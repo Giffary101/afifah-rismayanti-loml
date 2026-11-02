@@ -268,8 +268,8 @@ body.timeline-body {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
-  /* Jarak atas dan bawah foto diperkecil menjadi ringkas & pas (10px) */
-  padding: 10px calc(50vw - 165px);
+  /* Padding kalkulasi agar frame horizontal berada tepat di tengah layar */
+  padding: 10px calc(50vw - 195px);
   scrollbar-width: thin;
   scrollbar-color: #c46227 #1a0904;
 }
@@ -299,10 +299,10 @@ body.timeline-body {
   padding: 0;
 }
 
-/* Tiap Frame Klise Film */
+/* Tiap Frame Klise Film (Dibuat Memanjang Landscape / Kanan-Kiri) */
 .negative-frame {
-  width: 330px;
-  min-width: 330px;
+  width: 390px;
+  min-width: 390px;
   background: #120603;
   border: 3px solid #361406;
   border-radius: 0; /* Sudut biasa (tidak rounded) */
@@ -319,11 +319,12 @@ body.timeline-body {
   position: relative;
 }
 
-/* Kotak Foto */
+/* Kotak Foto: Dibuat Memanjang Horizontal (Landscape ke Arah Kanan dan Kiri) */
 .negative-photo-box {
   position: relative;
   width: 100%;
-  height: 235px;
+  aspect-ratio: 16 / 10; /* Memanjang ke kanan-kiri, bukan atas-bawah */
+  height: auto;
   background: #000;
   border-radius: 0; /* Sudut foto biasa (tidak rounded) */
   overflow: hidden;
@@ -334,6 +335,7 @@ body.timeline-body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
   border-radius: 0; /* Sudut foto tegas biasa */
   /* KONDISI FOTO TIDAK DIPILIH: FILTER COKLAT VINTAGE NOSTALGIK */
@@ -466,7 +468,7 @@ body.timeline-body {
   }
 
   .negative-scroll-viewport {
-    padding: 8px calc(50vw - 140px);
+    padding: 8px calc(50vw - 155px);
   }
 
   .negative-frames-row {
@@ -474,13 +476,14 @@ body.timeline-body {
   }
 
   .negative-frame {
-    width: 275px;
-    min-width: 275px;
+    width: 310px;
+    min-width: 310px;
     padding: 6px 6px 10px 6px;
   }
 
   .negative-photo-box {
-    height: 190px;
+    aspect-ratio: 16 / 10;
+    height: auto;
   }
 
   .frame-story-title {
