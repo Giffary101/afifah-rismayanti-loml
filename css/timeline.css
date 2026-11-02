@@ -268,14 +268,14 @@ body.timeline-body {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
-  /* Padding kalkulasi agar frame pertama & terakhir bisa berada tepat di tengah layar */
-  padding: 34px calc(50vw - 165px);
+  /* Jarak atas dan bawah foto diperkecil menjadi ringkas & pas (10px) */
+  padding: 10px calc(50vw - 165px);
   scrollbar-width: thin;
   scrollbar-color: #c46227 #1a0904;
 }
 
 .negative-scroll-viewport::-webkit-scrollbar {
-  height: 9px;
+  height: 8px;
 }
 
 .negative-scroll-viewport::-webkit-scrollbar-track {
@@ -293,7 +293,8 @@ body.timeline-body {
 
 .negative-frames-row {
   display: inline-flex;
-  gap: 32px;
+  /* Jarak antar foto diperkecil agar rapat layaknya roll film asli (12px) */
+  gap: 12px;
   align-items: stretch;
   padding: 0;
 }
@@ -303,9 +304,10 @@ body.timeline-body {
   width: 330px;
   min-width: 330px;
   background: #120603;
-  border: 3.5px solid #361406;
-  border-radius: 8px;
-  padding: 14px;
+  border: 3px solid #361406;
+  border-radius: 6px;
+  /* Jarak dalam frame foto diperkecil */
+  padding: 8px 8px 12px 8px;
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -361,9 +363,9 @@ body.timeline-body {
 
 /* KONDISI FOTO YANG DIPILIH (ACTIVE FRAME) */
 .negative-frame.active {
-  transform: scale(1.05);
+  transform: scale(1.03);
   border-color: #ffd166;
-  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 180, 80, 0.6);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9), 0 0 24px rgba(255, 180, 80, 0.55);
   background: #250d06;
   z-index: 10;
 }
@@ -463,13 +465,17 @@ body.timeline-body {
   }
 
   .negative-scroll-viewport {
-    padding: 22px calc(50vw - 140px);
+    padding: 8px calc(50vw - 140px);
+  }
+
+  .negative-frames-row {
+    gap: 8px;
   }
 
   .negative-frame {
     width: 275px;
     min-width: 275px;
-    padding: 10px;
+    padding: 6px 6px 10px 6px;
   }
 
   .negative-photo-box {
