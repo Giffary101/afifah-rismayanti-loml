@@ -306,8 +306,8 @@ body.timeline-body {
   background: #120603;
   border: 3px solid #361406;
   border-radius: 0; /* Sudut biasa (tidak rounded) */
-  /* Jarak dalam frame foto diperkecil */
-  padding: 8px 8px 12px 8px;
+  /* Jarak simetris di sekeliling foto */
+  padding: 6px;
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -386,61 +386,6 @@ body.timeline-body {
   text-shadow: 0 0 8px rgba(255, 209, 102, 1);
 }
 
-/* Konten Deskripsi Cerita di Bawah Foto */
-.negative-frame-details {
-  padding: 14px 6px 6px 6px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.details-row-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.frame-code-pill {
-  font-family: 'Courier New', monospace;
-  font-size: 0.72rem;
-  font-weight: 800;
-  color: #ffd166;
-  background: rgba(255, 209, 102, 0.15);
-  padding: 2px 8px;
-  border-radius: 0;
-}
-
-.frame-date-text {
-  font-size: 0.75rem;
-  color: #ffbe88;
-  font-weight: 600;
-}
-
-.frame-story-title {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.18rem;
-  font-weight: 700;
-  color: #fff4f8;
-  margin-top: 3px;
-  line-height: 1.35;
-}
-
-.negative-frame.active .frame-story-title {
-  color: #ffd166;
-  text-shadow: 0 0 10px rgba(255, 209, 102, 0.4);
-}
-
-.frame-story-desc {
-  font-size: 0.85rem;
-  color: #d8c2ce;
-  line-height: 1.55;
-  margin-top: 2px;
-}
-
-.negative-frame.active .frame-story-desc {
-  color: #f7e6ef;
-}
-
 .film-bottom-hint {
   text-align: center;
   font-size: 0.88rem;
@@ -478,19 +423,11 @@ body.timeline-body {
   .negative-frame {
     width: 310px;
     min-width: 310px;
-    padding: 6px 6px 10px 6px;
+    padding: 5px;
   }
 
   .negative-photo-box {
     aspect-ratio: 16 / 10;
     height: auto;
-  }
-
-  .frame-story-title {
-    font-size: 1.05rem;
-  }
-
-  .frame-story-desc {
-    font-size: 0.8rem;
   }
 }

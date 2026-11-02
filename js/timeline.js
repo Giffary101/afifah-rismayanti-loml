@@ -95,17 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       frameEl.innerHTML = `
         <div class="negative-photo-box">
-          <img src="${moment.image}" alt="${moment.title}" class="frame-img" loading="lazy">
+          <img src="${moment.image}" alt="Foto Kenangan ${index + 1}" class="frame-img" loading="lazy">
           <!-- TANGGAL DI ATAS KANAN FOTO (FONT ANALOG MASA LALU) -->
           <div class="frame-date-badge">${moment.dateStamp}</div>
-        </div>
-        <div class="negative-frame-details">
-          <div class="details-row-meta">
-            <span class="frame-code-pill">${moment.frameCode}</span>
-            <span class="frame-date-text">${moment.fullDate}</span>
-          </div>
-          <h3 class="frame-story-title">${moment.title}</h3>
-          <p class="frame-story-desc">${moment.desc}</p>
         </div>
       `;
 
