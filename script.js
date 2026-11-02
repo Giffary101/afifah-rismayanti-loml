@@ -1,19 +1,23 @@
 /**
  * Spesial Untuk Afifah Rismayanti
- * Logika Animasi Amplop, Hitung Mundur, Roll Film Vintage 35mm, dan Partikel Ambient
+ * Logika Animasi Amplop, Navigasi Menu, Hitung Mundur, dan Klise Roll Film 35mm
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // DOM Elements - Amplop & Navigasi
+  // DOM Elements - Bagian Halaman (3 Layar)
+  const envelopeSection = document.getElementById('envelope-section');
+  const mainSection = document.getElementById('main-section');
+  const timelineSection = document.getElementById('timeline-section');
+
+  // DOM Elements - Amplop
   const envelopeContainer = document.getElementById('envelope-container');
   const heartSeal = document.getElementById('heart-seal');
   const openMainBtn = document.getElementById('open-main-btn');
   const backToEnvelopeBtn = document.getElementById('back-to-envelope-btn');
-  const envelopeSection = document.getElementById('envelope-section');
-  const mainSection = document.getElementById('main-section');
-  const soundBtn = document.getElementById('sound-btn');
-  const canvas = document.getElementById('ambient-canvas');
-  const ctx = canvas.getContext('2d');
+
+  // DOM Elements - Navigasi List "Selamat Datang Cintaku"
+  const openTimelineItem = document.getElementById('open-timeline-item');
+  const backToMainBtn = document.getElementById('back-to-main-btn');
 
   // DOM Elements - Hitung Mundur
   const cdDays = document.getElementById('cd-days');
@@ -22,8 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const cdSeconds = document.getElementById('cd-seconds');
   const cdMessage = document.getElementById('countdown-message');
 
-  // DOM Elements - Roll Film & Dynamic Background
-  const vintageBgLayer = document.getElementById('vintage-bg-layer');
+  // DOM Elements - Klise Roll Film 35mm & Dynamic Background
+  const timelineBgPhoto = document.getElementById('timeline-bg-photo');
   const filmTrack = document.getElementById('film-track');
   const filmTrackViewport = document.getElementById('film-track-viewport');
   const filmPrevBtn = document.getElementById('film-prev-btn');
@@ -31,14 +35,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const currentFrameIdx = document.getElementById('current-frame-idx');
   const totalFramesIdx = document.getElementById('total-frames-idx');
 
+  // Audio & Ambient Canvas
+  const soundBtn = document.getElementById('sound-btn');
+  const canvas = document.getElementById('ambient-canvas');
+  const ctx = canvas.getContext('2d');
+
   // State
   let isEnvelopeOpen = false;
   let isSoundEnabled = true;
   let activeFrameIndex = 0;
 
   // ==========================================
-  // WEB AUDIO API (Sintesis Suara Romantis & Kamera Vintage)
-  // Tidak perlu download file mp3 eksternal!
+  // WEB AUDIO API (Sintesis Suara Romantis & Kamera Analog)
+  // Tidak memerlukan file mp3 eksternal
   // ==========================================
   let audioCtx = null;
 
@@ -61,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
       initAudio();
       if (!audioCtx) return;
 
-      const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51]; // C5, E5, G5, C6, E6
+      const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51];
       notes.forEach((freq, index) => {
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
@@ -84,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Nada lembut pop saat klik hati
+  // Nada lembut pop saat klik
   function playPopSound() {
     if (!isSoundEnabled) return;
     try {
@@ -111,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Suara Shutter / Mekanik Putaran Film Kamera Analog Masa Lalu
+  // Suara Shutter & Putaran Klise Film Kamera Analog
   function playCameraShutterSound() {
     if (!isSoundEnabled) return;
     try {
@@ -120,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const now = audioCtx.currentTime;
 
-      // Click 1 (shutter press)
+      // Click 1 (shutter click)
       const osc1 = audioCtx.createOscillator();
       const gain1 = audioCtx.createGain();
       osc1.type = 'square';
@@ -133,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
       osc1.start(now);
       osc1.stop(now + 0.05);
 
-      // Click 2 (shutter release / film advance tick)
+      // Click 2 (film ratchet advance)
       const osc2 = audioCtx.createOscillator();
       const gain2 = audioCtx.createGain();
       osc2.type = 'triangle';
@@ -162,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==========================================
-  // LOGIKA PEMBUKA AMPLOP
+  // SECTION 1: LOGIKA PEMBUKA AMPLOP
   // ==========================================
   function openEnvelope() {
     if (isEnvelopeOpen) return;
@@ -179,7 +188,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const originX = rect.left + rect.width / 2;
     const originY = rect.top + rect.height / 2;
 
-    // Ledakan partikel hati & kelopak
     createBurstParticles(originX, originY, 40);
   }
 
@@ -196,7 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Klik di area amplop juga bisa membuka
   envelopeContainer.addEventListener('click', () => {
     if (!isEnvelopeOpen) {
       openEnvelope();
@@ -208,29 +215,23 @@ document.addEventListener('DOMContentLoaded', () => {
     envelopeContainer.classList.remove('open');
   }
 
-  // ==========================================
-  // TRANSISI KE HALAMAN UTAMA
-  // ==========================================
+  // Tombol Buka Halaman Utama (Dari Amplop -> "Selamat Datang Cintaku")
   openMainBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     initAudio();
     playChimeSound();
 
-    // Ledakan confetti perayaan
     const rect = openMainBtn.getBoundingClientRect();
     createBurstParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, 50);
 
-    // Transisi halus
     envelopeSection.classList.remove('active');
     setTimeout(() => {
       mainSection.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      // Inisialisasi tampilan film roll frame pertama
-      setActiveFrame(0, true);
     }, 350);
   });
 
-  // Kembali ke Tampilan Amplop & Bisa diputar ulang animasinya
+  // Tombol Kembali ke Amplop (Dari "Selamat Datang Cintaku" -> Amplop)
   backToEnvelopeBtn.addEventListener('click', () => {
     mainSection.classList.remove('active');
     setTimeout(() => {
@@ -241,14 +242,33 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==========================================
-  // 1. LOGIKA HITUNG MUNDUR (COUNTDOWN TIMER)
+  // NAVIGASI MENU: DARI "SELAMAT DATANG CINTAKU" KE ROLL FILM
   // ==========================================
-  /**
-   * PANDUAN PENGATURAN TANGGAL:
-   * Anda bisa mengganti tanggal di bawah ini dengan tanggal ulang tahun
-   * atau tanggal anniversary yang sebenarnya, misalnya:
-   * const COUNTDOWN_TARGET = new Date('2026-11-20T00:00:00');
-   */
+  // Klik list item "⏳ Hitung Mundur / Timeline Perjalanan"
+  openTimelineItem.addEventListener('click', () => {
+    initAudio();
+    playPopSound();
+
+    mainSection.classList.remove('active');
+    setTimeout(() => {
+      timelineSection.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setActiveFrame(0, true);
+    }, 350);
+  });
+
+  // Tombol Kembali ke Halaman Utama "Selamat Datang Cintaku"
+  backToMainBtn.addEventListener('click', () => {
+    timelineSection.classList.remove('active');
+    setTimeout(() => {
+      mainSection.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 350);
+  });
+
+  // ==========================================
+  // SECTION 3: LOGIKA HITUNG MUNDUR (COUNTDOWN TIMER)
+  // ==========================================
   const COUNTDOWN_TARGET = new Date();
   COUNTDOWN_TARGET.setDate(COUNTDOWN_TARGET.getDate() + 18);
   COUNTDOWN_TARGET.setHours(COUNTDOWN_TARGET.getHours() + 4);
@@ -281,12 +301,8 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(updateCountdown, 1000);
 
   // ==========================================
-  // 2. DATA TIMELINE ROLL FILM KENANGAN
+  // SECTION 3: DATA & LOGIKA KLISE ROLL FILM 35MM
   // ==========================================
-  /**
-   * Anda dapat mengganti URL foto ini dengan foto pribadi yang ditaruh
-   * di folder 'images/foto1.jpg', dst!
-   */
   const timelineMoments = [
     {
       id: 1,
@@ -346,32 +362,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
   totalFramesIdx.textContent = timelineMoments.length;
 
-  // Render Frame Roll Film ke HTML
+  // Render Frame-frame Klise Film 35mm
   function renderFilmFrames() {
     filmTrack.innerHTML = '';
 
     timelineMoments.forEach((moment, index) => {
       const frameEl = document.createElement('div');
-      frameEl.className = `film-frame ${index === 0 ? 'active' : ''}`;
+      frameEl.className = `negative-frame ${index === 0 ? 'active' : ''}`;
       frameEl.dataset.index = index;
 
       frameEl.innerHTML = `
-        <div class="frame-photo-wrapper">
-          <img src="${moment.image}" alt="${moment.title}" class="frame-photo" loading="lazy">
+        <div class="negative-photo-box">
+          <img src="${moment.image}" alt="${moment.title}" class="frame-img" loading="lazy">
           <!-- TANGGAL DI ATAS KANAN FOTO (FONT ANALOG MASA LALU) -->
           <div class="frame-date-badge">${moment.dateStamp}</div>
         </div>
-        <div class="frame-content">
-          <div class="frame-badge-row">
-            <span class="frame-index-tag">${moment.frameCode}</span>
-            <span class="frame-full-date">${moment.fullDate}</span>
+        <div class="negative-frame-details">
+          <div class="details-row-meta">
+            <span class="frame-code-pill">${moment.frameCode}</span>
+            <span class="frame-date-text">${moment.fullDate}</span>
           </div>
-          <h3 class="frame-title">${moment.title}</h3>
-          <p class="frame-desc">${moment.desc}</p>
+          <h3 class="frame-story-title">${moment.title}</h3>
+          <p class="frame-story-desc">${moment.desc}</p>
         </div>
       `;
 
-      // Klik foto untuk langsung memilih & memusatkannya
       frameEl.addEventListener('click', () => {
         setActiveFrame(index, true);
       });
@@ -382,11 +397,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderFilmFrames();
 
-  // Fungsi Mengaktifkan Foto yang Dipilih
+  // Fungsi Mengaktifkan Foto Klise yang Dipilih
   function setActiveFrame(index, shouldScroll = false) {
     if (index < 0 || index >= timelineMoments.length) return;
 
-    const frames = filmTrack.querySelectorAll('.film-frame');
+    const frames = filmTrack.querySelectorAll('.negative-frame');
     frames.forEach((f, idx) => {
       if (idx === index) {
         f.classList.add('active');
@@ -399,9 +414,11 @@ document.addEventListener('DOMContentLoaded', () => {
     currentFrameIdx.textContent = index + 1;
 
     // 1. UPDATE LATAR BELAKANG:
-    // Menggunakan foto yang dipilih dengan FILTER COKLAT VINTAGE (diatur lewat CSS vintage-bg-layer)
+    // Menggunakan foto yang dipilih dengan FILTER COKLAT VINTAGE NOSTALGIK
     const selectedMoment = timelineMoments[index];
-    vintageBgLayer.style.backgroundImage = `url('${selectedMoment.image}')`;
+    if (timelineBgPhoto) {
+      timelineBgPhoto.style.backgroundImage = `url('${selectedMoment.image}')`;
+    }
 
     // 2. Animasi Scroll ke tengah viewport jika diminta
     if (shouldScroll && frames[index]) {
@@ -414,12 +431,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Set initial background image
-  if (timelineMoments[0]) {
-    vintageBgLayer.style.backgroundImage = `url('${timelineMoments[0].image}')`;
+  // Set latar belakang inisial
+  if (timelineMoments[0] && timelineBgPhoto) {
+    timelineBgPhoto.style.backgroundImage = `url('${timelineMoments[0].image}')`;
   }
 
-  // Tombol Geser Roll Film Selanjutnya & Sebelumnya
+  // Tombol Navigasi Geser
   filmPrevBtn.addEventListener('click', () => {
     if (activeFrameIndex > 0) {
       setActiveFrame(activeFrameIndex - 1, true);
@@ -436,8 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Listener Scroll: Saat pengguna scroll roll film dari kiri ke kanan,
-  // deteksi otomatis frame foto yang berada di tengah dan jadikan aktif!
+  // Listener Scroll dari kiri ke kanan: Otomatis mendeteksi frame yang berada di tengah
   let scrollTimeout = null;
   filmTrackViewport.addEventListener('scroll', () => {
     if (scrollTimeout) clearTimeout(scrollTimeout);
@@ -446,7 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const viewportRect = filmTrackViewport.getBoundingClientRect();
       const viewportCenter = viewportRect.left + viewportRect.width / 2;
 
-      const frames = filmTrack.querySelectorAll('.film-frame');
+      const frames = filmTrack.querySelectorAll('.negative-frame');
       let closestIdx = activeFrameIndex;
       let minDistance = Infinity;
 
@@ -469,7 +485,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==========================================
-  // SISTEM PARTIKEL AMBIENT (BLOSSOM & HEARTS)
+  // SISTEM PARTIKEL AMBIENT (KELOPAK BUNGA SAKURA)
   // ==========================================
   let width = (canvas.width = window.innerWidth);
   let height = (canvas.height = window.innerHeight);
@@ -483,13 +499,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const burstParticles = [];
   const TOTAL_AMBIENT = 35;
 
-  // Warna-warna harmonis palet pink blossom
   const colors = [
-    'rgba(255, 140, 198, 0.7)',  // Love Pink #ff8cc6
-    'rgba(232, 93, 158, 0.65)', // Deep Rose #e85d9e
-    'rgba(255, 194, 223, 0.75)', // Soft Blossom
-    'rgba(255, 209, 102, 0.6)',  // Warm Gold
-    'rgba(255, 230, 240, 0.85)'  // Pale Blush
+    'rgba(255, 140, 198, 0.7)',
+    'rgba(232, 93, 158, 0.65)',
+    'rgba(255, 194, 223, 0.75)',
+    'rgba(255, 209, 102, 0.6)',
+    'rgba(255, 230, 240, 0.85)'
   ];
 
   class AmbientPetal {
@@ -506,7 +521,7 @@ document.addEventListener('DOMContentLoaded', () => {
       this.rotation = Math.random() * 360;
       this.rotationSpeed = (Math.random() - 0.5) * 2;
       this.color = colors[Math.floor(Math.random() * colors.length)];
-      this.isHeart = Math.random() > 0.65; // Sebagian berbentuk hati kecil
+      this.isHeart = Math.random() > 0.65;
       this.opacity = Math.random() * 0.6 + 0.3;
     }
 
@@ -530,7 +545,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (this.isHeart) {
         drawMiniHeart(ctx, 0, 0, this.size * 0.6);
       } else {
-        // Kelopak bunga sakura melayang
         ctx.beginPath();
         ctx.ellipse(0, 0, this.size, this.size * 0.5, Math.PI / 4, 0, Math.PI * 2);
         ctx.fill();
@@ -539,7 +553,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Partikel Ledakan saat Amplop Terbuka
   class BurstParticle {
     constructor(x, y) {
       this.x = x;
@@ -547,7 +560,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const angle = Math.random() * Math.PI * 2;
       const speed = Math.random() * 6 + 2;
       this.vx = Math.cos(angle) * speed;
-      this.vy = Math.sin(angle) * speed - 2.5; // Sedikit dorongan ke atas
+      this.vy = Math.sin(angle) * speed - 2.5;
       this.size = Math.random() * 9 + 5;
       this.color = colors[Math.floor(Math.random() * colors.length)];
       this.isHeart = Math.random() > 0.4;
@@ -560,7 +573,7 @@ document.addEventListener('DOMContentLoaded', () => {
     update() {
       this.x += this.vx;
       this.y += this.vy;
-      this.vy += 0.12; // gravitasi halus
+      this.vy += 0.12;
       this.vx *= 0.98;
       this.rotation += this.rotationSpeed;
       this.alpha -= this.decay;
@@ -603,24 +616,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Inisialisasi partikel ambient
   for (let i = 0; i < TOTAL_AMBIENT; i++) {
     const petal = new AmbientPetal();
-    petal.y = Math.random() * height; // Distribusikan merata di awal
+    petal.y = Math.random() * height;
     ambientParticles.push(petal);
   }
 
-  // Animation Loop
   function animate() {
     ctx.clearRect(0, 0, width, height);
 
-    // Update & Render Ambient Petals
     ambientParticles.forEach((petal) => {
       petal.update();
       petal.draw();
     });
 
-    // Update & Render Burst Particles
     for (let i = burstParticles.length - 1; i >= 0; i--) {
       const p = burstParticles[i];
       p.update();

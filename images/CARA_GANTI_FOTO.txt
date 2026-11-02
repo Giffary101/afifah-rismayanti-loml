@@ -1,7 +1,7 @@
-PETUNJUK MENGGANTI FOTO ROLL FILM:
-======================================
-1. Masukkan file foto kenangan Anda dan Afifah ke dalam folder 'images' ini.
-   Contoh:
+PETUNJUK MENGGANTI FOTO ROLL FILM 35MM:
+=========================================
+1. Masukkan file foto kenangan Anda dan Afifah ke dalam folder 'images/' ini.
+   Contoh nama file:
    - foto1.jpg
    - foto2.jpg
    - foto3.jpg
@@ -14,4 +14,10 @@ PETUNJUK MENGGANTI FOTO ROLL FILM:
    image: 'images/foto1.jpg',
    dst.
 
-3. Anda juga dapat mengubah tanggal, judul momen, dan teks deskripsi perjalanan cinta langsung di dalam 'script.js'!
+3. Anda juga dapat mengubah:
+   - Tanggal stempel kamera analog (dateStamp: "'23 05 12")
+   - Tanggal lengkap (fullDate: "12 Mei 2023")
+   - Judul momen (title: "Awal Mula Cerita Kita")
+   - Teks cerita perjalanan (desc: "...")
+   
+   Semua bisa disesuaikan langsung di dalam file 'script.js'!
