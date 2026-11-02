@@ -1,16 +1,9 @@
 /**
- * Logika Hitung Mundur & Roll Film 35mm (timeline.html)
- * Bentuk klise film amber/oranye persis seperti gambar
+ * Logika Klise Roll Film 35mm (timeline.html)
+ * Fokus murni pada tampilan roll film amber/oranye persis seperti gambar
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // DOM Elements - Hitung Mundur
-  const cdDays = document.getElementById('cd-days');
-  const cdHours = document.getElementById('cd-hours');
-  const cdMinutes = document.getElementById('cd-minutes');
-  const cdSeconds = document.getElementById('cd-seconds');
-  const cdMessage = document.getElementById('countdown-message');
-
   // DOM Elements - Roll Film & Dynamic Background
   const timelineBgPhoto = document.getElementById('timeline-bg-photo');
   const filmTrack = document.getElementById('film-track');
@@ -23,50 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let activeFrameIndex = 0;
 
   // ==========================================
-  // 1. LOGIKA HITUNG MUNDUR (COUNTDOWN TIMER)
-  // ==========================================
-  /**
-   * PANDUAN PENGATURAN TANGGAL:
-   * Anda bisa mengganti tanggal di bawah ini dengan tanggal ulang tahun
-   * atau tanggal anniversary yang sebenarnya, misalnya:
-   * const COUNTDOWN_TARGET = new Date('2026-11-20T00:00:00');
-   */
-  const COUNTDOWN_TARGET = new Date();
-  COUNTDOWN_TARGET.setDate(COUNTDOWN_TARGET.getDate() + 18);
-  COUNTDOWN_TARGET.setHours(COUNTDOWN_TARGET.getHours() + 4);
-
-  function updateCountdown() {
-    if (!cdDays) return;
-    const now = new Date().getTime();
-    const distance = COUNTDOWN_TARGET.getTime() - now;
-
-    if (distance <= 0) {
-      cdDays.textContent = '00';
-      cdHours.textContent = '00';
-      cdMinutes.textContent = '00';
-      cdSeconds.textContent = '00';
-      if (cdMessage) {
-        cdMessage.textContent = 'Hari paling membahagiakan telah tiba! Selamat merayakan cinta & cita-cita! 🎉💖';
-      }
-      return;
-    }
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    cdDays.textContent = String(days).padStart(2, '0');
-    cdHours.textContent = String(hours).padStart(2, '0');
-    cdMinutes.textContent = String(minutes).padStart(2, '0');
-    cdSeconds.textContent = String(seconds).padStart(2, '0');
-  }
-
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-
-  // ==========================================
-  // 2. DATA TIMELINE ROLL FILM KENANGAN
+  // DATA TIMELINE ROLL FILM KENANGAN
   // ==========================================
   /**
    * Anda dapat mengganti URL foto ini dengan foto pribadi yang ditaruh

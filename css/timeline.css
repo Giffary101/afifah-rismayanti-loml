@@ -1,10 +1,14 @@
 /* =========================================================
-   STYLING KHUSUS ROLL FILM 35MM & HITUNG MUNDUR (LAYAR 3)
+   STYLING KHUSUS ROLL FILM 35MM (timeline.html)
    PERSIS SEPERTI GAMBAR KLISE NEGATIF AMBER/ORANYE
    ========================================================= */
 .timeline-screen {
   position: relative;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 48px);
 }
 
 /* ---------------------------------------------------------
@@ -51,11 +55,11 @@
   position: relative;
   z-index: 5;
   width: 100%;
-  max-width: 980px;
+  max-width: 1020px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 26px;
+  gap: 20px;
   animation: zoomInContent 0.7s cubic-bezier(0.34, 1.25, 0.64, 1);
 }
 
@@ -103,152 +107,18 @@
 }
 
 /* ---------------------------------------------------------
-   1. HITUNG MUNDUR (COUNTDOWN TIMER)
-   --------------------------------------------------------- */
-.timeline-countdown-box {
-  background: rgba(24, 10, 18, 0.88);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(200, 95, 35, 0.35);
-  border-radius: var(--radius-lg);
-  padding: 26px 20px;
-  text-align: center;
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
-  position: relative;
-  overflow: hidden;
-}
-
-.timeline-countdown-box::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #c46227, #ffd166, #ff8cc6, transparent);
-}
-
-.countdown-mini-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(196, 98, 39, 0.2);
-  border: 1px solid rgba(216, 112, 44, 0.4);
-  color: #ffbe88;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  padding: 4px 14px;
-  border-radius: var(--radius-full);
-  margin-bottom: 10px;
-}
-
-.dot-beacon {
-  width: 7px;
-  height: 7px;
-  background: #ff9838;
-  border-radius: 50%;
-  box-shadow: 0 0 8px #ff9838;
-  animation: pulseDotAnim 1.5s infinite;
-}
-
-@keyframes pulseDotAnim {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.7); }
-}
-
-.countdown-header-title {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.45rem;
-  font-weight: 700;
-  color: #fff6fa;
-  margin-bottom: 18px;
-}
-
-.countdown-digits-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-.cd-item {
-  background: linear-gradient(180deg, #281420 0%, #170812 100%);
-  border: 1px solid rgba(200, 95, 35, 0.4);
-  border-radius: 12px;
-  padding: 12px 18px;
-  min-width: 74px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
-}
-
-.cd-val {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #ffd166;
-  text-shadow: 0 0 10px rgba(255, 209, 102, 0.5);
-  line-height: 1.1;
-}
-
-.cd-lbl {
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: #f7d0e4;
-  letter-spacing: 1px;
-  margin-top: 5px;
-}
-
-.cd-sep {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #c46227;
-  text-shadow: 0 0 10px rgba(196, 98, 39, 0.8);
-  margin-top: -12px;
-}
-
-.cd-caption {
-  font-size: 0.88rem;
-  color: #e2cad7;
-  font-style: italic;
-}
-
-/* ---------------------------------------------------------
-   2. WADAH ROLL FILM 35MM (KLISE ORANYE/AMBER PERSIS SEPERTI GAMBAR)
+   WADAH ROLL FILM 35MM (KLISE ORANGE/AMBER PERSIS SEPERTI GAMBAR)
    --------------------------------------------------------- */
 .film-container-card {
-  background: rgba(18, 8, 14, 0.9);
+  background: rgba(18, 8, 14, 0.92);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(196, 98, 39, 0.35);
   border-radius: var(--radius-lg);
-  padding: 30px 18px;
+  padding: 26px 18px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
   display: flex;
   flex-direction: column;
-  gap: 18px;
-}
-
-.film-info-header {
-  text-align: center;
-  padding: 0 12px;
-}
-
-.film-title-large {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.85rem;
-  font-weight: 700;
-  color: #fff8fc;
-  margin-bottom: 6px;
-}
-
-.film-subtitle-text {
-  font-size: 0.92rem;
-  color: #dfc8d4;
-  max-width: 620px;
-  margin: 0 auto;
-  line-height: 1.55;
+  gap: 16px;
 }
 
 .film-action-bar {
@@ -315,7 +185,7 @@
   box-shadow: 0 16px 45px rgba(0, 0, 0, 0.85), inset 0 0 20px rgba(255, 140, 50, 0.25);
   position: relative;
   overflow: hidden;
-  margin: 8px 0;
+  margin: 6px 0;
 }
 
 .negative-sprocket-bar {
@@ -558,19 +428,8 @@
 
 /* Responsif Mobile */
 @media (max-width: 480px) {
-  .cd-item {
-    min-width: 58px;
-    padding: 8px 10px;
-  }
-  .cd-val { font-size: 1.5rem; }
-  .cd-lbl { font-size: 0.6rem; }
-  .cd-sep { font-size: 1.3rem; }
-
   .film-container-card {
-    padding: 20px 12px;
-  }
-  .film-title-large {
-    font-size: 1.35rem;
+    padding: 18px 10px;
   }
   .btn-film-nav {
     padding: 6px 12px;
