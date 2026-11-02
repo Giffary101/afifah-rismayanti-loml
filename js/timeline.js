@@ -150,6 +150,39 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Mengaktifkan Foto yang Dipilih
+  
+  // ==========================================
+  // LOGIKA KARTU JUDUL & DESKRIPSI MOMEN DI BAWAH ROLL
+  // ==========================================
+  const filmStoryCard = document.getElementById('film-story-card');
+  const storyDateBadge = document.getElementById('story-date-badge');
+  const storyTitle = document.getElementById('story-title');
+  const storyDesc = document.getElementById('story-desc');
+  let storyFadeTimer = null;
+
+  function updateStoryCard(index) {
+    if (!filmStoryCard || index < 0 || index >= timelineMoments.length) return;
+    const moment = timelineMoments[index];
+
+    if (storyFadeTimer) clearTimeout(storyFadeTimer);
+
+    // Fade-out sekejap, perbarui data cerita, lalu fade-in halus
+    filmStoryCard.classList.remove('visible');
+
+    storyFadeTimer = setTimeout(() => {
+      if (storyDateBadge) {
+        storyDateBadge.textContent = moment.fullDate || moment.dateStamp;
+      }
+      if (storyTitle) {
+        storyTitle.textContent = moment.title;
+      }
+      if (storyDesc) {
+        storyDesc.textContent = moment.desc;
+      }
+      filmStoryCard.classList.add('visible');
+    }, 180);
+  }
+
   function setActiveFrame(index, shouldScroll = false) {
     if (index < 0 || index >= timelineMoments.length || !filmTrack) return;
 
@@ -186,6 +219,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (window.AudioApp) {
         window.AudioApp.playShutter();
       }
+    }
+
+    // 3. Perbarui judul & deskripsi di bawah roll dengan animasi fade
+    if (!isRollingCylinder) {
+      updateStoryCard(index);
     }
   }
 
@@ -289,6 +327,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (filmStripWrapper) {
       filmStripWrapper.style.clipPath = 'inset(0 0 0 100%)';
     }
+    if (filmStoryCard) {
+      filmStoryCard.classList.remove('visible');
+    }
     if (filmEndSpool && filmStage) {
       const maxDist = Math.max(0, filmStage.clientWidth - filmEndSpool.offsetWidth);
       filmEndSpool.style.transform = `translateX(${maxDist}px)`;
@@ -315,8 +356,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const spoolWidth = filmEndSpool.offsetWidth || 76;
     const maxDist = Math.max(0, stageWidth - spoolWidth);
 
-    // 1. Latar belakang roll di-hide sebelum kepala roll berjalan
+    // 1. Latar belakang roll di-hide & kartu deskripsi tidak muncul dulu saat roll berjalan
     filmStripWrapper.style.clipPath = `inset(0 0 0 ${stageWidth}px)`;
+    if (filmStoryCard) {
+      filmStoryCard.classList.remove('visible');
+    }
 
     // 2. Kepala roll mulai di ujung kanan & aktifkan animasi 3D putaran silinder di lantai
     filmEndSpool.style.transform = `translateX(${maxDist}px)`;
@@ -365,11 +409,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Aktifkan frame foto pertama
         setActiveFrame(0, true);
 
+        // Setelah semua roll selesai berjalan, otomatis judul & deskripsi muncul animasi fade
+        isRollingCylinder = false;
+        updateStoryCard(0);
+
         if (window.AudioApp) {
           window.AudioApp.playShutter();
         }
-
-        isRollingCylinder = false;
       }
     }
 
