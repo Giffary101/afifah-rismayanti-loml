@@ -8,10 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const timelineBgPhoto = document.getElementById('timeline-bg-photo');
   const filmTrack = document.getElementById('film-track');
   const filmTrackViewport = document.getElementById('film-track-viewport');
-  const filmPrevBtn = document.getElementById('film-prev-btn');
-  const filmNextBtn = document.getElementById('film-next-btn');
-  const currentFrameIdx = document.getElementById('current-frame-idx');
-  const totalFramesIdx = document.getElementById('total-frames-idx');
 
   let activeFrameIndex = 0;
 
@@ -79,10 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   ];
 
-  if (totalFramesIdx) {
-    totalFramesIdx.textContent = timelineMoments.length;
-  }
-
   // Render Frame-frame Klise Roll Film
   function renderFilmFrames() {
     if (!filmTrack) return;
@@ -125,9 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     activeFrameIndex = index;
-    if (currentFrameIdx) {
-      currentFrameIdx.textContent = index + 1;
-    }
 
     // 1. UPDATE LATAR BELAKANG:
     // Menggunakan foto yang dipilih dengan FILTER COKLAT VINTAGE (diatur lewat CSS timeline-bg-photo)
@@ -154,26 +143,22 @@ document.addEventListener('DOMContentLoaded', () => {
     timelineBgPhoto.style.backgroundImage = `url('${timelineMoments[0].image}')`;
   }
 
-  // Tombol Navigasi Geser
-  if (filmPrevBtn) {
-    filmPrevBtn.addEventListener('click', () => {
+  // Navigasi Keyboard (Panah Kiri & Kanan di Desktop)
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
       if (activeFrameIndex > 0) {
         setActiveFrame(activeFrameIndex - 1, true);
       } else {
         setActiveFrame(timelineMoments.length - 1, true);
       }
-    });
-  }
-
-  if (filmNextBtn) {
-    filmNextBtn.addEventListener('click', () => {
+    } else if (e.key === 'ArrowRight') {
       if (activeFrameIndex < timelineMoments.length - 1) {
         setActiveFrame(activeFrameIndex + 1, true);
       } else {
         setActiveFrame(0, true);
       }
-    });
-  }
+    }
+  });
 
   // Listener Scroll dari kiri ke kanan: Otomatis mendeteksi frame yang berada di tengah
   let scrollTimeout = null;
