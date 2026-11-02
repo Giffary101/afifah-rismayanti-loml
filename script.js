@@ -1,10 +1,10 @@
 /**
  * Spesial Untuk Afifah Rismayanti
- * Logika Animasi Amplop, Partikel Ambient, dan Efek Interaktif
+ * Logika Animasi Amplop, Hitung Mundur, Roll Film Vintage 35mm, dan Partikel Ambient
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // DOM Elements
+  // DOM Elements - Amplop & Navigasi
   const envelopeContainer = document.getElementById('envelope-container');
   const heartSeal = document.getElementById('heart-seal');
   const openMainBtn = document.getElementById('open-main-btn');
@@ -15,12 +15,29 @@ document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('ambient-canvas');
   const ctx = canvas.getContext('2d');
 
+  // DOM Elements - Hitung Mundur
+  const cdDays = document.getElementById('cd-days');
+  const cdHours = document.getElementById('cd-hours');
+  const cdMinutes = document.getElementById('cd-minutes');
+  const cdSeconds = document.getElementById('cd-seconds');
+  const cdMessage = document.getElementById('countdown-message');
+
+  // DOM Elements - Roll Film & Dynamic Background
+  const vintageBgLayer = document.getElementById('vintage-bg-layer');
+  const filmTrack = document.getElementById('film-track');
+  const filmTrackViewport = document.getElementById('film-track-viewport');
+  const filmPrevBtn = document.getElementById('film-prev-btn');
+  const filmNextBtn = document.getElementById('film-next-btn');
+  const currentFrameIdx = document.getElementById('current-frame-idx');
+  const totalFramesIdx = document.getElementById('total-frames-idx');
+
   // State
   let isEnvelopeOpen = false;
   let isSoundEnabled = true;
+  let activeFrameIndex = 0;
 
   // ==========================================
-  // WEB AUDIO API (Sintesis Suara Romantis Ringan)
+  // WEB AUDIO API (Sintesis Suara Romantis & Kamera Vintage)
   // Tidak perlu download file mp3 eksternal!
   // ==========================================
   let audioCtx = null;
@@ -63,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         osc.stop(audioCtx.currentTime + index * 0.1 + 0.95);
       });
     } catch (e) {
-      console.log('Audio disabled or blocked', e);
+      console.log('Audio error', e);
     }
   }
 
@@ -89,6 +106,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
       osc.start();
       osc.stop(audioCtx.currentTime + 0.16);
+    } catch (e) {
+      console.log('Audio error', e);
+    }
+  }
+
+  // Suara Shutter / Mekanik Putaran Film Kamera Analog Masa Lalu
+  function playCameraShutterSound() {
+    if (!isSoundEnabled) return;
+    try {
+      initAudio();
+      if (!audioCtx) return;
+
+      const now = audioCtx.currentTime;
+
+      // Click 1 (shutter press)
+      const osc1 = audioCtx.createOscillator();
+      const gain1 = audioCtx.createGain();
+      osc1.type = 'square';
+      osc1.frequency.setValueAtTime(800, now);
+      osc1.frequency.exponentialRampToValueAtTime(120, now + 0.04);
+      gain1.gain.setValueAtTime(0.12, now);
+      gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+      osc1.connect(gain1);
+      gain1.connect(audioCtx.destination);
+      osc1.start(now);
+      osc1.stop(now + 0.05);
+
+      // Click 2 (shutter release / film advance tick)
+      const osc2 = audioCtx.createOscillator();
+      const gain2 = audioCtx.createGain();
+      osc2.type = 'triangle';
+      osc2.frequency.setValueAtTime(1200, now + 0.06);
+      osc2.frequency.exponentialRampToValueAtTime(200, now + 0.11);
+      gain2.gain.setValueAtTime(0.08, now + 0.06);
+      gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+      osc2.connect(gain2);
+      gain2.connect(audioCtx.destination);
+      osc2.start(now + 0.06);
+      osc2.stop(now + 0.12);
     } catch (e) {
       console.log('Audio error', e);
     }
@@ -141,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Klik di area amplop juga bisa membuka
-  envelopeContainer.addEventListener('click', (e) => {
+  envelopeContainer.addEventListener('click', () => {
     if (!isEnvelopeOpen) {
       openEnvelope();
     }
@@ -169,6 +225,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       mainSection.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Inisialisasi tampilan film roll frame pertama
+      setActiveFrame(0, true);
     }, 350);
   });
 
@@ -180,6 +238,234 @@ document.addEventListener('DOMContentLoaded', () => {
       envelopeSection.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 350);
+  });
+
+  // ==========================================
+  // 1. LOGIKA HITUNG MUNDUR (COUNTDOWN TIMER)
+  // ==========================================
+  /**
+   * PANDUAN PENGATURAN TANGGAL:
+   * Anda bisa mengganti tanggal di bawah ini dengan tanggal ulang tahun
+   * atau tanggal anniversary yang sebenarnya, misalnya:
+   * const COUNTDOWN_TARGET = new Date('2026-11-20T00:00:00');
+   */
+  const COUNTDOWN_TARGET = new Date();
+  COUNTDOWN_TARGET.setDate(COUNTDOWN_TARGET.getDate() + 18);
+  COUNTDOWN_TARGET.setHours(COUNTDOWN_TARGET.getHours() + 4);
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = COUNTDOWN_TARGET.getTime() - now;
+
+    if (distance <= 0) {
+      cdDays.textContent = '00';
+      cdHours.textContent = '00';
+      cdMinutes.textContent = '00';
+      cdSeconds.textContent = '00';
+      cdMessage.textContent = 'Hari paling membahagiakan telah tiba! Selamat merayakan cinta & cita-cita! 🎉💖';
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    cdDays.textContent = String(days).padStart(2, '0');
+    cdHours.textContent = String(hours).padStart(2, '0');
+    cdMinutes.textContent = String(minutes).padStart(2, '0');
+    cdSeconds.textContent = String(seconds).padStart(2, '0');
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // ==========================================
+  // 2. DATA TIMELINE ROLL FILM KENANGAN
+  // ==========================================
+  /**
+   * Anda dapat mengganti URL foto ini dengan foto pribadi yang ditaruh
+   * di folder 'images/foto1.jpg', dst!
+   */
+  const timelineMoments = [
+    {
+      id: 1,
+      frameCode: "▶ 01A",
+      dateStamp: "'23 05 12",
+      fullDate: "12 Mei 2023",
+      title: "Awal Mula Cerita Kita",
+      desc: "Hari di mana senyum manismu pertama kali mencuri perhatian, membuka lembaran kisah penuh rasa hangat dan ketulusan.",
+      image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: 2,
+      frameCode: "▶ 02A",
+      dateStamp: "'23 09 20",
+      fullDate: "20 September 2023",
+      title: "Pejuang Mimpi Berhati Lembut",
+      desc: "Melihat tekad dan kerja kerasmu mengejar setiap cita-cita selalu membuatku kagum. Afifah adalah inspirasi terbesarku.",
+      image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: 3,
+      frameCode: "▶ 03A",
+      dateStamp: "'24 01 14",
+      fullDate: "14 Januari 2024",
+      title: "Tawa di Bawah Langit Sore",
+      desc: "Momen sederhana berbincang tanpa batas waktu, berbagi secangkir rasa dan impian besar yang selalu menghangatkan hati.",
+      image: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: 4,
+      frameCode: "▶ 04A",
+      dateStamp: "'24 06 18",
+      fullDate: "18 Juni 2024",
+      title: "Melangkah Melewati Ujian",
+      desc: "Di setiap rintangan yang hadir, kita belajar saling menguatkan. Menemani setiap langkah juangmu adalah hal terindah.",
+      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: 5,
+      frameCode: "▶ 05A",
+      dateStamp: "'24 11 02",
+      fullDate: "02 November 2024",
+      title: "Hari Spesial & Doa Abadi",
+      desc: "Hari istimewa untuk wanita peraih mimpi. Semoga setiap impian dan harapan mekar seindah bunga-bunga musim semi.",
+      image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: 6,
+      frameCode: "▶ 06A",
+      dateStamp: "'25 02 14",
+      fullDate: "14 Februari 2025",
+      title: "Menatap Masa Depan Bersama",
+      desc: "Merajut babak baru yang lebih indah. Terima kasih telah hadir dan menjadi bagian paling berharga dalam hidup ini.",
+      image: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=800&q=80"
+    }
+  ];
+
+  totalFramesIdx.textContent = timelineMoments.length;
+
+  // Render Frame Roll Film ke HTML
+  function renderFilmFrames() {
+    filmTrack.innerHTML = '';
+
+    timelineMoments.forEach((moment, index) => {
+      const frameEl = document.createElement('div');
+      frameEl.className = `film-frame ${index === 0 ? 'active' : ''}`;
+      frameEl.dataset.index = index;
+
+      frameEl.innerHTML = `
+        <div class="frame-photo-wrapper">
+          <img src="${moment.image}" alt="${moment.title}" class="frame-photo" loading="lazy">
+          <!-- TANGGAL DI ATAS KANAN FOTO (FONT ANALOG MASA LALU) -->
+          <div class="frame-date-badge">${moment.dateStamp}</div>
+        </div>
+        <div class="frame-content">
+          <div class="frame-badge-row">
+            <span class="frame-index-tag">${moment.frameCode}</span>
+            <span class="frame-full-date">${moment.fullDate}</span>
+          </div>
+          <h3 class="frame-title">${moment.title}</h3>
+          <p class="frame-desc">${moment.desc}</p>
+        </div>
+      `;
+
+      // Klik foto untuk langsung memilih & memusatkannya
+      frameEl.addEventListener('click', () => {
+        setActiveFrame(index, true);
+      });
+
+      filmTrack.appendChild(frameEl);
+    });
+  }
+
+  renderFilmFrames();
+
+  // Fungsi Mengaktifkan Foto yang Dipilih
+  function setActiveFrame(index, shouldScroll = false) {
+    if (index < 0 || index >= timelineMoments.length) return;
+
+    const frames = filmTrack.querySelectorAll('.film-frame');
+    frames.forEach((f, idx) => {
+      if (idx === index) {
+        f.classList.add('active');
+      } else {
+        f.classList.remove('active');
+      }
+    });
+
+    activeFrameIndex = index;
+    currentFrameIdx.textContent = index + 1;
+
+    // 1. UPDATE LATAR BELAKANG:
+    // Menggunakan foto yang dipilih dengan FILTER COKLAT VINTAGE (diatur lewat CSS vintage-bg-layer)
+    const selectedMoment = timelineMoments[index];
+    vintageBgLayer.style.backgroundImage = `url('${selectedMoment.image}')`;
+
+    // 2. Animasi Scroll ke tengah viewport jika diminta
+    if (shouldScroll && frames[index]) {
+      frames[index].scrollIntoView({
+        behavior: 'smooth',
+        inline: 'center',
+        block: 'nearest'
+      });
+      playCameraShutterSound();
+    }
+  }
+
+  // Set initial background image
+  if (timelineMoments[0]) {
+    vintageBgLayer.style.backgroundImage = `url('${timelineMoments[0].image}')`;
+  }
+
+  // Tombol Geser Roll Film Selanjutnya & Sebelumnya
+  filmPrevBtn.addEventListener('click', () => {
+    if (activeFrameIndex > 0) {
+      setActiveFrame(activeFrameIndex - 1, true);
+    } else {
+      setActiveFrame(timelineMoments.length - 1, true);
+    }
+  });
+
+  filmNextBtn.addEventListener('click', () => {
+    if (activeFrameIndex < timelineMoments.length - 1) {
+      setActiveFrame(activeFrameIndex + 1, true);
+    } else {
+      setActiveFrame(0, true);
+    }
+  });
+
+  // Listener Scroll: Saat pengguna scroll roll film dari kiri ke kanan,
+  // deteksi otomatis frame foto yang berada di tengah dan jadikan aktif!
+  let scrollTimeout = null;
+  filmTrackViewport.addEventListener('scroll', () => {
+    if (scrollTimeout) clearTimeout(scrollTimeout);
+
+    scrollTimeout = setTimeout(() => {
+      const viewportRect = filmTrackViewport.getBoundingClientRect();
+      const viewportCenter = viewportRect.left + viewportRect.width / 2;
+
+      const frames = filmTrack.querySelectorAll('.film-frame');
+      let closestIdx = activeFrameIndex;
+      let minDistance = Infinity;
+
+      frames.forEach((frame, idx) => {
+        const frameRect = frame.getBoundingClientRect();
+        const frameCenter = frameRect.left + frameRect.width / 2;
+        const distance = Math.abs(viewportCenter - frameCenter);
+
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestIdx = idx;
+        }
+      });
+
+      if (closestIdx !== activeFrameIndex) {
+        setActiveFrame(closestIdx, false);
+        playCameraShutterSound();
+      }
+    }, 60);
   });
 
   // ==========================================

@@ -1,0 +1,17 @@
+PETUNJUK MENGGANTI FOTO ROLL FILM:
+======================================
+1. Masukkan file foto kenangan Anda dan Afifah ke dalam folder 'images' ini.
+   Contoh:
+   - foto1.jpg
+   - foto2.jpg
+   - foto3.jpg
+   - foto4.jpg
+   - foto5.jpg
+   - foto6.jpg
+
+2. Buka file 'script.js' lalu sesuaikan bagian 'timelineMoments':
+   Ganti nilai properti 'image' dengan:
+   image: 'images/foto1.jpg',
+   dst.
+
+3. Anda juga dapat mengubah tanggal, judul momen, dan teks deskripsi perjalanan cinta langsung di dalam 'script.js'!
