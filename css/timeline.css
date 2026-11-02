@@ -685,15 +685,11 @@ body.timeline-body {
   opacity: 0.95;
 }
 
-.sprocket-top .sprocket-holes-backlight {
-  top: 11px;
-  transform: none;
-}
-
+.sprocket-top .sprocket-holes-backlight,
 .sprocket-bottom .sprocket-holes-backlight {
-  bottom: 9px;
-  top: auto;
-  transform: none;
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
 }
 
 /* Teks Cap Analog Hitam di Klise Film */
