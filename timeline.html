@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/timeline.css">
 </head>
-<body>
+<body class="timeline-body">
   <!-- Canvas Animasi Kelopak Sakura & Hati -->
   <canvas id="ambient-canvas"></canvas>
 
@@ -32,79 +32,73 @@
     </button>
   </div>
 
-  <main class="page-container">
-    <!-- HALAMAN KHUSUS: ROLL FILM 35MM -->
-    <section class="timeline-screen">
-      <div class="timeline-page-content">
-        <!-- Navigasi Kembali ke main.html -->
-        <div class="timeline-nav-bar">
-          <a href="main.html" class="btn-subtle btn-timeline-back" title="Kembali ke menu Selamat Datang Cintaku">
-            ← Kembali ke Menu Utama
-          </a>
-          <div class="film-mode-badge">🎞️ 35mm Negative Film Roll</div>
+  <main class="timeline-full-container">
+    <!-- Bar Navigasi Atas -->
+    <header class="timeline-top-nav">
+      <a href="main.html" class="btn-subtle btn-timeline-back" title="Kembali ke menu Selamat Datang Cintaku">
+        ← Kembali ke Menu Utama
+      </a>
+      
+      <!-- Tombol Navigasi Geser & Indikator Frame -->
+      <div class="film-action-controls">
+        <button id="film-prev-btn" class="btn-film-nav" aria-label="Geser ke Kiri">
+          <span>‹</span> Foto Sebelumnya
+        </button>
+        <div class="film-indicator-pill">
+          Frame <strong id="current-frame-idx">1</strong> dari <strong id="total-frames-idx">6</strong>
         </div>
-
-        <!-- WADAH UTAMA ROLL FILM 35MM (KLISE ORANGE/AMBER PERSIS SEPERTI GAMBAR) -->
-        <div class="film-container-card">
-          <!-- Tombol Navigasi Geser & Indikator Frame -->
-          <div class="film-action-bar">
-            <button id="film-prev-btn" class="btn-film-nav" aria-label="Geser ke Kiri">
-              <span>‹</span> Foto Sebelumnya
-            </button>
-            <div class="film-indicator-pill">
-              Frame <strong id="current-frame-idx">1</strong> dari <strong id="total-frames-idx">6</strong>
-            </div>
-            <button id="film-next-btn" class="btn-film-nav" aria-label="Geser ke Kanan">
-              Foto Selanjutnya <span>›</span>
-            </button>
-          </div>
-
-          <!-- PITA KLISE FILM 35MM PERSIS SEPERTI GAMBAR -->
-          <div class="film-negative-strip-wrapper">
-            <!-- Pinggiran Atas Klise (Lubang Sprocket & Teks Kodak) -->
-            <div class="negative-sprocket-bar sprocket-top">
-              <div class="sprocket-holes-backlight"></div>
-              <div class="negative-meta-text">
-                <span>KODAK COLOR 200</span>
-                <span>▶ 19</span>
-                <span>• SAFETY FILM •</span>
-                <span>▶ 19A</span>
-                <span>35mm EXP</span>
-                <span>▶ 20</span>
-                <span>KODAK COLOR 200</span>
-              </div>
-            </div>
-
-            <!-- Viewport Klise Film (Bisa di-scroll dari kiri ke kanan) -->
-            <div class="negative-scroll-viewport" id="film-track-viewport">
-              <div class="negative-frames-row" id="film-track">
-                <!-- Frame-frame klise film di-render via js/timeline.js -->
-              </div>
-            </div>
-
-            <!-- Pinggiran Bawah Klise (Lubang Sprocket & Barcode) -->
-            <div class="negative-sprocket-bar sprocket-bottom">
-              <div class="negative-meta-text bottom-meta">
-                <span>||||||| | |||</span>
-                <span>▶ 01A</span>
-                <span>▶ 02A</span>
-                <span>▶ 03A</span>
-                <span>▶ 04A</span>
-                <span>▶ 05A</span>
-                <span>▶ 06A</span>
-                <span>||| || ||||</span>
-              </div>
-              <div class="sprocket-holes-backlight"></div>
-            </div>
-          </div>
-
-          <div class="film-bottom-hint">
-            <span>✨ Geser ke kanan / kiri atau klik salah satu klise foto untuk melihatnya tanpa filter</span>
-          </div>
-        </div>
-
+        <button id="film-next-btn" class="btn-film-nav" aria-label="Geser ke Kanan">
+          Foto Selanjutnya <span>›</span>
+        </button>
       </div>
-    </section>
+    </header>
+
+    <!-- WADAH PITA KLISE FILM 35MM FULL DARI KIRI KE KANAN LAYAR -->
+    <div class="film-fullwidth-strip">
+      <!-- Pinggiran Atas Klise (Lubang Sprocket & Teks Kodak) -->
+      <div class="negative-sprocket-bar sprocket-top">
+        <div class="sprocket-holes-backlight"></div>
+        <div class="negative-meta-text">
+          <span>★ KODAK COLOR 200</span>
+          <span>▶ 19</span>
+          <span>• 35MM SAFETY FILM •</span>
+          <span>▶ 19A</span>
+          <span>EXP-36</span>
+          <span>▶ 20</span>
+          <span>★ KODAK COLOR 200</span>
+          <span>▶ 20A</span>
+          <span>• 35MM SAFETY FILM •</span>
+        </div>
+      </div>
+
+      <!-- Viewport Klise Film (Bisa di-scroll dari kiri ke kanan secara penuh) -->
+      <div class="negative-scroll-viewport" id="film-track-viewport">
+        <div class="negative-frames-row" id="film-track">
+          <!-- Frame-frame klise film di-render via js/timeline.js -->
+        </div>
+      </div>
+
+      <!-- Pinggiran Bawah Klise (Lubang Sprocket & Barcode) -->
+      <div class="negative-sprocket-bar sprocket-bottom">
+        <div class="negative-meta-text bottom-meta">
+          <span>||||||| | |||</span>
+          <span>▶ 01A</span>
+          <span>▶ 02A</span>
+          <span>▶ 03A</span>
+          <span>▶ 04A</span>
+          <span>▶ 05A</span>
+          <span>▶ 06A</span>
+          <span>||| || ||||</span>
+          <span>▶ 07A</span>
+        </div>
+        <div class="sprocket-holes-backlight"></div>
+      </div>
+    </div>
+
+    <!-- Petunjuk Interaksi Bawah -->
+    <div class="film-bottom-hint">
+      <span>✨ Geser ke kanan / kiri atau klik salah satu klise foto untuk melihatnya tanpa filter</span>
+    </div>
   </main>
 
   <!-- Modular Scripts -->
