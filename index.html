@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spesial Untuk Afifah Rismayanti 🌸</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Canvas for floating petals & spark effects -->
+  <canvas id="ambient-canvas"></canvas>
+
+  <!-- Sound Toggle / Ambient Controls -->
+  <div class="audio-control-bar">
+    <button id="sound-btn" class="icon-btn" title="Nyalakan / Matikan Efek Suara">
+      <span class="icon">🔔</span>
+      <span class="btn-text">Sound: On</span>
+    </button>
+  </div>
+
+  <main class="page-container">
+    <!-- SECTION 1: ENVELOPE LANDING VIEW -->
+    <section id="envelope-section" class="screen-view active">
+      <div class="intro-header">
+        <span class="badge-tag">💌 Ada Surat Spesial Untukmu</span>
+        <h1 class="prompt-text">Ketuk hati untuk membuka amplop</h1>
+      </div>
+
+      <div class="envelope-wrapper" id="envelope-container">
+        <div class="envelope-shadow"></div>
+        
+        <div class="envelope" id="envelope">
+          <!-- Back flap (inside of envelope) -->
+          <div class="envelope-inside"></div>
+
+          <!-- Letter Card that slides up -->
+          <div class="letter-card" id="letter-card">
+            <div class="letter-inner">
+              <div class="letter-stamp">
+                <span class="flower-icon">🌸</span>
+              </div>
+              
+              <p class="greeting-subtitle">Selamat Datang,</p>
+              <h2 class="recipient-name">Afifah Rismayanti</h2>
+              
+              <div class="quote-wrapper">
+                <div class="quote-line"></div>
+                <p class="quote-text">“Wanita pejuang peraih mimpi”</p>
+                <div class="quote-line"></div>
+              </div>
+
+              <p class="warm-message">
+                Setiap langkah perjuanganmu begitu berharga. Di hari istimewa ini, ada rangkaian doa, kasih, dan kejutan manis yang dirancang khusus untukmu.
+              </p>
+
+              <!-- Button to go to Main Page -->
+              <button id="open-main-btn" class="btn-romantic">
+                <span>Buka Halaman Utama</span>
+                <span class="btn-arrow">✨</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Left & Right Flaps -->
+          <div class="envelope-flap flap-left"></div>
+          <div class="envelope-flap flap-right"></div>
+          <div class="envelope-flap flap-bottom"></div>
+
+          <!-- Top Foldable Flap -->
+          <div class="envelope-flap flap-top" id="flap-top"></div>
+
+          <!-- Heart Seal Opener Button -->
+          <div class="heart-seal-btn" id="heart-seal" role="button" tabindex="0" aria-label="Buka Amplop">
+            <div class="heart-pulse"></div>
+            <div class="heart-shape">
+              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 28.5C16 28.5 3 20.5 3 11.5C3 6.8 6.8 3 11.5 3C14.2 3 15.6 4.3 16 5C16.4 4.3 17.8 3 20.5 3C25.2 3 29 6.8 29 11.5C29 20.5 16 28.5 16 28.5Z" 
+                      fill="url(#heart-gradient)" 
+                      filter="url(#heart-shadow)"/>
+                <defs>
+                  <linearGradient id="heart-gradient" x1="5" y1="5" x2="27" y2="27" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#ff9ecf"/>
+                    <stop offset="0.5" stop-color="#ff8cc6"/>
+                    <stop offset="1" stop-color="#e85d9e"/>
+                  </linearGradient>
+                  <filter id="heart-shadow" x="0" y="0" width="32" height="34" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#a62c64" flood-opacity="0.35"/>
+                  </filter>
+                </defs>
+              </svg>
+              <span class="heart-caption">Klik Aku 💖</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hint-text" id="envelope-hint">
+        <span>✨ Dibuat dengan segenap cinta & kehangatan</span>
+      </div>
+    </section>
+
+    <!-- SECTION 2: MAIN PAGE (Tujuan setelah klik 'Buka Halaman Utama') -->
+    <section id="main-section" class="screen-view">
+      <div class="main-card">
+        <button id="back-to-envelope-btn" class="btn-subtle">
+          ← Lihat Amplop Kembali
+        </button>
+
+        <div class="main-header">
+          <div class="blossom-badge">🌸 Sweet Celebration 🌸</div>
+          <h1 class="main-title">Ruang Kebahagiaan Untuk Afifah</h1>
+          <p class="main-subtitle">
+            Selamat datang di halaman utama ucapan spesialmu, <strong>Afifah Rismayanti</strong>.
+          </p>
+        </div>
+
+        <div class="announcement-box">
+          <div class="box-icon">🎂 🥂 💕</div>
+          <h3>Gerbang Kejutan Telah Terbuka!</h3>
+          <p>
+            Tampilan amplop pembuka telah siap. Bagian ini adalah pondasi untuk halaman utama ucapan selamat ulang tahun / anniversary berikutnya yang dapat diisi dengan:
+          </p>
+          <ul class="feature-preview-list">
+            <li>✨ <strong>Surat & Doa Mendalam</strong> untuk sang pejuang mimpi</li>
+            <li>📸 <strong>Galeri Foto Kenangan Indah</strong> berbingkai manis</li>
+            <li>⏳ <strong>Hitung Mundur / Timeline Perjalanan</strong> cinta & cita-cita</li>
+            <li>🎵 <strong>Pemutar Musik Favorit</strong> bernuansa romantis</li>
+          </ul>
+        </div>
+
+        <div class="palette-showcase">
+          <p class="palette-title">🎨 Paduan Palet Warna yang Digunakan:</p>
+          <div class="palette-swatches">
+            <div class="swatch" style="background: #ff8cc6;"><span>#ff8cc6<br>Love Pink</span></div>
+            <div class="swatch" style="background: #e85d9e; color: #fff;"><span>#e85d9e<br>Deep Rose</span></div>
+            <div class="swatch" style="background: #ffc2df;"><span>#ffc2df<br>Soft Blossom</span></div>
+            <div class="swatch" style="background: #fff0f6;"><span>#fff0f6<br>Blush Cloud</span></div>
+            <div class="swatch" style="background: #ffd166; color: #4a2839;"><span>#ffd166<br>Warm Gold</span></div>
+            <div class="swatch" style="background: #4a2839; color: #fff;"><span>#4a2839<br>Plum Velvet</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

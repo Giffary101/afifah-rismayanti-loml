@@ -1,0 +1,813 @@
+/* =========================================================
+   PALET WARNA & VARIABEL TEMA
+   ========================================================= */
+:root {
+  /* Warna Utama Permintaan: #ff8cc6 (Love Pink) */
+  --love-pink: #ff8cc6;
+  --love-pink-light: #ffaed6;
+  --love-pink-deep: #e85d9e;
+  --love-pink-darker: #c93b7e;
+
+  /* Paduan Warna Harmonik (Blossom & Luxury Warmth) */
+  --blossom-soft: #ffeaf3;
+  --blossom-card: #fff6fa;
+  --blossom-white: #ffffff;
+  --gold-accent: #ffd166;
+  --gold-glow: rgba(255, 209, 102, 0.45);
+
+  /* Tipografi & Kontras */
+  --text-primary: #4a2839;
+  --text-secondary: #7e4d67;
+  --text-muted: #a67990;
+
+  /* Bayangan & Efek */
+  --shadow-soft: 0 10px 30px rgba(232, 93, 158, 0.15);
+  --shadow-elevated: 0 20px 50px rgba(185, 50, 114, 0.22);
+  --shadow-heart: 0 8px 24px rgba(232, 93, 158, 0.45);
+  
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+  
+  --transition-smooth: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-normal: all 0.35s ease;
+}
+
+/* =========================================================
+   RESET & DASAR
+   ========================================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 20%, #fff7fb 0%, #ffe6f1 45%, #ffd4e7 100%);
+  color: var(--text-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  position: relative;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Canvas ambient untuk kelopak bunga & partikel hati melayang */
+#ambient-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Tombol Kontrol Suara (Pojok Kanan Atas) */
+.audio-control-bar {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+.icon-btn {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 140, 198, 0.4);
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: var(--transition-normal);
+}
+
+.icon-btn:hover {
+  transform: translateY(-2px);
+  background: #ffffff;
+  border-color: var(--love-pink);
+  color: var(--love-pink-deep);
+  box-shadow: 0 8px 20px rgba(255, 140, 198, 0.35);
+}
+
+/* =========================================================
+   CONTAINER TAMPILAN
+   ========================================================= */
+.page-container {
+  width: 100%;
+  max-width: 900px;
+  padding: 24px 16px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+
+.screen-view {
+  display: none;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.screen-view.active {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================================================
+   TAMPILAN 1: INTRO & AMPLOP
+   ========================================================= */
+.intro-header {
+  text-align: center;
+  margin-bottom: 24px;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.badge-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 234, 243, 0.9));
+  border: 1px solid rgba(255, 140, 198, 0.5);
+  color: var(--love-pink-deep);
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 6px 18px;
+  border-radius: var(--radius-full);
+  margin-bottom: 12px;
+  box-shadow: 0 4px 14px rgba(232, 93, 158, 0.15);
+  letter-spacing: 0.5px;
+}
+
+.prompt-text {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-shadow: 0 2px 8px rgba(255, 255, 255, 0.8);
+}
+
+/* Wrapper Amplop */
+.envelope-wrapper {
+  position: relative;
+  width: 360px;
+  height: 250px;
+  margin: 30px auto;
+  perspective: 1200px;
+}
+
+.envelope-shadow {
+  position: absolute;
+  bottom: -20px;
+  left: 5%;
+  width: 90%;
+  height: 25px;
+  background: radial-gradient(ellipse at center, rgba(166, 44, 100, 0.35) 0%, rgba(166, 44, 100, 0) 70%);
+  border-radius: 50%;
+  filter: blur(4px);
+  transition: transform 0.6s ease;
+}
+
+.envelope-wrapper.open .envelope-shadow {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+/* Kotak Utama Amplop */
+.envelope {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  box-shadow: 0 15px 40px rgba(185, 50, 114, 0.22);
+}
+
+/* Latar Belakang Dalam Amplop */
+.envelope-inside {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #ffc9e2 0%, #ffa5ce 100%);
+  border-radius: 12px;
+  z-index: 1;
+}
+
+/* =========================================================
+   SURAT / ISI DI DALAM AMPLOP
+   ========================================================= */
+.letter-card {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  width: calc(100% - 28px);
+  height: 225px;
+  max-height: 225px;
+  overflow: hidden;
+  background: linear-gradient(145deg, #ffffff 0%, #fff7fb 100%);
+  border-radius: 14px;
+  padding: 20px 18px;
+  box-shadow: 0 4px 15px rgba(185, 50, 114, 0.12);
+  border: 1px solid rgba(255, 140, 198, 0.35);
+  z-index: 2;
+  transition: transform 0.85s cubic-bezier(0.34, 1.35, 0.64, 1) 0.1s,
+              max-height 0.6s ease 0.25s,
+              height 0.6s ease 0.25s,
+              box-shadow 0.6s ease,
+              z-index 0.01s ease 0.35s;
+  transform: translateY(0);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+}
+
+/* Saat amplop terbuka: Surat bergeser keluar, memanjang dan membesar */
+.envelope-wrapper.open .letter-card {
+  transform: translateY(-165px) scale(1.04);
+  height: auto;
+  max-height: 480px;
+  overflow: visible;
+  box-shadow: 0 25px 60px rgba(185, 50, 114, 0.35), 0 0 0 1px rgba(255, 140, 198, 0.3);
+  z-index: 8;
+  cursor: default;
+  transition: transform 0.9s cubic-bezier(0.34, 1.25, 0.64, 1) 0.38s,
+              max-height 0.8s ease 0.38s,
+              height 0.8s ease 0.38s,
+              box-shadow 0.6s ease 0.38s,
+              z-index 0.01s ease 0.38s;
+}
+
+.letter-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.letter-stamp {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #fff0f6, #ffe0ee);
+  border: 1px dashed var(--love-pink);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px rgba(255, 140, 198, 0.2);
+}
+
+.greeting-subtitle {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.recipient-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--love-pink-deep);
+  letter-spacing: -0.3px;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 6px rgba(232, 93, 158, 0.15);
+}
+
+.quote-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.quote-line {
+  height: 1px;
+  flex: 1;
+  max-width: 35px;
+  background: linear-gradient(90deg, transparent, var(--love-pink));
+}
+
+.quote-wrapper .quote-line:last-child {
+  background: linear-gradient(90deg, var(--love-pink), transparent);
+}
+
+.quote-text {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.35;
+}
+
+.warm-message {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: 18px;
+  padding: 0 4px;
+}
+
+/* =========================================================
+   TOMBOL ROMANTIS KE HALAMAN UTAMA
+   ========================================================= */
+.btn-romantic {
+  background: linear-gradient(135deg, #ff8cc6 0%, #e85d9e 100%);
+  color: #ffffff;
+  border: none;
+  outline: none;
+  padding: 12px 26px;
+  border-radius: var(--radius-full);
+  font-size: 0.92rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(232, 93, 158, 0.45);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-romantic::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 70%
+  );
+  transform: rotate(25deg);
+  animation: shineGleam 3s infinite linear;
+}
+
+@keyframes shineGleam {
+  0% { transform: translateX(-100%) rotate(25deg); }
+  100% { transform: translateX(100%) rotate(25deg); }
+}
+
+.btn-romantic:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 12px 28px rgba(232, 93, 158, 0.6);
+  background: linear-gradient(135deg, #ff7dbf 0%, #dc4b90 100%);
+}
+
+.btn-romantic:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.btn-arrow {
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.btn-romantic:hover .btn-arrow {
+  transform: scale(1.2) rotate(15deg);
+}
+
+/* =========================================================
+   LIPATAN AMPLOP (FLAPS)
+   ========================================================= */
+.envelope-flap {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+/* Lipatan Kiri */
+.flap-left {
+  top: 0;
+  left: 0;
+  border-width: 125px 0 125px 180px;
+  border-color: transparent transparent transparent #ffd0e5;
+  z-index: 3;
+  filter: drop-shadow(2px 0 3px rgba(185, 50, 114, 0.08));
+}
+
+/* Lipatan Kanan */
+.flap-right {
+  top: 0;
+  right: 0;
+  border-width: 125px 180px 125px 0;
+  border-color: transparent #ffc7df transparent transparent;
+  z-index: 3;
+  filter: drop-shadow(-2px 0 3px rgba(185, 50, 114, 0.08));
+}
+
+/* Lipatan Bawah */
+.flap-bottom {
+  bottom: 0;
+  left: 0;
+  border-width: 0 180px 135px 180px;
+  border-color: transparent transparent #ffbdda transparent;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  z-index: 4;
+  filter: drop-shadow(0 -3px 5px rgba(185, 50, 114, 0.1));
+}
+
+/* Lipatan Atas (Flap yang membuka) */
+.flap-top {
+  top: 0;
+  left: 0;
+  border-width: 140px 180px 0 180px;
+  border-color: #ff9ecf transparent transparent transparent;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  z-index: 5;
+  transform-origin: top center;
+  transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1),
+              z-index 0.3s ease 0.35s;
+  filter: drop-shadow(0 4px 6px rgba(185, 50, 114, 0.15));
+}
+
+/* Status Saat Amplop Terbuka */
+.envelope-wrapper.open .flap-top {
+  transform: rotateX(180deg);
+  z-index: 1; /* Pindah ke belakang saat sudah terbuka penuh */
+  transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1),
+              z-index 0.1s ease 0.35s;
+}
+
+/* =========================================================
+   SEGEL HATI MERAH MUDA (HEART SEAL BUTTON)
+   ========================================================= */
+.heart-seal-btn {
+  position: absolute;
+  top: 130px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72px;
+  height: 72px;
+  cursor: pointer;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+  outline: none;
+}
+
+.heart-shape {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.heart-shape svg {
+  width: 60px;
+  height: 60px;
+  filter: drop-shadow(0 6px 12px rgba(232, 93, 158, 0.4));
+  transition: transform 0.25s ease;
+}
+
+.heart-caption {
+  position: absolute;
+  bottom: -18px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--love-pink-deep);
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 2px 8px rgba(185, 50, 114, 0.18);
+  pointer-events: none;
+  animation: bounceHint 2s infinite ease-in-out;
+}
+
+@keyframes bounceHint {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* Efek Denyut Kasih Sayang (Pulse) */
+.heart-pulse {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 140, 198, 0.4);
+  animation: pulseBeat 1.8s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes pulseBeat {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.9;
+  }
+  60% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.heart-seal-btn:hover {
+  transform: translate(-50%, -50%) scale(1.12);
+}
+
+.heart-seal-btn:hover svg {
+  transform: scale(1.05);
+}
+
+/* Ketika amplop terbuka: Hati memudar atau meluncur ke bawah */
+.envelope-wrapper.open .heart-seal-btn {
+  transform: translate(-50%, 40px) scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Hint Text Bawah */
+.hint-text {
+  margin-top: 28px;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  text-align: center;
+  font-weight: 500;
+}
+
+/* =========================================================
+   TAMPILAN 2: HALAMAN UTAMA (MAIN SECTION)
+   ========================================================= */
+.main-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 140, 198, 0.35);
+  border-radius: var(--radius-lg);
+  padding: 40px 32px;
+  box-shadow: var(--shadow-elevated);
+  max-width: 620px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  animation: zoomInCard 0.6s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+@keyframes zoomInCard {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.btn-subtle {
+  background: transparent;
+  border: 1px solid rgba(255, 140, 198, 0.4);
+  color: var(--love-pink-deep);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 24px;
+  transition: var(--transition-normal);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-subtle:hover {
+  background: rgba(255, 140, 198, 0.1);
+  border-color: var(--love-pink);
+  transform: translateX(-3px);
+}
+
+.blossom-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #fff0f6, #ffe0ee);
+  color: var(--love-pink-darker);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.main-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.main-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.main-subtitle strong {
+  color: var(--love-pink-deep);
+}
+
+.announcement-box {
+  background: linear-gradient(135deg, #fff9fb, #fff0f6);
+  border: 1px dashed rgba(255, 140, 198, 0.5);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  margin-bottom: 28px;
+  text-align: left;
+}
+
+.box-icon {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.announcement-box h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--love-pink-deep);
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.announcement-box p {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.feature-preview-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feature-preview-list li {
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 2px 6px rgba(255, 140, 198, 0.08);
+}
+
+/* Palette Showcase */
+.palette-showcase {
+  border-top: 1px solid rgba(255, 140, 198, 0.2);
+  padding-top: 20px;
+}
+
+.palette-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.palette-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.swatch {
+  width: 82px;
+  height: 54px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #4a2839;
+  text-align: center;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+}
+
+.swatch:hover {
+  transform: translateY(-3px) scale(1.05);
+}
+
+/* =========================================================
+   ANIMASI UMUM
+   ========================================================= */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   RESPONSIVE DESIGN (MOBILE FRIENDLY)
+   ========================================================= */
+@media (max-width: 480px) {
+  .envelope-wrapper {
+    width: 320px;
+    height: 225px;
+  }
+
+  .flap-left {
+    border-width: 112px 0 112px 160px;
+  }
+
+  .flap-right {
+    border-width: 112px 160px 112px 0;
+  }
+
+  .flap-bottom {
+    border-width: 0 160px 125px 160px;
+  }
+
+  .flap-top {
+    border-width: 128px 160px 0 160px;
+  }
+
+  .envelope-wrapper.open .letter-card {
+    transform: translateY(-145px) scale(1.02);
+    padding: 16px 14px;
+  }
+
+  .recipient-name {
+    font-size: 1.35rem;
+  }
+
+  .quote-text {
+    font-size: 0.88rem;
+  }
+
+  .prompt-text {
+    font-size: 1.35rem;
+  }
+
+  .main-card {
+    padding: 28px 18px;
+  }
+
+  .main-title {
+    font-size: 1.5rem;
+  }
+
+  .swatch {
+    width: 70px;
+    height: 48px;
+    font-size: 0.6rem;
+  }
+}
