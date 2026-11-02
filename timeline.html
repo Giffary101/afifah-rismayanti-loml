@@ -12,9 +12,67 @@
   
   <!-- Modular CSS -->
   <link rel="stylesheet" href="css/global.css?v=2.0">
-  <link rel="stylesheet" href="css/timeline.css?v=2.0">
+  <link rel="stylesheet" href="css/timeline.css?v=3.0">
 </head>
 <body class="timeline-body">
+  <!-- ========================================================
+       INTRO SCREEN: COUNTDOWN VINTAGE & ANIMASI LAMPU MENYALA
+       ======================================================== -->
+  <div id="intro-overlay" class="intro-overlay" aria-label="Intro Animasi Lampu dan Countdown">
+    <!-- Tombol Lewati Intro -->
+    <button id="skip-intro-btn" class="skip-intro-btn" title="Lewati Animasi">
+      Lewati ➔
+    </button>
+
+    <div class="intro-content">
+      <!-- Lampu Bohlam Edison Vintage Gantung -->
+      <div class="vintage-lamp-assembly" id="vintage-lamp">
+        <div class="lamp-wire"></div>
+        <div class="lamp-socket-cap"></div>
+        <div class="lamp-socket">
+          <div class="socket-screw-stripes"></div>
+          <div class="socket-switch-knob"></div>
+        </div>
+        
+        <div class="lamp-bulb-glass">
+          <div class="bulb-reflection-curve"></div>
+          <!-- Filamen Pijar Tungsten (Kuning Tembaga / Emas Menyala) -->
+          <div class="bulb-filament" id="bulb-filament">
+            <svg viewBox="0 0 44 60" class="filament-svg">
+              <path class="lead-wire left" d="M16 0 L16 22" />
+              <path class="lead-wire right" d="M28 0 L28 22" />
+              <path class="tungsten-filament-coil" d="M16 22 Q12 34 17 44 Q22 52 27 44 Q32 34 28 22" />
+            </svg>
+          </div>
+          <!-- Inti Cahaya Pijar Hangat -->
+          <div class="bulb-inner-glow" id="bulb-inner-glow"></div>
+        </div>
+
+        <!-- Radiasi Aura Cahaya Emas & Pink Hangat saat Menyala -->
+        <div class="bulb-radial-halo" id="bulb-radial-halo"></div>
+      </div>
+
+      <!-- Tampilan Dial Countdown Vintage -->
+      <div class="intro-countdown-panel" id="countdown-panel">
+        <div class="countdown-film-dial">
+          <div class="dial-film-crosshair horizontal"></div>
+          <div class="dial-film-crosshair vertical"></div>
+          <div class="dial-number-wrapper">
+            <span class="countdown-number" id="countdown-number">3</span>
+          </div>
+        </div>
+
+        <div class="countdown-narrative">
+          <h2 class="countdown-title" id="countdown-title">Mempersiapkan Kenangan</h2>
+          <p class="countdown-subtitle" id="countdown-subtitle">Menghitung mundur setiap detik berharga...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kilatan Sinar Transisi (Bloom Flash) saat Lampu Menyala Terang Menuju Timeline -->
+    <div class="intro-bloom-flash" id="intro-bloom-flash"></div>
+  </div>
+
   <!-- Canvas Animasi Kelopak Sakura & Hati -->
   <canvas id="ambient-canvas"></canvas>
 
@@ -24,8 +82,26 @@
     <div class="timeline-bg-overlay"></div>
   </div>
 
-  <!-- Kontrol Suara -->
+  <!-- Tombol Panah Kembali ke Menu Utama (Pojok Kiri Atas Absolute) -->
+  <header class="timeline-top-nav">
+    <a href="main.html" class="btn-timeline-back" title="Kembali ke Menu Utama" aria-label="Kembali ke Menu Utama">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+    </a>
+  </header>
+
+  <!-- Kontrol Suara & Tombol Aksi (Pojok Kanan Atas) -->
   <div class="audio-control-bar">
+    <button id="roll-film-btn" class="icon-btn" title="Gelindingkan Kepala Roll dari Kanan ke Kiri" style="margin-right: 8px;">
+      <span class="icon">🎞️</span>
+      <span class="btn-text">Roll 3D</span>
+    </button>
+    <button id="replay-lamp-btn" class="icon-btn" title="Nyalakan Kembali Animasi Lampu & Countdown" style="margin-right: 8px;">
+      <span class="icon">💡</span>
+      <span class="btn-text">Lampu</span>
+    </button>
     <button id="sound-btn" class="icon-btn" title="Nyalakan / Matikan Efek Suara">
       <span class="icon">🔔</span>
       <span class="btn-text">Sound: On</span>
@@ -33,67 +109,81 @@
   </div>
 
   <main class="timeline-full-container">
-    <!-- Bar Navigasi Atas: Tombol Panah Kembali ke Menu Utama -->
-    <header class="timeline-top-nav">
-      <a href="main.html" class="btn-timeline-back" title="Kembali ke Menu Utama" aria-label="Kembali ke Menu Utama">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="19" y1="12" x2="5" y2="12"></line>
-          <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
-      </a>
-    </header>
+    <!-- PANGGUNG WADAH UTAMA ROLL FILM -->
+    <div class="film-container-stage" id="film-stage">
+      <!-- PITA KLISE FILM (Latar Belakang Roll: Klise, Sprocket, Foto-Foto) -->
+      <div class="film-fullwidth-strip" id="film-strip-wrapper">
+        <!-- Pinggiran Atas Klise (Lubang Sprocket & Teks Kodak) -->
+        <div class="negative-sprocket-bar sprocket-top">
+          <div class="sprocket-holes-backlight"></div>
+          <div class="negative-meta-text">
+            <span>★ KODAK COLOR 200</span>
+            <span>▶ 19</span>
+            <span>• 35MM SAFETY FILM •</span>
+            <span>▶ 19A</span>
+            <span>EXP-36</span>
+            <span>▶ 20</span>
+            <span>★ KODAK COLOR 200</span>
+            <span>▶ 20A</span>
+            <span>• 35MM SAFETY FILM •</span>
+          </div>
+        </div>
 
-    <!-- WADAH PITA KLISE FILM 35MM FULL DARI KIRI KE KANAN LAYAR -->
-    <div class="film-fullwidth-strip">
-      <!-- Pinggiran Atas Klise (Lubang Sprocket & Teks Kodak) -->
-      <div class="negative-sprocket-bar sprocket-top">
-        <div class="sprocket-holes-backlight"></div>
-        <div class="negative-meta-text">
-          <span>★ KODAK COLOR 200</span>
-          <span>▶ 19</span>
-          <span>• 35MM SAFETY FILM •</span>
-          <span>▶ 19A</span>
-          <span>EXP-36</span>
-          <span>▶ 20</span>
-          <span>★ KODAK COLOR 200</span>
-          <span>▶ 20A</span>
-          <span>• 35MM SAFETY FILM •</span>
+        <!-- Viewport Klise Film (Foto-Foto Kenangan) -->
+        <div class="negative-scroll-viewport" id="film-track-viewport">
+          <div class="negative-frames-row" id="film-track">
+            <!-- Frame-frame klise film di-render via js/timeline.js -->
+          </div>
+        </div>
+
+        <!-- Pinggiran Bawah Klise (Lubang Sprocket & Barcode) -->
+        <div class="negative-sprocket-bar sprocket-bottom">
+          <div class="negative-meta-text bottom-meta">
+            <span>||||||| | |||</span>
+            <span>▶ 01A</span>
+            <span>▶ 02A</span>
+            <span>▶ 03A</span>
+            <span>▶ 04A</span>
+            <span>▶ 05A</span>
+            <span>▶ 06A</span>
+            <span>||| || ||||</span>
+            <span>▶ 07A</span>
+          </div>
+          <div class="sprocket-holes-backlight"></div>
         </div>
       </div>
 
-      <!-- Viewport Klise Film (Bisa di-scroll dari kiri ke kanan secara penuh) -->
-      <div class="negative-scroll-viewport" id="film-track-viewport">
-        <div class="negative-frames-row" id="film-track">
-          <!-- Frame-frame klise film di-render via js/timeline.js -->
+      <!-- KEPALA ROLL YANG ADA DI GAMBAR (SILINDER KODAK 35MM 3D BERPUTAR MENGGELINDING) -->
+      <div class="film-end-spool" id="film-end-spool" title="Kepala Roll Film Kodak 35mm">
+        <div class="spool-top-cap">
+          <div class="spool-core-pin"></div>
         </div>
-      </div>
-
-      <!-- Pinggiran Bawah Klise (Lubang Sprocket & Barcode) -->
-      <div class="negative-sprocket-bar sprocket-bottom">
-        <div class="negative-meta-text bottom-meta">
-          <span>||||||| | |||</span>
-          <span>▶ 01A</span>
-          <span>▶ 02A</span>
-          <span>▶ 03A</span>
-          <span>▶ 04A</span>
-          <span>▶ 05A</span>
-          <span>▶ 06A</span>
-          <span>||| || ||||</span>
-          <span>▶ 07A</span>
+        <div class="spool-body" id="spool-body">
+          <div class="spool-cylinder-sheen"></div>
+          <div class="spool-brand-badge" id="spool-brand-badge">
+            <span class="brand-name">KODAK</span>
+            <span class="film-type">35mm</span>
+          </div>
+          <div class="spool-film-slit"></div>
         </div>
-        <div class="sprocket-holes-backlight"></div>
+        <div class="spool-bottom-cap">
+          <div class="spool-core-pin"></div>
+        </div>
       </div>
     </div>
 
     <!-- Petunjuk Interaksi Bawah -->
     <div class="film-bottom-hint">
       <span>✨ Geser ke kanan / kiri atau klik salah satu klise foto untuk melihatnya tanpa filter</span>
+      <button id="trigger-roll-btn" class="btn-inline-roll" title="Gelindingkan Kepala Roll dari Kanan ke Kiri">
+        <span>🎞️ Putar Gelindingkan Kepala Roll</span>
+      </button>
     </div>
   </main>
 
   <!-- Modular Scripts -->
-  <script src="js/audio.js?v=2.0"></script>
+  <script src="js/audio.js?v=3.0"></script>
   <script src="js/ambient.js?v=2.0"></script>
-  <script src="js/timeline.js?v=2.0"></script>
+  <script src="js/timeline.js?v=3.0"></script>
 </body>
 </html>

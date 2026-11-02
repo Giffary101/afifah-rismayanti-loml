@@ -3,6 +3,464 @@
    MEMANJANG PENUH DARI KIRI KE KANAN LAYAR (100VW)
    ========================================================= */
 
+
+/* =========================================================
+   INTRO SCREEN: HITUNG MUNDUR & ANIMASI LAMPU MENYALA VINTAGE
+   ========================================================= */
+.intro-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at 50% 35%, #1d0912 0%, #0d0407 60%, #050103 100%);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), visibility 1s;
+}
+
+.intro-overlay.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Tombol Lewati Intro */
+.skip-intro-btn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 1010;
+  background: rgba(26, 10, 4, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffd166;
+  border: 1px solid rgba(255, 209, 102, 0.4);
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.skip-intro-btn:hover {
+  background: linear-gradient(135deg, #c46227, #8e3d12);
+  border-color: #ffd166;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(196, 98, 39, 0.6);
+}
+
+.intro-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1005;
+  margin-top: -30px;
+}
+
+/* ---------------------------------------------------------
+   BOHLAM LAMPU EDISON VINTAGE GANTUNG
+   --------------------------------------------------------- */
+.vintage-lamp-assembly {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+  transform-origin: 50% 0;
+  animation: gentleLampSway 6s ease-in-out infinite;
+}
+
+@keyframes gentleLampSway {
+  0%, 100% {
+    transform: rotate(-0.75deg);
+  }
+  50% {
+    transform: rotate(0.75deg);
+  }
+}
+
+/* Kabel Gantung */
+.lamp-wire {
+  width: 3px;
+  height: 120px;
+  background: linear-gradient(90deg, #120a05, #351c0f, #0d0703);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+}
+
+/* Tutup Dudukan Logam */
+.lamp-socket-cap {
+  width: 22px;
+  height: 10px;
+  background: linear-gradient(180deg, #6e431f, #4a2b13);
+  border-radius: 4px 4px 0 0;
+  border: 1px solid rgba(216, 112, 44, 0.4);
+}
+
+/* Fitting Kuningan Antik */
+.lamp-socket {
+  width: 32px;
+  height: 38px;
+  background: linear-gradient(90deg, #5a3517 0%, #8b572a 35%, #ffd166 50%, #8b572a 65%, #42250d 100%);
+  border-radius: 3px;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.socket-screw-stripes {
+  position: absolute;
+  top: 10px;
+  left: 2px;
+  right: 2px;
+  height: 14px;
+  background: repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0px, rgba(0, 0, 0, 0.3) 2px, transparent 2px, transparent 4px);
+}
+
+.socket-switch-knob {
+  position: absolute;
+  right: -8px;
+  top: 12px;
+  width: 8px;
+  height: 12px;
+  background: #3a200e;
+  border-radius: 2px;
+  border: 1px solid #7d4d23;
+}
+
+/* Kaca Bohlam Edison Klasik */
+.lamp-bulb-glass {
+  position: relative;
+  width: 90px;
+  height: 120px;
+  margin-top: -2px;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.12) 0%, rgba(255, 200, 120, 0.05) 50%, rgba(20, 10, 5, 0.6) 100%);
+  border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
+  border: 1.5px solid rgba(255, 215, 120, 0.25);
+  box-shadow: inset 0 0 15px rgba(255, 180, 80, 0.1), 0 8px 25px rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+/* Refleksi Lengkung Kaca */
+.bulb-reflection-curve {
+  position: absolute;
+  top: 16px;
+  left: 14px;
+  width: 22px;
+  height: 50px;
+  border-left: 2.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+
+/* Filamen Tungsten */
+.bulb-filament {
+  position: absolute;
+  top: 12px;
+  width: 44px;
+  height: 60px;
+  transition: filter 0.2s ease, opacity 0.2s ease;
+}
+
+.filament-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.lead-wire {
+  stroke: #5a371c;
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.tungsten-filament-coil {
+  stroke: #663617;
+  stroke-width: 1.8;
+  fill: none;
+  stroke-linecap: round;
+  transition: stroke 0.25s ease, filter 0.25s ease;
+}
+
+/* Inti Cahaya Pijar di dalam Kaca */
+.bulb-inner-glow {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 240, 180, 0.95) 0%, rgba(255, 170, 60, 0.8) 40%, rgba(255, 110, 160, 0.3) 70%, transparent 100%);
+  opacity: 0;
+  transform: scale(0.3);
+  transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+/* Radiasi Aura Cahaya Emas & Pink Hangat */
+.bulb-radial-halo {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.3);
+  width: 580px;
+  height: 580px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 230, 150, 0.85) 0%, rgba(255, 160, 80, 0.5) 30%, rgba(255, 105, 180, 0.3) 55%, rgba(196, 98, 39, 0.12) 75%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+  pointer-events: none;
+  z-index: -1;
+  mix-blend-mode: screen;
+}
+
+/* =========================================================
+   STATUS SAAT LAMPU MENYALA (ACTIVE / ON)
+   ========================================================= */
+.vintage-lamp-assembly.lamp-on .lamp-bulb-glass {
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 240, 0.85) 0%, rgba(255, 200, 100, 0.6) 45%, rgba(180, 70, 20, 0.4) 100%);
+  border-color: rgba(255, 245, 180, 0.9);
+  box-shadow: inset 0 0 25px rgba(255, 240, 180, 0.9), 0 0 45px rgba(255, 180, 60, 0.9), 0 0 80px rgba(255, 120, 180, 0.5);
+}
+
+.vintage-lamp-assembly.lamp-on .tungsten-filament-coil {
+  stroke: #ffffff;
+  filter: drop-shadow(0 0 6px #ffe599) drop-shadow(0 0 14px #ff9f1c) drop-shadow(0 0 24px #ff3b88);
+  animation: filamentFlickerPulse 2.5s infinite alternate ease-in-out;
+}
+
+.vintage-lamp-assembly.lamp-on .lead-wire {
+  stroke: #ffd166;
+}
+
+.vintage-lamp-assembly.lamp-on .bulb-inner-glow {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.vintage-lamp-assembly.lamp-on .bulb-radial-halo {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.4);
+}
+
+/* Animasi Flicker Filamen */
+@keyframes filamentFlickerPulse {
+  0% {
+    filter: drop-shadow(0 0 6px #ffe599) drop-shadow(0 0 14px #ff9f1c) drop-shadow(0 0 24px #ff3b88);
+  }
+  50% {
+    filter: drop-shadow(0 0 8px #ffffff) drop-shadow(0 0 18px #ffb703) drop-shadow(0 0 30px #ff3b88);
+  }
+  100% {
+    filter: drop-shadow(0 0 5px #ffe599) drop-shadow(0 0 12px #ff9f1c) drop-shadow(0 0 22px #ff3b88);
+  }
+}
+
+/* Kedipan Menyalakan Lampu (Filament Ignite) */
+.vintage-lamp-assembly.igniting .tungsten-filament-coil {
+  animation: igniteFlicker 0.45s forwards;
+}
+
+@keyframes igniteFlicker {
+  0% { opacity: 0.2; stroke: #8b4513; }
+  20% { opacity: 0.9; stroke: #ffd166; filter: drop-shadow(0 0 10px #ffd166); }
+  35% { opacity: 0.15; stroke: #663617; filter: none; }
+  55% { opacity: 1; stroke: #ffffff; filter: drop-shadow(0 0 18px #ffb347); }
+  70% { opacity: 0.4; stroke: #ff9f1c; filter: drop-shadow(0 0 5px #ff9f1c); }
+  85% { opacity: 1; stroke: #ffffff; filter: drop-shadow(0 0 22px #ffd166); }
+  100% { opacity: 1; stroke: #ffffff; filter: drop-shadow(0 0 26px #ffe599) drop-shadow(0 0 40px #ff7b00); }
+}
+
+/* ---------------------------------------------------------
+   COUNTDOWN PANEL DIAL VINTAGE
+   --------------------------------------------------------- */
+.intro-countdown-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
+}
+
+/* Dial Retro Film Countdown */
+.countdown-film-dial {
+  position: relative;
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  border: 2px dashed rgba(255, 209, 102, 0.45);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7), inset 0 0 15px rgba(216, 112, 44, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(20, 8, 12, 0.75);
+}
+
+.dial-film-crosshair {
+  position: absolute;
+  background: rgba(255, 209, 102, 0.3);
+}
+
+.dial-film-crosshair.horizontal {
+  top: 50%;
+  left: 6px;
+  right: 6px;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+.dial-film-crosshair.vertical {
+  left: 50%;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  transform: translateX(-50%);
+}
+
+.dial-number-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(40, 16, 25, 0.9) 0%, rgba(15, 5, 10, 0.95) 100%);
+  border: 1.5px solid rgba(255, 209, 102, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.countdown-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #ffd166;
+  text-shadow: 0 0 16px rgba(255, 209, 102, 0.8), 0 2px 8px rgba(0, 0, 0, 0.9);
+  line-height: 1;
+  display: inline-block;
+  transform-origin: center;
+}
+
+/* Animasi Detak Angka Countdown */
+.countdown-number.beat {
+  animation: numberBeat 0.75s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes numberBeat {
+  0% {
+    transform: scale(0.65);
+    opacity: 0;
+  }
+  40% {
+    transform: scale(1.18);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(0.96);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.countdown-narrative {
+  max-width: 320px;
+}
+
+.countdown-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.countdown-subtitle {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.9rem;
+  color: #ffd166;
+  margin: 0;
+  opacity: 0.9;
+  font-weight: 500;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+}
+
+/* Kilatan Transisi (Bloom Flash) */
+.intro-bloom-flash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at 50% 35%, #fffdf0 0%, #ffd166 35%, #ff8cc6 70%, transparent 100%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1008;
+  mix-blend-mode: screen;
+  transition: opacity 0.6s ease-out;
+}
+
+.intro-bloom-flash.active {
+  opacity: 0.92;
+}
+
+/* Mobile Media Query for Intro */
+@media (max-width: 480px) {
+  .vintage-lamp-assembly {
+    margin-bottom: 20px;
+  }
+
+  .lamp-wire {
+    height: 70px;
+  }
+
+  .lamp-bulb-glass {
+    width: 76px;
+    height: 104px;
+  }
+
+  .countdown-film-dial {
+    width: 88px;
+    height: 88px;
+  }
+
+  .dial-number-wrapper {
+    width: 68px;
+    height: 68px;
+  }
+
+  .countdown-number {
+    font-size: 2.2rem;
+  }
+
+  .countdown-title {
+    font-size: 1.1rem;
+  }
+
+  .countdown-subtitle {
+    font-size: 0.82rem;
+  }
+
+  .skip-intro-btn {
+    top: 14px;
+    right: 14px;
+    padding: 6px 14px;
+    font-size: 0.78rem;
+  }
+}
+
 body.timeline-body {
   margin: 0;
   padding: 0;
@@ -80,15 +538,17 @@ body.timeline-body {
   }
 }
 
-/* Bar Navigasi Atas */
+/* Bar Navigasi Atas (Pojok Kiri Atas Absolute) */
 .timeline-top-nav {
-  width: 100%;
-  max-width: 100vw;
-  padding: 0 32px;
-  margin-bottom: 22px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
   display: flex;
-  justify-content: flex-start;
   align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  margin: 0;
 }
 
 /* Tombol Panah Kembali ke Menu Utama (Sesuai Tema Klise Film Oranye-Amber & Vintage Gold) */
@@ -264,9 +724,9 @@ body.timeline-body {
   overflow-y: hidden;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
-  /* Padding kalkulasi agar frame horizontal berada tepat di tengah layar */
-  padding: 10px calc(50vw - 195px);
+  scroll-snap-type: none; /* Dikelola secara presisi oleh navigasi frame */
+  /* Foto 1 langsung berada di paling kiri (tepat di samping tabung roll 76px) */
+  padding: 10px 92px 10px 92px;
   scrollbar-width: thin;
   scrollbar-color: #c46227 #1a0904;
 }
@@ -308,7 +768,7 @@ body.timeline-body {
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  scroll-snap-align: center;
+  scroll-snap-align: none;
   transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1),
               border-color 0.45s ease,
               box-shadow 0.45s ease,
@@ -395,8 +855,10 @@ body.timeline-body {
 /* Responsif Layar HP (Mobile) */
 @media (max-width: 480px) {
   .timeline-top-nav {
-    padding: 0 16px;
-    margin-bottom: 14px;
+    top: 14px;
+    left: 14px;
+    padding: 0;
+    margin: 0;
   }
 
   .btn-timeline-back {
@@ -410,7 +872,8 @@ body.timeline-body {
   }
 
   .negative-scroll-viewport {
-    padding: 8px calc(50vw - 155px);
+    padding: 8px 64px 8px 64px;
+    scroll-snap-type: none;
   }
 
   .negative-frames-row {
@@ -426,5 +889,395 @@ body.timeline-body {
   .negative-photo-box {
     aspect-ratio: 16 / 10;
     height: auto;
+  }
+}
+
+
+
+
+/* =========================================================
+   ANIMASI PITA KLISE ROLL FILM DISERET DARI KANAN KE KIRI
+   ========================================================= */
+
+
+
+
+/* Tombol Seret Film di Area Petunjuk Bawah */
+.btn-inline-roll {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(26, 10, 4, 0.85);
+  border: 1.5px solid rgba(216, 112, 44, 0.7);
+  color: #ffd166;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-decoration: none;
+}
+
+.btn-inline-roll:hover {
+  background: linear-gradient(135deg, #c46227, #8e3d12);
+  border-color: #ffd166;
+  color: #ffffff;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 15px rgba(196, 98, 39, 0.6);
+}
+
+.btn-inline-roll:active {
+  transform: scale(0.96);
+}
+
+.film-bottom-hint {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+
+
+
+/* =========================================================
+   PANGGUNG & ANIMASI KEPALA ROLL 3D BERPUTAR MENGGELINDING DI LANTAI
+   (Latar Belakang Roll Di-Hide & Terbuka Mengikuti Kepala Roll)
+   ========================================================= */
+.film-container-stage {
+  position: relative;
+  width: 100vw;
+  max-width: 100vw;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+/* Latar Belakang Roll (Pita Klise Film, Sprocket, & Foto) */
+.film-fullwidth-strip {
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0;
+  left: 0;
+  right: 0;
+  position: relative;
+  /* Warna oranye kecokelatan khas klise film negatif 35mm */
+  background: linear-gradient(
+    180deg,
+    #944216 0%,
+    #b8541e 9%,
+    #aa4b19 13%,
+    #8e3d12 87%,
+    #b8541e 91%,
+    #944216 100%
+  );
+  border-top: 3.5px solid #632506;
+  border-bottom: 3.5px solid #632506;
+  box-shadow: 0 20px 65px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(255, 140, 50, 0.28);
+  overflow: hidden;
+  will-change: clip-path;
+}
+
+/* KEPALA ROLL YANG ADA DI GAMBAR (TABUNG SILINDER KODAK 35MM) */
+.film-end-spool {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 76px;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  pointer-events: none;
+  filter: drop-shadow(8px 0 20px rgba(0, 0, 0, 0.95)) drop-shadow(14px 0 30px rgba(184, 84, 30, 0.45));
+  will-change: transform;
+}
+
+/* Tutup Atas Silinder */
+.spool-top-cap {
+  width: 74px;
+  height: 22px;
+  background: linear-gradient(90deg, #1f1109 0%, #613313 25%, #ffd166 50%, #613313 75%, #140903 100%);
+  border-radius: 50% 50% 4px 4px;
+  border: 1.5px solid #2d1306;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+
+/* Tutup Bawah Silinder */
+.spool-bottom-cap {
+  width: 74px;
+  height: 22px;
+  background: linear-gradient(90deg, #1f1109 0%, #613313 25%, #ffd166 50%, #613313 75%, #140903 100%);
+  border-radius: 4px 4px 50% 50%;
+  border: 1.5px solid #2d1306;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+
+.spool-core-pin {
+  width: 14px;
+  height: 8px;
+  background: #0d0603;
+  border-radius: 2px;
+  border: 1px solid #7d441c;
+  transition: transform 0.1s linear;
+}
+
+/* Badan Silinder Utama */
+.spool-body {
+  width: 70px;
+  flex: 1;
+  background: linear-gradient(
+    90deg,
+    #120803 0%,
+    #2b1509 18%,
+    #b8541e 38%,
+    #ffd166 50%,
+    #b8541e 62%,
+    #241005 85%,
+    #0c0401 100%
+  );
+  border-left: 2px solid #542208;
+  border-right: 2px solid #361404;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.85);
+  overflow: hidden;
+}
+
+/* Kilauan Pantulan Silinder Berputar (Sheen) */
+.spool-cylinder-sheen {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 235, 170, 0) 30%,
+    rgba(255, 245, 200, 0.45) 50%,
+    rgba(255, 235, 170, 0) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* Lencana KODAK 35mm */
+.spool-brand-badge {
+  background: linear-gradient(180deg, #1a0a03 0%, #0d0401 100%);
+  border: 1.5px solid rgba(255, 209, 102, 0.75);
+  padding: 14px 6px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.85);
+  position: relative;
+  z-index: 2;
+  will-change: transform, opacity;
+}
+
+.brand-name {
+  font-family: 'Arial Black', Impact, sans-serif;
+  font-size: 0.86rem;
+  letter-spacing: 1.5px;
+  color: #ffb703;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  text-shadow: 0 0 8px rgba(255, 183, 3, 0.75);
+}
+
+.film-type {
+  font-family: 'Courier New', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #ffd166;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  opacity: 0.9;
+}
+
+/* Celah Pita Klise Film */
+.spool-film-slit {
+  position: absolute;
+  right: -5px;
+  left: auto;
+  top: 8px;
+  bottom: 8px;
+  width: 6px;
+  background: #080301;
+  border-radius: 2px;
+  border: 1px solid rgba(216, 112, 44, 0.6);
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.9);
+}
+
+/* =========================================================
+   ANIMASI PUTARAN SILINDER 3D (SEPERTI ROLL DIDORONG DI LANTAI)
+   ========================================================= */
+.film-end-spool.rolling-spin .spool-body {
+  background: repeating-linear-gradient(
+    90deg,
+    #120803 0px,
+    #2b1509 16px,
+    #b8541e 32px,
+    #ffd166 45px,
+    #fff8d6 48px,
+    #ffd166 52px,
+    #b8541e 66px,
+    #241005 82px,
+    #120803 98px
+  );
+  background-size: 98px 100%;
+  animation: cylinderRollSurface 0.38s linear infinite;
+}
+
+@keyframes cylinderRollSurface {
+  0% {
+    background-position: 98px 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.film-end-spool.rolling-spin .spool-brand-badge {
+  animation: badgeCylinderOrbit 0.38s linear infinite;
+}
+
+@keyframes badgeCylinderOrbit {
+  0% {
+    transform: translateX(24px) scaleX(0.45);
+    opacity: 0.45;
+  }
+  30% {
+    transform: translateX(8px) scaleX(0.85);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateX(0px) scaleX(1);
+    opacity: 1;
+  }
+  75% {
+    transform: translateX(-12px) scaleX(0.75);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(-24px) scaleX(0.45);
+    opacity: 0.45;
+  }
+}
+
+.film-end-spool.rolling-spin .spool-core-pin {
+  animation: pinOscillate 0.38s ease-in-out infinite alternate;
+}
+
+@keyframes pinOscillate {
+  0% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(-5px);
+  }
+}
+
+.film-end-spool.rolling-spin .spool-cylinder-sheen {
+  animation: sheenCycle 0.38s linear infinite;
+}
+
+@keyframes sheenCycle {
+  0% {
+    transform: translateX(35px);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateX(0px);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateX(-35px);
+    opacity: 0.2;
+  }
+}
+
+/* Tombol Aksi */
+.btn-inline-roll {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(26, 10, 4, 0.85);
+  border: 1.5px solid rgba(216, 112, 44, 0.7);
+  color: #ffd166;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-decoration: none;
+}
+
+.btn-inline-roll:hover {
+  background: linear-gradient(135deg, #c46227, #8e3d12);
+  border-color: #ffd166;
+  color: #ffffff;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 15px rgba(196, 98, 39, 0.6);
+}
+
+.btn-inline-roll:active {
+  transform: scale(0.96);
+}
+
+.film-bottom-hint {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+@media (max-width: 480px) {
+  .film-end-spool {
+    width: 52px;
+  }
+  .spool-top-cap, .spool-bottom-cap {
+    width: 50px;
+    height: 18px;
+  }
+  .spool-body {
+    width: 46px;
+  }
+  .brand-name {
+    font-size: 0.68rem;
+    letter-spacing: 1px;
+  }
+  .film-type {
+    font-size: 0.45rem;
   }
 }
