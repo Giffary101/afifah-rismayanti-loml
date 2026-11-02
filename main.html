@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selamat Datang Cintaku 💖</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <!-- Modular CSS -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <!-- Canvas Animasi Kelopak Sakura & Hati -->
+  <canvas id="ambient-canvas"></canvas>
+
+  <!-- Kontrol Suara -->
+  <div class="audio-control-bar">
+    <button id="sound-btn" class="icon-btn" title="Nyalakan / Matikan Efek Suara">
+      <span class="icon">🔔</span>
+      <span class="btn-text">Sound: On</span>
+    </button>
+  </div>
+
+  <main class="page-container">
+    <!-- HALAMAN UTAMA: "SELAMAT DATANG CINTAKU" -->
+    <section class="main-screen">
+      <div class="main-card">
+        <a href="index.html" class="btn-subtle" title="Buka amplop kembali">
+          ← Lihat Amplop Kembali
+        </a>
+
+        <div class="main-header">
+          <div class="blossom-badge">🌸 Sweet Celebration 🌸</div>
+          <h1 class="main-title">Selamat Datang Cintaku</h1>
+          <p class="main-subtitle">
+            Selamat datang di halaman utama ucapan spesialmu, <strong>My Love</strong>.
+          </p>
+        </div>
+
+        <div class="announcement-box">
+          <div class="box-icon">🎂 🥂 💕</div>
+          <h3>Gerbang Kejutan Telah Terbuka!</h3>
+          <p>
+            Tampilan amplop pembuka telah siap. Bagian ini adalah pondasi untuk halaman utama ucapan selamat ulang tahun / anniversary berikutnya yang dapat diisi dengan:
+          </p>
+          <ul class="feature-preview-list">
+            <li>✨ <strong>Surat & Doa Mendalam</strong> untuk sang pejuang mimpi</li>
+            <li>📸 <strong>Galeri Foto Kenangan Indah</strong> berbingkai manis</li>
+            <!-- Klik item ini untuk menuju ke halaman timeline.html -->
+            <li class="feature-interactive" onclick="window.location.href='timeline.html'" title="Klik untuk membuka Roll Film & Hitung Mundur">
+              <div class="feature-left">
+                <span class="feature-icon">⏳</span>
+                <span><strong>Hitung Mundur / Timeline Perjalanan</strong> cinta & cita-cita</span>
+              </div>
+              <span class="feature-arrow-badge">Klik Disini ➔</span>
+            </li>
+            <li>🎵 <strong>Pemutar Musik Favorit</strong> bernuansa romantis</li>
+          </ul>
+        </div>
+
+        <div class="palette-showcase">
+          <p class="palette-title">🎨 Paduan Palet Warna yang Digunakan:</p>
+          <div class="palette-swatches">
+            <div class="swatch" style="background: #ff8cc6;"><span>#ff8cc6<br>Love Pink</span></div>
+            <div class="swatch" style="background: #e85d9e; color: #fff;"><span>#e85d9e<br>Deep Rose</span></div>
+            <div class="swatch" style="background: #ffc2df;"><span>#ffc2df<br>Soft Blossom</span></div>
+            <div class="swatch" style="background: #fff0f6;"><span>#fff0f6<br>Blush Cloud</span></div>
+            <div class="swatch" style="background: #ffd166; color: #4a2839;"><span>#ffd166<br>Warm Gold</span></div>
+            <div class="swatch" style="background: #4a2839; color: #fff;"><span>#4a2839<br>Plum Velvet</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modular Scripts -->
+  <script src="js/audio.js"></script>
+  <script src="js/ambient.js"></script>
+</body>
+</html>

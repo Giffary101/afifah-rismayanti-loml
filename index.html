@@ -8,15 +8,17 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css">
+  <!-- Modular CSS -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/envelope.css">
 </head>
 <body>
-  <!-- Canvas for floating petals & spark effects -->
+  <!-- Canvas Animasi Kelopak Sakura & Hati -->
   <canvas id="ambient-canvas"></canvas>
 
-  <!-- Sound Toggle / Ambient Controls -->
+  <!-- Kontrol Suara -->
   <div class="audio-control-bar">
     <button id="sound-btn" class="icon-btn" title="Nyalakan / Matikan Efek Suara">
       <span class="icon">🔔</span>
@@ -25,10 +27,8 @@
   </div>
 
   <main class="page-container">
-    <!-- =========================================================
-         SECTION 1: ENVELOPE LANDING VIEW (TAMPILAN AWAL AMPLOP)
-         ========================================================= -->
-    <section id="envelope-section" class="screen-view active">
+    <!-- TAMPILAN AWAL: AMPLOP ROMANTIS -->
+    <section id="envelope-section" class="envelope-screen">
       <div class="intro-header">
         <span class="badge-tag">💌 Ada Surat Spesial Untukmu</span>
         <h1 class="prompt-text">Ketuk hati untuk membuka amplop</h1>
@@ -38,10 +38,10 @@
         <div class="envelope-shadow"></div>
         
         <div class="envelope" id="envelope">
-          <!-- Back flap (inside of envelope) -->
+          <!-- Bagian Dalam Amplop -->
           <div class="envelope-inside"></div>
 
-          <!-- Letter Card that slides up -->
+          <!-- Surat di Dalam Amplop -->
           <div class="letter-card" id="letter-card">
             <div class="letter-inner">
               <div class="letter-stamp">
@@ -61,23 +61,23 @@
                 Setiap langkah perjuanganmu begitu berharga. Di hari istimewa ini, ada rangkaian doa, kasih, dan kejutan manis yang dirancang khusus untukmu.
               </p>
 
-              <!-- Button to go to Main Page -->
-              <button id="open-main-btn" class="btn-romantic">
+              <!-- Tombol Menuju Halaman Utama (main.html) -->
+              <a href="main.html" id="open-main-btn" class="btn-romantic">
                 <span>Buka Halaman Utama</span>
                 <span class="btn-arrow">✨</span>
-              </button>
+              </a>
             </div>
           </div>
 
-          <!-- Left & Right Flaps -->
+          <!-- Lipatan Amplop Kiri, Kanan, Bawah -->
           <div class="envelope-flap flap-left"></div>
           <div class="envelope-flap flap-right"></div>
           <div class="envelope-flap flap-bottom"></div>
 
-          <!-- Top Foldable Flap -->
+          <!-- Penutup Amplop Atas (Membuka ke Atas) -->
           <div class="envelope-flap flap-top" id="flap-top"></div>
 
-          <!-- Heart Seal Opener Button -->
+          <!-- Segel Hati Merah Muda -->
           <div class="heart-seal-btn" id="heart-seal" role="button" tabindex="0" aria-label="Buka Amplop">
             <div class="heart-pulse"></div>
             <div class="heart-shape">
@@ -106,185 +106,11 @@
         <span>✨ Dibuat dengan segenap cinta & kehangatan</span>
       </div>
     </section>
-
-    <!-- =========================================================
-         SECTION 2: HALAMAN UTAMA "SELAMAT DATANG CINTAKU"
-         (DIKEMBALIKAN PERSIS ASLINYA TANPA DIUBAH)
-         ========================================================= -->
-    <section id="main-section" class="screen-view">
-      <div class="main-card">
-        <button id="back-to-envelope-btn" class="btn-subtle">
-          ← Lihat Amplop Kembali
-        </button>
-
-        <div class="main-header">
-          <div class="blossom-badge">🌸 Sweet Celebration 🌸</div>
-          <h1 class="main-title">Selamat Datang Cintaku</h1>
-          <p class="main-subtitle">
-            Selamat datang di halaman utama ucapan spesialmu, <strong>My Love</strong>.
-          </p>
-        </div>
-
-        <div class="announcement-box">
-          <div class="box-icon">🎂 🥂 💕</div>
-          <h3>Gerbang Kejutan Telah Terbuka!</h3>
-          <p>
-            Tampilan amplop pembuka telah siap. Bagian ini adalah pondasi untuk halaman utama ucapan selamat ulang tahun / anniversary berikutnya yang dapat diisi dengan:
-          </p>
-          <ul class="feature-preview-list">
-            <li>✨ <strong>Surat & Doa Mendalam</strong> untuk sang pejuang mimpi</li>
-            <li>📸 <strong>Galeri Foto Kenangan Indah</strong> berbingkai manis</li>
-            <!-- List item ini diklik untuk menuju tampilan Roll Film -->
-            <li id="open-timeline-item" class="feature-interactive" title="Klik untuk membuka Roll Film & Hitung Mundur">
-              <div class="feature-left">
-                <span class="feature-icon">⏳</span>
-                <span><strong>Hitung Mundur / Timeline Perjalanan</strong> cinta & cita-cita</span>
-              </div>
-              <span class="feature-arrow-badge">Klik Disini ➔</span>
-            </li>
-            <li>🎵 <strong>Pemutar Musik Favorit</strong> bernuansa romantis</li>
-          </ul>
-        </div>
-
-        <div class="palette-showcase">
-          <p class="palette-title">🎨 Paduan Palet Warna yang Digunakan:</p>
-          <div class="palette-swatches">
-            <div class="swatch" style="background: #ff8cc6;"><span>#ff8cc6<br>Love Pink</span></div>
-            <div class="swatch" style="background: #e85d9e; color: #fff;"><span>#e85d9e<br>Deep Rose</span></div>
-            <div class="swatch" style="background: #ffc2df;"><span>#ffc2df<br>Soft Blossom</span></div>
-            <div class="swatch" style="background: #fff0f6;"><span>#fff0f6<br>Blush Cloud</span></div>
-            <div class="swatch" style="background: #ffd166; color: #4a2839;"><span>#ffd166<br>Warm Gold</span></div>
-            <div class="swatch" style="background: #4a2839; color: #fff;"><span>#4a2839<br>Plum Velvet</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- =========================================================
-         SECTION 3: HALAMAN KHUSUS ROLL FILM & HITUNG MUNDUR
-         (BERUBAH TEMA MASA LALU & ROLL FILM SEPERTI PADA GAMBAR)
-         ========================================================= -->
-    <section id="timeline-section" class="screen-view">
-      <!-- Latar Belakang Dinamis: Foto yang dipilih dengan Filter Coklat Vintage -->
-      <div class="timeline-vintage-bg" id="timeline-vintage-bg">
-        <div class="timeline-bg-photo" id="timeline-bg-photo"></div>
-        <div class="timeline-bg-overlay"></div>
-      </div>
-
-      <div class="timeline-page-content">
-        <!-- Navigasi Kembali ke Halaman Selamat Datang Cintaku -->
-        <div class="timeline-nav-bar">
-          <button id="back-to-main-btn" class="btn-subtle btn-timeline-back">
-            ← Kembali ke Menu Utama
-          </button>
-          <div class="film-mode-badge">🎞️ Vintage 35mm Film Roll Experience</div>
-        </div>
-
-        <!-- 1. HITUNG MUNDUR (COUNTDOWN TIMER) -->
-        <div class="timeline-countdown-box">
-          <div class="countdown-mini-tag">
-            <span class="dot-beacon"></span>
-            <span>COUNTDOWN MOMENT</span>
-          </div>
-          <h2 class="countdown-header-title">Menuju Hari Paling Bahagia 🎂🥂</h2>
-          
-          <div class="countdown-digits-row">
-            <div class="cd-item">
-              <span class="cd-val" id="cd-days">00</span>
-              <span class="cd-lbl">HARI</span>
-            </div>
-            <div class="cd-sep">:</div>
-            <div class="cd-item">
-              <span class="cd-val" id="cd-hours">00</span>
-              <span class="cd-lbl">JAM</span>
-            </div>
-            <div class="cd-sep">:</div>
-            <div class="cd-item">
-              <span class="cd-val" id="cd-minutes">00</span>
-              <span class="cd-lbl">MENIT</span>
-            </div>
-            <div class="cd-sep">:</div>
-            <div class="cd-item">
-              <span class="cd-val" id="cd-seconds">00</span>
-              <span class="cd-lbl">DETIK</span>
-            </div>
-          </div>
-
-          <p class="cd-caption" id="countdown-message">
-            Menghitung setiap detik berharga menuju perayaan terindah untukmu.
-          </p>
-        </div>
-
-        <!-- 2. TIMELINE ROLL FILM PERSIS SEPERTI GAMBAR (KLISE NEGATIF ORANGE-COKLAT 35MM) -->
-        <div class="film-container-card">
-          <div class="film-info-header">
-            <h2 class="film-title-large">🎞️ Rekam Jejak Perjalanan Kita</h2>
-            <p class="film-subtitle-text">
-              Gulungan klise film 35mm kenangan masa lalu. Geser dari kiri ke kanan untuk melihat foto aslinya tanpa filter, sekaligus mengubah latar belakang menjadi foto tersebut.
-            </p>
-          </div>
-
-          <!-- Tombol Navigasi Geser & Indikator Frame -->
-          <div class="film-action-bar">
-            <button id="film-prev-btn" class="btn-film-nav" aria-label="Geser ke Kiri">
-              <span>‹</span> Foto Sebelumnya
-            </button>
-            <div class="film-indicator-pill">
-              Frame <strong id="current-frame-idx">1</strong> dari <strong id="total-frames-idx">6</strong>
-            </div>
-            <button id="film-next-btn" class="btn-film-nav" aria-label="Geser ke Kanan">
-              Foto Selanjutnya <span>›</span>
-            </button>
-          </div>
-
-          <!-- WADAH STRIP KLISE FILM 35MM PERSIS SEPERTI GAMBAR -->
-          <div class="film-negative-strip-wrapper">
-            <!-- Pinggiran Atas Klise Film (Lubang Sprocket & Teks Kodak) -->
-            <div class="negative-sprocket-bar sprocket-top">
-              <div class="sprocket-holes-backlight"></div>
-              <div class="negative-meta-text">
-                <span>KODAK COLOR 200</span>
-                <span>▶ 19</span>
-                <span>• SAFETY FILM •</span>
-                <span>▶ 19A</span>
-                <span>35mm EXP</span>
-                <span>▶ 20</span>
-                <span>KODAK COLOR 200</span>
-              </div>
-            </div>
-
-            <!-- Viewport Klise Film (Bisa di-scroll dari kiri ke kanan) -->
-            <div class="negative-scroll-viewport" id="film-track-viewport">
-              <div class="negative-frames-row" id="film-track">
-                <!-- Frame foto roll film klise di-render via script.js -->
-              </div>
-            </div>
-
-            <!-- Pinggiran Bawah Klise Film (Lubang Sprocket & Barcode) -->
-            <div class="negative-sprocket-bar sprocket-bottom">
-              <div class="negative-meta-text bottom-meta">
-                <span>||||||| | |||</span>
-                <span>▶ 01A</span>
-                <span>▶ 02A</span>
-                <span>▶ 03A</span>
-                <span>▶ 04A</span>
-                <span>▶ 05A</span>
-                <span>▶ 06A</span>
-                <span>||| || ||||</span>
-              </div>
-              <div class="sprocket-holes-backlight"></div>
-            </div>
-          </div>
-
-          <div class="film-bottom-hint">
-            <span>✨ Geser ke kanan / kiri atau klik salah satu klise foto untuk melihatnya tanpa filter</span>
-          </div>
-        </div>
-
-      </div>
-    </section>
   </main>
 
-  <script src="script.js"></script>
+  <!-- Modular Scripts -->
+  <script src="js/audio.js"></script>
+  <script src="js/ambient.js"></script>
+  <script src="js/envelope.js"></script>
 </body>
 </html>

@@ -4,33 +4,63 @@ Website interaktif ucapan selamat ulang tahun / anniversary bernuansa romantis d
 
 ---
 
+## 📁 Struktur Folder Proyek yang Rapi & Modular:
+
+```text
+Proyek Ucapan/
+│
+├── index.html            # Layar 1: Amplop Interaktif & Segel Hati untuk Afifah Rismayanti
+├── main.html             # Layar 2: Halaman "Selamat Datang Cintaku" & Menu Kejutan
+├── timeline.html         # Layar 3: Klise Roll Film 35mm & Hitung Mundur
+│
+├── css/                  # Direktori Stylesheet Terpisah
+│   ├── global.css        # Variabel warna, reset dasar, tombol audio, & palet umum
+│   ├── envelope.css      # Styling animasi 3D amplop, segel hati, dan surat
+│   ├── main.css          # Styling halaman utama "Selamat Datang Cintaku" & kartu menu
+│   └── timeline.css      # Styling klise film 35mm amber/oranye, sprocket, & countdown
+│
+├── js/                   # Direktori Script Logika Terpisah
+│   ├── audio.js          # Web Audio API (efek petikan harpa, pop, & shutter kamera)
+│   ├── ambient.js        # Animasi kelopak bunga sakura & hati di kanvas latar
+│   ├── envelope.js       # Logika pembuka amplop & navigasi ke main.html
+│   └── timeline.js       # Logika hitung mundur, render roll film 35mm, & dynamic background
+│
+├── images/               # Direktori Foto & Aset
+│   └── CARA_GANTI_FOTO.txt # Panduan mengganti foto pribadi
+│
+└── README.md             # Dokumentasi proyek
+```
+
+---
+
 ## 🗺️ Alur Halaman Website:
 
-1. **Layar 1: Amplop Romantis 💌**
-   - Amplop 3D estetik dengan segel hati merah muda berdenyut (*"Klik Aku 💖"*).
-   - Saat diklik: Animasi amplop membuka, letupan partikel sakura & hati, suara denting harpa lembut.
+1. **`index.html` (Layar 1: Amplop Romantis 💌)**
+   - Desain amplop 3D estetik dengan segel hati merah muda berdenyut (*"Klik Aku 💖"*).
+   - Saat diklik: Animasi amplop membuka, letupan partikel bunga sakura, suara harpa lembut.
    - Pesan surat:
      - *"Selamat Datang,"*
      - **"Afifah Rismayanti"**
      - *“Wanita pejuang peraih mimpi”*
-   - Tombol: *"Buka Halaman Utama ✨"*.
+   - Tombol: *"Buka Halaman Utama ✨"* (mengarah ke `main.html`).
 
-2. **Layar 2: Halaman "Selamat Datang Cintaku" 💖**
-   - Menampilkan kartu utama yang hangat dengan pesan cinta:
+2. **`main.html` (Layar 2: "Selamat Datang Cintaku" 💖)**
+   - Menampilkan kartu ucapan utama yang hangat:
      - *"Selamat Datang Cintaku"*
      - *"Selamat datang di halaman utama ucapan spesialmu, My Love."*
    - Kotak Pengumuman Kejutan dengan daftar menu:
      - ✨ Surat & Doa Mendalam untuk sang pejuang mimpi
      - 📸 Galeri Foto Kenangan Indah berbingkai manis
-     - ⏳ **Hitung Mundur / Timeline Perjalanan cinta & cita-cita** *(Interaktif / Dapat diklik untuk membuka klise roll film!)*
+     - ⏳ **Hitung Mundur / Timeline Perjalanan cinta & cita-cita** *(Interaktif, klik untuk membuka `timeline.html`!)*
      - 🎵 Pemutar Musik Favorit bernuansa romantis
    - Palet warna lengkap di bagian bawah.
+   - Tombol *"← Lihat Amplop Kembali"* untuk kembali ke `index.html`.
 
-3. **Layar 3: Halaman Khusus Klise Roll Film 35mm & Hitung Mundur 🎞️**
-   - **Bentuk Klise Film Persis Seperti Foto Asli**:
-     - Berwarna oranye/amber transparan khas pita klise film negatif 35mm.
-     - Lubang sprocket gerigi persegi panjang di atas dan bawah yang tembus cahaya putih (*backlight*).
-     - Teks stempel analog dan nomor frame khas klise film (*KODAK COLOR 200, ▶ 19, ▶ 19A, SAFETY FILM*).
+3. **`timeline.html` (Layar 3: Klise Roll Film 35mm & Hitung Mundur 🎞️)**
+   - **Bentuk Klise Film 35mm Persis Seperti Gambar**:
+     - Berwarna oranye/amber transparan khas pita klise negatif analog 35mm.
+     - Lubang sprocket gerigi persegi panjang di atas dan bawah yang tembus cahaya putih (*backlight effect*).
+     - Cap teks analog dan nomor frame khas klise film (*KODAK COLOR 200, ▶ 19, ▶ 19A, SAFETY FILM*).
    - **Aturan Filter Foto**:
      - **Foto yang tidak dipilih**: Diberi **filter coklat vintage nostalgik** layaknya klise film lama.
      - **Foto yang dipilih**: Menampilkan **foto aslinya tanpa filter**, jernih, cerah, dan membesar secara anggun.
@@ -39,11 +69,11 @@ Website interaktif ucapan selamat ulang tahun / anniversary bernuansa romantis d
    - **Deskripsi Cerita**: Judul dan cerita narasi di setiap frame foto.
    - **Latar Belakang Sinematik**: Latar belakang halaman secara dinamis berganti mengikuti foto yang dipilih dengan filter coklat vintage.
    - **Hitung Mundur (Countdown Timer)**: Hari, Jam, Menit, Detik menuju momen bahagia.
-   - **Tombol Kembali**: *"← Kembali ke Menu Utama"* untuk kembali ke halaman Selamat Datang Cintaku kapan saja.
+   - **Tombol Kembali**: *"← Kembali ke Menu Utama"* untuk kembali ke `main.html`.
 
 ---
 
-## 📷 Cara Mengganti dengan Foto Pribadi:
+## 📷 Cara Mengganti Foto Pribadi:
 1. Masukkan file foto Anda ke dalam folder `images/` (misal: `images/foto1.jpg`, `foto2.jpg`, dst).
-2. Buka file `script.js`, sesuaikan daftar `timelineMoments` pada bagian `image`, `dateStamp`, `title`, dan `desc`.
-3. Buka `index.html` dan nikmati hasilnya!
+2. Buka file `js/timeline.js`, sesuaikan daftar `timelineMoments` pada bagian `image`, `dateStamp`, `title`, dan `desc`.
+3. Buka `index.html` di browser Anda!

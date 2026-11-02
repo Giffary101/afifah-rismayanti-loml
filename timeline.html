@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timeline Perjalanan & Hitung Mundur 🎞️</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=VT323&display=swap" rel="stylesheet">
+  
+  <!-- Modular CSS -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/timeline.css">
+</head>
+<body>
+  <!-- Canvas Animasi Kelopak Sakura & Hati -->
+  <canvas id="ambient-canvas"></canvas>
+
+  <!-- Latar Belakang Dinamis: Foto Terpilih dengan Filter Coklat Vintage Nostalgik -->
+  <div class="timeline-vintage-bg">
+    <div class="timeline-bg-photo" id="timeline-bg-photo"></div>
+    <div class="timeline-bg-overlay"></div>
+  </div>
+
+  <!-- Kontrol Suara -->
+  <div class="audio-control-bar">
+    <button id="sound-btn" class="icon-btn" title="Nyalakan / Matikan Efek Suara">
+      <span class="icon">🔔</span>
+      <span class="btn-text">Sound: On</span>
+    </button>
+  </div>
+
+  <main class="page-container">
+    <!-- HALAMAN KHUSUS: ROLL FILM & HITUNG MUNDUR -->
+    <section class="timeline-screen">
+      <div class="timeline-page-content">
+        <!-- Navigasi Kembali ke main.html -->
+        <div class="timeline-nav-bar">
+          <a href="main.html" class="btn-subtle btn-timeline-back" title="Kembali ke menu Selamat Datang Cintaku">
+            ← Kembali ke Menu Utama
+          </a>
+          <div class="film-mode-badge">🎞️ Vintage 35mm Film Roll Experience</div>
+        </div>
+
+        <!-- 1. HITUNG MUNDUR (COUNTDOWN TIMER) -->
+        <div class="timeline-countdown-box">
+          <div class="countdown-mini-tag">
+            <span class="dot-beacon"></span>
+            <span>COUNTDOWN MOMENT</span>
+          </div>
+          <h2 class="countdown-header-title">Menuju Hari Paling Bahagia 🎂🥂</h2>
+          
+          <div class="countdown-digits-row">
+            <div class="cd-item">
+              <span class="cd-val" id="cd-days">00</span>
+              <span class="cd-lbl">HARI</span>
+            </div>
+            <div class="cd-sep">:</div>
+            <div class="cd-item">
+              <span class="cd-val" id="cd-hours">00</span>
+              <span class="cd-lbl">JAM</span>
+            </div>
+            <div class="cd-sep">:</div>
+            <div class="cd-item">
+              <span class="cd-val" id="cd-minutes">00</span>
+              <span class="cd-lbl">MENIT</span>
+            </div>
+            <div class="cd-sep">:</div>
+            <div class="cd-item">
+              <span class="cd-val" id="cd-seconds">00</span>
+              <span class="cd-lbl">DETIK</span>
+            </div>
+          </div>
+
+          <p class="cd-caption" id="countdown-message">
+            Menghitung setiap detik berharga menuju perayaan terindah untukmu.
+          </p>
+        </div>
+
+        <!-- 2. WADAH ROLL FILM 35MM (KLISE ORANGE/AMBER PERSIS SEPERTI GAMBAR) -->
+        <div class="film-container-card">
+          <div class="film-info-header">
+            <h2 class="film-title-large">🎞️ Rekam Jejak Perjalanan Kita</h2>
+            <p class="film-subtitle-text">
+              Gulungan klise film 35mm kenangan masa lalu. Geser dari kiri ke kanan untuk melihat foto aslinya tanpa filter, sekaligus mengubah latar belakang menjadi foto tersebut.
+            </p>
+          </div>
+
+          <!-- Tombol Navigasi Geser & Indikator Frame -->
+          <div class="film-action-bar">
+            <button id="film-prev-btn" class="btn-film-nav" aria-label="Geser ke Kiri">
+              <span>‹</span> Foto Sebelumnya
+            </button>
+            <div class="film-indicator-pill">
+              Frame <strong id="current-frame-idx">1</strong> dari <strong id="total-frames-idx">6</strong>
+            </div>
+            <button id="film-next-btn" class="btn-film-nav" aria-label="Geser ke Kanan">
+              Foto Selanjutnya <span>›</span>
+            </button>
+          </div>
+
+          <!-- PITA KLISE FILM 35MM PERSIS SEPERTI GAMBAR -->
+          <div class="film-negative-strip-wrapper">
+            <!-- Pinggiran Atas Klise (Lubang Sprocket & Teks Kodak) -->
+            <div class="negative-sprocket-bar sprocket-top">
+              <div class="sprocket-holes-backlight"></div>
+              <div class="negative-meta-text">
+                <span>KODAK COLOR 200</span>
+                <span>▶ 19</span>
+                <span>• SAFETY FILM •</span>
+                <span>▶ 19A</span>
+                <span>35mm EXP</span>
+                <span>▶ 20</span>
+                <span>KODAK COLOR 200</span>
+              </div>
+            </div>
+
+            <!-- Viewport Klise Film (Bisa di-scroll dari kiri ke kanan) -->
+            <div class="negative-scroll-viewport" id="film-track-viewport">
+              <div class="negative-frames-row" id="film-track">
+                <!-- Frame-frame klise film di-render via js/timeline.js -->
+              </div>
+            </div>
+
+            <!-- Pinggiran Bawah Klise (Lubang Sprocket & Barcode) -->
+            <div class="negative-sprocket-bar sprocket-bottom">
+              <div class="negative-meta-text bottom-meta">
+                <span>||||||| | |||</span>
+                <span>▶ 01A</span>
+                <span>▶ 02A</span>
+                <span>▶ 03A</span>
+                <span>▶ 04A</span>
+                <span>▶ 05A</span>
+                <span>▶ 06A</span>
+                <span>||| || ||||</span>
+              </div>
+              <div class="sprocket-holes-backlight"></div>
+            </div>
+          </div>
+
+          <div class="film-bottom-hint">
+            <span>✨ Geser ke kanan / kiri atau klik salah satu klise foto untuk melihatnya tanpa filter</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Modular Scripts -->
+  <script src="js/audio.js"></script>
+  <script src="js/ambient.js"></script>
+  <script src="js/timeline.js"></script>
+</body>
+</html>
