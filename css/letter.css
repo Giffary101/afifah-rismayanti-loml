@@ -34,28 +34,11 @@ body.letter-body {
 /* Bar Navigasi Atas */
 .letter-top-nav {
   width: 100%;
-  max-width: 520px;
+  max-width: 480px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  flex-wrap: wrap;
   gap: 10px;
-}
-
-.letter-header-pill {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1.5px solid rgba(255, 140, 198, 0.5);
-  padding: 7px 16px;
-  border-radius: var(--radius-full, 9999px);
-  font-size: 0.84rem;
-  font-weight: 700;
-  color: var(--love-pink-deep, #d63384);
-  box-shadow: 0 4px 14px rgba(232, 93, 158, 0.15);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
 }
 
 /* =========================================================
