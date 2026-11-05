@@ -427,6 +427,36 @@ body.letter-body {
   margin-bottom: 0;
 }
 
+/* Bait Puisi Senja & Laut */
+.page-poem-text {
+  font-family: 'Caveat', cursive, sans-serif;
+  font-size: 1.28rem;
+  line-height: 26px;
+  color: #2b0c1c;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  font-style: italic;
+  padding: 4px 0;
+}
+
+.page-poem-text::-webkit-scrollbar {
+  display: none;
+}
+
+.page-poem-text p {
+  margin-bottom: 12px;
+}
+
+.page-poem-text p:last-child {
+  margin-bottom: 0;
+}
+
 /* Footer Lembaran Kertas (Doodle & Nomor Halaman) */
 .page-paper-footer {
   display: flex;
@@ -675,6 +705,11 @@ body.letter-body {
   .page-handwritten-text {
     font-size: 1.22rem;
     line-height: 26px;
+  }
+
+  .page-poem-text {
+    font-size: 1.15rem;
+    line-height: 23px;
   }
 
   .btn-book-nav {
