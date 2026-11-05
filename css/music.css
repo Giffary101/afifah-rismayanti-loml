@@ -537,7 +537,7 @@ body.music-body {
   padding: 8px 14px;
   border-radius: 12px;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
   transform-origin: left center;
 }
 
@@ -557,11 +557,13 @@ body.music-body {
   transform: scale(1.02);
   box-shadow: 0 4px 15px rgba(232, 93, 158, 0.2);
   text-shadow: 0 0 14px rgba(232, 93, 158, 0.4);
+  transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* Baris Lirik yang Sudah Lewat */
 .lyric-line.past {
   opacity: 0.4;
+  transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .lyric-line.chorus {
@@ -619,3 +621,4 @@ body.music-body {
     font-size: 1.15rem;
   }
 }
+
