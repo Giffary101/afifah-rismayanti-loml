@@ -1,7 +1,7 @@
 /* =========================================================
    STYLING BUKU CATATAN KECIL: SURAT & DOA MENDALAM (letter.html)
-   Desain Jurnal Kulit Rose-Magenta dengan Garis Jahitan Emas
-   Persis Sesuai Dimensi & Tampilan Gambar Asli
+   Desain Jurnal Kulit Rose-Magenta dengan Animasi Buka Halaman 3D Horisontal
+   Buku Bersih Tanpa Garis-Garis Panjang Vertikal
    ========================================================= */
 
 body.letter-body {
@@ -59,20 +59,20 @@ body.letter-body {
 }
 
 /* =========================================================
-   STAGE & WADAH BUKU CATATAN (NOTEBOOK CASING)
-   Dimensi Tetap & Konsisten di Setiap Halaman
+   STAGE & WADAH BUKU CATATAN (NOTEBOOK)
+   Hanya Menampilkan Bentuk Buku yang Bersih & Elegan
    ========================================================= */
 .notebook-stage {
-  perspective: 1600px;
+  perspective: 2200px;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 8px 0 16px 0;
+  margin: 6px 0 16px 0;
   position: relative;
 }
 
-/* Buku Catatan Kulit Rose-Magenta Utama */
+/* Buku Catatan Kulit Rose-Magenta */
 .notebook {
   position: relative;
   width: 480px;
@@ -87,111 +87,159 @@ body.letter-body {
     0 25px 60px rgba(185, 50, 114, 0.35),
     0 10px 25px rgba(0, 0, 0, 0.2),
     inset 0 0 35px rgba(60, 10, 35, 0.45);
-  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   transform-style: preserve-3d;
   overflow: hidden;
 }
 
-/* 1. Pita Pembatas Buku Emas (Bookmark Ribbon) */
-.notebook-ribbon {
-  position: absolute;
-  top: -14px;
-  right: 55px;
-  width: 24px;
-  height: calc(100% + 36px);
-  background: linear-gradient(135deg, #ffd166 0%, #fca311 100%);
-  border-radius: 4px 4px 0 0;
-  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.32);
-  z-index: 35;
-  pointer-events: none;
-  transition: transform 0.45s ease;
-}
-
-/* Ujung Bawah Pita Bentuk V (Notch) */
-.notebook-ribbon::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 12px 14px 12px;
-  border-color: transparent transparent #ffd166 transparent;
-  transform: rotate(180deg) translateY(-100%);
-}
-
-/* 2. Tulang Buku Kulit 3D (Spine) di Sisi Kiri */
-.notebook-spine {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 30px;
-  height: 100%;
-  background: linear-gradient(90deg, #781442 0%, #ad2768 35%, #de5394 65%, #6e103b 100%);
-  border-radius: 22px 0 0 22px;
-  box-shadow: inset -2px 0 6px rgba(0, 0, 0, 0.4), 3px 0 10px rgba(0, 0, 0, 0.25);
-  z-index: 40;
-  pointer-events: none;
-}
-
-/* 3. Garis Jahitan Emas Sepanjang Tepi Kulit (Gold Stitching) */
+/* Garis Jahitan Emas Sepanjang Tepi Kulit (Gold Stitching) */
 .notebook-stitch {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  bottom: 12px;
-  left: 20px;
+  top: 10px;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
   border: 1.5px dashed rgba(255, 209, 102, 0.65);
-  border-radius: 14px;
+  border-radius: 16px;
   pointer-events: none;
   z-index: 5;
 }
 
-/* 4. Wadah Seluruh Lembaran Buku */
+/* Wadah Lembaran Buku dengan Perspektif 3D Horisontal */
 .notebook-sheets {
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 22px;
+  border-radius: 24px;
+  perspective: 2200px;
+  transform-style: preserve-3d;
   z-index: 10;
 }
 
 /* Base Lembaran Buku */
 .notebook-sheet {
-  display: none;
-  opacity: 0;
-  transition: opacity 0.35s ease, transform 0.4s ease;
-}
-
-.notebook-sheet.active {
-  display: flex;
-  opacity: 1;
-}
-
-/* =========================================================
-   1. COVER DEPAN BUKU (FRONT COVER - PERSIS SESUAI GAMBAR)
-   ========================================================= */
-.sheet-cover-front {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 40px 32px 36px 48px;
+  display: none;
+  opacity: 0;
+  transform-origin: left center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.notebook-sheet.active {
+  display: flex;
+  opacity: 1;
+  z-index: 10;
+  transform: rotateY(0deg);
+}
+
+/* =========================================================
+   ANIMASI MEMBUKA HALAMAN BUKU (HORIZONTAL 3D PAGE FLIP)
+   Efek nyata membuka lembaran buku dari kanan ke kiri
+   Secara horisontal murni, tanpa gerakan vertikal atas-bawah
+   ========================================================= */
+
+/* 1. Halaman lama melipat dan terbuka ke sisi kiri */
+.notebook-sheet.flip-out-left {
+  display: flex !important;
+  z-index: 20;
+  animation: pageFlipOutLeft 0.55s cubic-bezier(0.35, 0, 0.15, 1) forwards;
+}
+
+@keyframes pageFlipOutLeft {
+  0% {
+    transform: rotateY(0deg);
+    opacity: 1;
+    filter: brightness(1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+  }
+  50% {
+    filter: brightness(0.92);
+    box-shadow: -15px 0 25px rgba(0, 0, 0, 0.3);
+  }
+  100% {
+    transform: rotateY(-90deg);
+    opacity: 0;
+    filter: brightness(0.85);
+  }
+}
+
+/* 2. Halaman baru terbuka ke depan pembaca dari sisi kanan */
+.notebook-sheet.flip-in-right {
+  display: flex !important;
+  z-index: 25;
+  animation: pageFlipInRight 0.55s cubic-bezier(0.35, 0, 0.15, 1) forwards;
+}
+
+@keyframes pageFlipInRight {
+  0% {
+    transform: rotateY(90deg);
+    opacity: 0;
+    filter: brightness(0.88);
+  }
+  50% {
+    opacity: 0.95;
+    filter: brightness(0.96);
+  }
+  100% {
+    transform: rotateY(0deg);
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+/* 3. Balik Halaman Mundur (Prev) - Halaman lama melipat ke kanan */
+.notebook-sheet.flip-out-right {
+  display: flex !important;
+  z-index: 20;
+  animation: pageFlipOutRight 0.55s cubic-bezier(0.35, 0, 0.15, 1) forwards;
+}
+
+@keyframes pageFlipOutRight {
+  0% {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: rotateY(90deg);
+    opacity: 0;
+  }
+}
+
+/* 4. Balik Halaman Mundur (Prev) - Halaman sebelumnya kembali terbuka */
+.notebook-sheet.flip-in-left {
+  display: flex !important;
+  z-index: 25;
+  animation: pageFlipInLeft 0.55s cubic-bezier(0.35, 0, 0.15, 1) forwards;
+}
+
+@keyframes pageFlipInLeft {
+  0% {
+    transform: rotateY(-90deg);
+    opacity: 0;
+  }
+  100% {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   1. COVER DEPAN BUKU (FRONT COVER - SESUAI GAMBAR ASLI)
+   ========================================================= */
+.sheet-cover-front {
+  padding: 42px 32px 38px 32px;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   text-align: center;
   color: #ffffff;
   cursor: pointer;
-  z-index: 20;
-  animation: coverAppear 0.5s ease-out forwards;
-}
-
-@keyframes coverAppear {
-  0% { opacity: 0; transform: scale(0.98); }
-  100% { opacity: 1; transform: scale(1); }
+  z-index: 10;
 }
 
 /* Badge Atas: 🌸 CATATAN CINTA & DOA 🌸 */
@@ -277,7 +325,7 @@ body.letter-body {
   margin: 4px 0 0 0;
 }
 
-/* Tombol / Prompt Buka Buku */
+/* Tombol Buka Buku */
 .cover-tap-prompt {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%);
   border: 1.5px solid rgba(255, 209, 102, 0.75);
@@ -311,57 +359,29 @@ body.letter-body {
 
 /* =========================================================
    2. LEMBARAN KERTAS DI DALAM BUKU (INSIDE PAPER PAGES)
-   Sits Neatly Inside the Notebook Leather Casing
+   Tanpa Garis-Garis Vertikal yang Memotong, Bersih & Nyaman Dibaca
    ========================================================= */
 .sheet-paper {
-  position: absolute;
-  top: 12px;
+  top: 14px;
   right: 14px;
-  bottom: 12px;
-  left: 36px; /* Memberi ruang untuk tulang buku di kiri */
-  background-color: #fffdf9;
-  /* Garis Kertas Catatan Halus */
-  background-image: 
-    linear-gradient(90deg, transparent 40px, #f7a9c8 41px, #f7a9c8 42px, transparent 43px),
-    repeating-linear-gradient(transparent, transparent 27px, #f2d7e4 28px);
-  border-radius: 4px 14px 14px 4px;
+  bottom: 14px;
+  left: 14px;
+  width: calc(100% - 28px);
+  height: calc(100% - 28px);
+  background-color: #fffdfa;
+  /* Garis Catatan Lembut Horisontal Saja */
+  background-image: repeating-linear-gradient(transparent, transparent 27px, #f2d7e4 28px);
+  border-radius: 16px;
   border: 1px solid #ebd3df;
-  border-left: 2px solid #ba266d;
   box-shadow: 
-    2px 4px 18px rgba(0, 0, 0, 0.22),
-    inset 14px 0 20px rgba(0, 0, 0, 0.05);
-  padding: 22px 20px 16px 48px;
+    0 4px 18px rgba(0, 0, 0, 0.12),
+    inset 0 0 20px rgba(0, 0, 0, 0.03);
+  padding: 24px 24px 18px 24px;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
-  z-index: 20;
+  z-index: 10;
   cursor: pointer;
-  animation: paperPageIn 0.4s ease-out forwards;
-}
-
-@keyframes paperPageIn {
-  0% {
-    opacity: 0;
-    transform: rotateY(-8deg) scale(0.97);
-  }
-  100% {
-    opacity: 1;
-    transform: rotateY(0deg) scale(1);
-  }
-}
-
-/* Efek Lipatan Halus di Sudut Atas Kanan Kertas */
-.sheet-paper::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 20px 20px 0;
-  border-color: transparent #edd4e1 transparent transparent;
-  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.08);
 }
 
 /* Header Lembaran Kertas */
@@ -403,7 +423,7 @@ body.letter-body {
 .page-handwritten-text {
   font-family: 'Caveat', cursive, sans-serif;
   font-size: 1.34rem;
-  line-height: 28px; /* Tepat menyatu dengan garis kertas repeating 28px */
+  line-height: 28px; /* Selaras dengan garis kertas 28px */
   color: #280e1c;
   flex: 1;
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.12);
@@ -457,20 +477,14 @@ body.letter-body {
    3. COVER BELAKANG BUKU (BACK COVER)
    ========================================================= */
 .sheet-cover-back {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  padding: 40px 32px 36px 48px;
+  padding: 42px 32px 38px 32px;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   text-align: center;
   color: #ffffff;
   cursor: pointer;
-  z-index: 20;
-  animation: coverAppear 0.4s ease-out forwards;
+  z-index: 10;
 }
 
 .back-cover-emblem-box {
@@ -628,26 +642,17 @@ body.letter-body {
     border-radius: 20px;
   }
 
-  .notebook-spine {
-    width: 24px;
-    border-radius: 18px 0 0 18px;
-  }
-
   .notebook-stitch {
-    top: 10px;
-    right: 10px;
-    bottom: 10px;
-    left: 16px;
-  }
-
-  .notebook-ribbon {
-    right: 38px;
-    width: 20px;
+    top: 8px;
+    right: 8px;
+    bottom: 8px;
+    left: 8px;
+    border-radius: 14px;
   }
 
   .sheet-cover-front,
   .sheet-cover-back {
-    padding: 30px 20px 26px 34px;
+    padding: 30px 18px 26px 18px;
   }
 
   .cover-icon-seal {
@@ -672,11 +677,11 @@ body.letter-body {
     top: 10px;
     right: 10px;
     bottom: 10px;
-    left: 28px;
-    padding: 16px 14px 14px 38px;
-    background-image: 
-      linear-gradient(90deg, transparent 30px, #f7a9c8 31px, #f7a9c8 32px, transparent 33px),
-      repeating-linear-gradient(transparent, transparent 25px, #f2d7e4 26px);
+    left: 10px;
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    padding: 16px 16px 14px 16px;
+    background-image: repeating-linear-gradient(transparent, transparent 25px, #f2d7e4 26px);
   }
 
   .page-paper-title {
