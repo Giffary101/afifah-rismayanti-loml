@@ -11,8 +11,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Modular CSS -->
-  <link rel="stylesheet" href="css/global.css?v=4.0">
-  <link rel="stylesheet" href="css/letter.css?v=4.0">
+  <link rel="stylesheet" href="css/global.css?v=4.1">
+  <link rel="stylesheet" href="css/letter.css?v=4.1">
 
   <!-- Pengaman Akses: Wajib lolos verifikasi manual oleh admin -->
   <script>
@@ -46,24 +46,28 @@
 
     <!-- Stage Buku Catatan Kecil 3D -->
     <div class="notebook-stage">
-      <div class="notebook" id="love-notebook">
-        <!-- Pita Pembatas Buku (Bookmark Ribbon) -->
-        <div class="notebook-ribbon"></div>
+      <div class="notebook" id="love-notebook" aria-label="Buku Catatan Surat & Doa Mendalam">
+        
+        <!-- Pita Pembatas Buku Emas (Bookmark Ribbon) -->
+        <div class="notebook-ribbon" aria-hidden="true"></div>
 
-        <!-- Tulang Buku (Leather Spine) -->
-        <div class="notebook-spine"></div>
+        <!-- Tulang Buku Kulit 3D (Spine) -->
+        <div class="notebook-spine" aria-hidden="true"></div>
+
+        <!-- Garis Jahitan Emas Kulit Buku (Stitching Frame) -->
+        <div class="notebook-stitch" aria-hidden="true"></div>
 
         <!-- Wadah Lembaran Buku -->
         <div class="notebook-sheets">
           
           <!-- ==============================================
-               LEMABARAN 0: COVER DEPAN BUKU (FRONT COVER)
+               LEMBARAN 0: COVER DEPAN BUKU (FRONT COVER)
                ============================================== -->
-          <div class="notebook-sheet sheet-cover-front active" data-sheet-index="0" title="Klik untuk membuka buku">
+          <div class="notebook-sheet sheet-cover-front active" data-sheet-index="0" title="Klik untuk membuka lembaran buku">
             <span class="cover-badge-top">🌸 Catatan Cinta & Doa 🌸</span>
 
             <div class="cover-emblem-box">
-              <div class="cover-icon-seal">📖</div>
+              <div class="cover-icon-seal" aria-hidden="true">📖</div>
               <h1 class="cover-main-title">Surat & Doa Mendalam</h1>
               <div class="cover-divider-gold"></div>
               <div class="cover-recipient">Afifah Rismayanti</div>
@@ -72,10 +76,10 @@
               </p>
             </div>
 
-            <div class="cover-tap-prompt">
+            <button type="button" class="cover-tap-prompt" id="btn-open-book" aria-label="Buka Lembaran Buku">
               <span>Buka Lembaran Buku</span>
-              <span>✨</span>
-            </div>
+              <span class="sparkle">✨</span>
+            </button>
           </div>
 
           <!-- ==============================================
@@ -174,10 +178,12 @@
                LEMBARAN 5: COVER BELAKANG BUKU (BACK COVER)
                ============================================== -->
           <div class="notebook-sheet sheet-cover-back" data-sheet-index="5" title="Klik untuk kembali ke sampul depan">
-            <div class="back-cover-emblem">💌</div>
+            <span class="cover-badge-top">🌸 Dari Lubuk Hati Terdalam 🌸</span>
 
-            <div class="back-cover-content">
+            <div class="back-cover-emblem-box">
+              <div class="back-cover-seal">💌</div>
               <h2 class="back-cover-title">Tertulis Abadi</h2>
+              <div class="cover-divider-gold"></div>
               <p class="back-cover-message">
                 “Doa dan cintaku akan selalu membersamai setiap helaan nafas dan derap langkah juangmu, selamanya.”
               </p>
@@ -187,6 +193,11 @@
               <div class="back-signature-name">With all my love</div>
               <div class="back-signature-sub">~ Selamanya Untuk Afifah ~</div>
             </div>
+
+            <button type="button" class="cover-tap-prompt" id="btn-restart-book" aria-label="Kembali ke Sampul Depan">
+              <span>Kembali ke Depan</span>
+              <span>↺</span>
+            </button>
           </div>
 
         </div>
@@ -212,8 +223,8 @@
   </main>
 
   <!-- Modular Scripts -->
-  <script src="js/audio.js?v=4.0"></script>
-  <script src="js/ambient.js?v=4.0"></script>
-  <script src="js/letter.js?v=4.0"></script>
+  <script src="js/audio.js?v=4.1"></script>
+  <script src="js/ambient.js?v=4.1"></script>
+  <script src="js/letter.js?v=4.1"></script>
 </body>
 </html>

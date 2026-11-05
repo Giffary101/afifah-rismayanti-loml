@@ -323,11 +323,7 @@
     playShutter: playCameraShutterSound,
     playTick: playTickSound,
     playLightSwitch: playLightSwitchSound,
-    playFilmRolling: playFilmDragSound,
-    playFilmDrag: playFilmSlowTurnSound,
     playCylinderRoll: playCylinderRollSound,
-    playFilmRolling: playCylinderRollSound,
-    playFilmSlowTurn: playFilmUnfoldSound,
     playPageFlip: playPageFlipSound,
     isEnabled: () => isSoundEnabled
   };

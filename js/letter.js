@@ -1,6 +1,6 @@
 /**
  * Logika Interaktif Buku Catatan Kecil: Surat & Doa Mendalam (letter.html)
- * Mendukung animasi balik halaman realistis, suara gesekan kertas, dan navigasi nomor
+ * Mendukung animasi balik halaman realistis, efek suara gesekan kertas, dan navigasi nomor
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const nextBtn = document.getElementById('book-next-btn');
   const paginationContainer = document.getElementById('book-pagination');
   const ribbon = document.querySelector('.notebook-ribbon');
+  const btnOpenBook = document.getElementById('btn-open-book');
+  const btnRestartBook = document.getElementById('btn-restart-book');
 
   let currentSheet = 0;
   const totalSheets = sheets.length;
@@ -39,8 +41,10 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.className = `page-num-pill ${idx === 0 ? 'active' : ''}`;
       btn.textContent = sheetLabels[idx] || `Hal ${idx}`;
       btn.dataset.sheet = idx;
+      btn.setAttribute('aria-label', `Buka ${sheetLabels[idx] || 'Halaman ' + idx}`);
 
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
         goToSheet(idx);
       });
 
@@ -55,13 +59,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mainkan efek suara lembaran kertas bergeser
     if (window.AudioApp) {
       window.AudioApp.init();
-      window.AudioApp.playPageFlip();
+      if (typeof window.AudioApp.playPageFlip === 'function') {
+        window.AudioApp.playPageFlip();
+      }
     }
 
     // Efek partikel bunga sakura kecil saat membuka lembaran
-    if (window.createBurstParticles && sheets[index]) {
+    if (typeof window.createBurstParticles === 'function' && sheets[index]) {
       const rect = sheets[index].getBoundingClientRect();
-      window.createBurstParticles(rect.left + rect.width / 2, rect.top + rect.height / 3, 20);
+      window.createBurstParticles(rect.left + rect.width / 2, rect.top + rect.height / 3, 22);
     }
 
     // Update lembaran aktif
@@ -91,15 +97,16 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // Goyangkan pita pembatas buku
+    // Goyangkan lembut pita pembatas buku
     if (ribbon) {
-      ribbon.style.transform = `rotate(${Math.sin(index) * 4}deg) translateY(${index === 0 ? '0' : '8px'})`;
+      ribbon.style.transform = `rotate(${Math.sin(index * 1.5) * 4}deg) translateY(${index === 0 ? '0' : '8px'})`;
     }
   }
 
   // Tombol Lembar Sebelumnya & Berikutnya
   if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       if (currentSheet > 0) {
         goToSheet(currentSheet - 1);
       }
@@ -107,10 +114,26 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       if (currentSheet < totalSheets - 1) {
         goToSheet(currentSheet + 1);
       }
+    });
+  }
+
+  // Tombol khusus Buka Buku & Tutup Buku
+  if (btnOpenBook) {
+    btnOpenBook.addEventListener('click', (e) => {
+      e.stopPropagation();
+      goToSheet(1);
+    });
+  }
+
+  if (btnRestartBook) {
+    btnRestartBook.addEventListener('click', (e) => {
+      e.stopPropagation();
+      goToSheet(0);
     });
   }
 
@@ -129,9 +152,9 @@ document.addEventListener('DOMContentLoaded', () => {
       else {
         const rect = sheet.getBoundingClientRect();
         const clickX = e.clientX - rect.left;
-        if (clickX > rect.width * 0.6) {
+        if (clickX > rect.width * 0.42) {
           if (currentSheet < totalSheets - 1) goToSheet(currentSheet + 1);
-        } else if (clickX < rect.width * 0.4) {
+        } else {
           if (currentSheet > 0) goToSheet(currentSheet - 1);
         }
       }
@@ -140,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Navigasi Keyboard (Panah Kiri & Kanan di Desktop)
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
       if (currentSheet < totalSheets - 1) goToSheet(currentSheet + 1);
     } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
       if (currentSheet > 0) goToSheet(currentSheet - 1);
@@ -161,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 
   function handleSwipe() {
-    const swipeThreshold = 45;
+    const swipeThreshold = 40;
     if (touchEndX < touchStartX - swipeThreshold) {
       // Geser ke kiri -> Halaman berikutnya
       if (currentSheet < totalSheets - 1) goToSheet(currentSheet + 1);
