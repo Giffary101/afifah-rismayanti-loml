@@ -13,6 +13,12 @@
   <!-- Modular CSS -->
   <link rel="stylesheet" href="css/global.css?v=2.0">
   <link rel="stylesheet" href="css/timeline.css?v=3.3">
+  <!-- Pengaman Akses: Wajib lolos verifikasi manual oleh admin -->
+  <script>
+    if (sessionStorage.getItem('access_verified') !== 'true') {
+      window.location.replace('index.html');
+    }
+  </script>
 </head>
 <body class="timeline-body">
   <!-- ========================================================
