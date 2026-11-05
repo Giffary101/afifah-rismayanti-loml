@@ -9,21 +9,27 @@ Website interaktif ucapan selamat ulang tahun / anniversary bernuansa romantis d
 ```text
 Proyek Ucapan/
 │
-├── index.html            # Layar 1: Amplop Interaktif & Segel Hati untuk Afifah Rismayanti
+├── index.html            # Layar 1: Gerbang Verifikasi (Your Email & Kunci) & Amplop Interaktif
 ├── main.html             # Layar 2: Halaman "Selamat Datang Cintaku" & Menu Kejutan
-├── timeline.html         # Layar 3: Klise Roll Film 35mm & Hitung Mundur
+├── timeline.html         # Layar 3: Klise Roll Film 35mm Kenangan
 │
 ├── css/                  # Direktori Stylesheet Terpisah
 │   ├── global.css        # Variabel warna, reset dasar, tombol audio, & palet umum
+│   ├── gate.css          # Styling formulir gerbang verifikasi (login-like card)
 │   ├── envelope.css      # Styling animasi 3D amplop, segel hati, dan surat
 │   ├── main.css          # Styling halaman utama "Selamat Datang Cintaku" & kartu menu
-│   └── timeline.css      # Styling klise film 35mm amber/oranye, sprocket, & countdown
+│   └── timeline.css      # Styling klise film 35mm amber/oranye, sprocket, & roll kenangan
 │
 ├── js/                   # Direktori Script Logika Terpisah
+│   ├── config.js         # Konfigurasi Supabase Database (URL & Anon Key)
+│   ├── gate.js           # Logika simpan form ke Supabase / LocalStorage & transisi
 │   ├── audio.js          # Web Audio API (efek petikan harpa, pop, & shutter kamera)
 │   ├── ambient.js        # Animasi kelopak bunga sakura & hati di kanvas latar
 │   ├── envelope.js       # Logika pembuka amplop & navigasi ke main.html
-│   └── timeline.js       # Logika hitung mundur, render roll film 35mm, & dynamic background
+│   └── timeline.js       # Logika roll film 35mm & dynamic background
+│
+├── database/             # Direktori Database SQL
+│   └── schema.sql        # Skrip pembuatan tabel PostgreSQL / Supabase
 │
 ├── images/               # Direktori Foto & Aset
 │   └── CARA_GANTI_FOTO.txt # Panduan mengganti foto pribadi
