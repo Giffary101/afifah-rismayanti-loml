@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Verifikasi Kunci Manual 🔐</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Modular CSS -->
+  <link rel="stylesheet" href="css/global.css?v=2.2">
+  <link rel="stylesheet" href="css/verify.css?v=2.2">
+</head>
+<body class="verify-body">
+  <!-- Canvas Animasi Kelopak Sakura & Hati -->
+  <canvas id="ambient-canvas"></canvas>
+
+  <main class="verify-container">
+    <!-- Header Panel Verifikasi -->
+    <header class="verify-header-card">
+      <div class="verify-header-top">
+        <div class="verify-brand">
+          <div class="verify-icon-box">🔐</div>
+          <div>
+            <h1 class="verify-title">Panel Verifikasi Kunci</h1>
+            <p class="verify-subtitle">Verifikasi manual permintaan akses pengunjung website secara langsung</p>
+          </div>
+        </div>
+
+        <div class="verify-quick-links">
+          <a href="index.html" class="btn-subtle" target="_blank" title="Buka Halaman Pengunjung">
+            🌐 Buka Website ↗
+          </a>
+          <button id="refresh-btn" class="btn-refresh" title="Muat Ulang Data">
+            <span class="refresh-icon">🔄</span> Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Bar Statistik & Status Real-Time -->
+      <div class="verify-stats-bar">
+        <div class="stats-badges">
+          <span class="stat-pill pending">
+            ⏳ <strong id="count-pending">0</strong> Menunggu
+          </span>
+          <span class="stat-pill approved">
+            ✅ <strong id="count-approved">0</strong> Disetujui
+          </span>
+          <span class="stat-pill total">
+            📊 <strong id="count-total">0</strong> Total Permintaan
+          </span>
+        </div>
+
+        <div class="live-indicator">
+          <span class="live-dot"></span>
+          <span id="live-text">Real-Time Aktif</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Wadah Daftar Permintaan Akses Pengunjung -->
+    <section class="submissions-section">
+      <div id="submissions-list" class="submissions-list">
+        <!-- Kartu-kartu permintaan akan di-render via js/verify.js -->
+        <div class="empty-state-card">
+          <div class="empty-state-icon">⏳</div>
+          <h3>Memuat Data Permintaan...</h3>
+          <p>Sedang menghubungkan ke database Supabase...</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Supabase JS Client SDK v2 -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Modular Scripts -->
+  <script src="js/config.js?v=2.2"></script>
+  <script src="js/audio.js?v=2.2"></script>
+  <script src="js/ambient.js?v=2.2"></script>
+  <script src="js/verify.js?v=2.2"></script>
+</body>
+</html>

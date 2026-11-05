@@ -223,6 +223,78 @@
   color: #d13030;
 }
 
+/* Tampilan Menunggu Verifikasi Manual oleh Pemilik */
+.gate-waiting-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+  animation: fadeInDown 0.5s ease;
+  padding: 10px 0;
+}
+
+.waiting-spinner-pulse {
+  font-size: 2.8rem;
+  animation: waitingPulse 1.8s infinite ease-in-out;
+}
+
+@keyframes waitingPulse {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.15) rotate(15deg); }
+}
+
+.waiting-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 4px;
+}
+
+.waiting-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.waiting-data-badge {
+  background: rgba(255, 140, 198, 0.12);
+  border: 1px solid rgba(255, 140, 198, 0.35);
+  padding: 10px 16px;
+  border-radius: 14px;
+  font-size: 0.82rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  color: var(--text-primary);
+}
+
+.waiting-data-badge strong {
+  color: var(--love-pink-deep);
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+}
+
+.waiting-live-pulse {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #c46227;
+  background: rgba(196, 98, 39, 0.1);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(196, 98, 39, 0.25);
+}
+
+.btn-cancel-wait {
+  margin-top: 6px;
+  font-size: 0.8rem;
+}
+
 /* Catatan Privasi di Bawah */
 .gate-footer-note {
   margin-top: 18px;

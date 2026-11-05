@@ -12,17 +12,20 @@ Proyek Ucapan/
 ├── index.html            # Layar 1: Gerbang Verifikasi (Your Email & Kunci) & Amplop Interaktif
 ├── main.html             # Layar 2: Halaman "Selamat Datang Cintaku" & Menu Kejutan
 ├── timeline.html         # Layar 3: Klise Roll Film 35mm Kenangan
+├── verify.html           # Layar 4: Panel Verifikasi Kunci Manual oleh Pemilik (Admin)
 │
 ├── css/                  # Direktori Stylesheet Terpisah
 │   ├── global.css        # Variabel warna, reset dasar, tombol audio, & palet umum
 │   ├── gate.css          # Styling formulir gerbang verifikasi (login-like card)
 │   ├── envelope.css      # Styling animasi 3D amplop, segel hati, dan surat
 │   ├── main.css          # Styling halaman utama "Selamat Datang Cintaku" & kartu menu
-│   └── timeline.css      # Styling klise film 35mm amber/oranye, sprocket, & roll kenangan
+│   ├── timeline.css      # Styling klise film 35mm amber/oranye, sprocket, & roll kenangan
+│   └── verify.css        # Styling panel verifikasi manual admin
 │
 ├── js/                   # Direktori Script Logika Terpisah
 │   ├── config.js         # Konfigurasi Supabase Database (URL & Anon Key)
-│   ├── gate.js           # Logika simpan form ke Supabase / LocalStorage & transisi
+│   ├── gate.js           # Logika gerbang akses & pendengar status verifikasi real-time
+│   ├── verify.js         # Logika panel verifikasi manual (tombol setujui/tolak kunci)
 │   ├── audio.js          # Web Audio API (efek petikan harpa, pop, & shutter kamera)
 │   ├── ambient.js        # Animasi kelopak bunga sakura & hati di kanvas latar
 │   ├── envelope.js       # Logika pembuka amplop & navigasi ke main.html
