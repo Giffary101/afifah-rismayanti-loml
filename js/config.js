@@ -31,17 +31,17 @@ window.SUPABASE_CONFIG = {
  * 4. Menu "Account" (kanan atas) -> Tab "General" -> Salin "Public Key"
  */
 window.EMAILJS_CONFIG = {
-  // Masukkan Service ID EmailJS Anda:
-  serviceId: 'YOUR_SERVICE_ID',
+  // Service ID EmailJS:
+  serviceId: 'Giffary101',
 
-  // Masukkan Template ID EmailJS Anda:
-  templateId: 'YOUR_TEMPLATE_ID',
+  // Template ID EmailJS:
+  templateId: 'MyTemplate',
 
-  // Masukkan Public Key EmailJS Anda:
-  publicKey: 'YOUR_PUBLIC_KEY',
+  // Public Key EmailJS:
+  publicKey: 'mc6IRCLfYoXhrRl-r',
 
   // Informasi default pengirim & pesan
-  fromName: 'Admin Proyek Ucapan 💖',
+  fromName: 'Giffary 💖',
   subject: 'Selamat! Kunci Anda Telah Berhasil Diverifikasi 🌸',
   defaultMessage: 'Selamat telah berhasil masuk! Kunci rahasiamu telah disetujui oleh admin. Silakan kembali ke website untuk membuka amplop kejutan ini ✨'
 };

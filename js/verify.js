@@ -118,10 +118,12 @@ document.addEventListener('DOMContentLoaded', () => {
       to_email: recipientEmail,
       recipient_email: recipientEmail,
       user_email: recipientEmail,
+      email: recipientEmail,
+      reply_to: recipientEmail,
       to_name: recipientEmail.split('@')[0],
       kunci: recipientKunci,
       message: emailConfig.defaultMessage || 'Selamat! Kunci Anda telah berhasil diverifikasi oleh admin. Silakan kembali ke website untuk membuka amplop spesial Anda... ✨',
-      from_name: emailConfig.fromName || 'Admin Proyek Ucapan 💖',
+      from_name: emailConfig.fromName || 'Giffary 💖',
       subject: emailConfig.subject || 'Selamat! Kunci Anda Telah Berhasil Diverifikasi 🌸',
       website_link: websiteUrl
     };
