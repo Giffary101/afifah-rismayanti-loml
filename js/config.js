@@ -11,11 +11,11 @@
  */
 
 window.SUPABASE_CONFIG = {
-  // Masukkan Project URL Supabase Anda di sini:
-  url: 'https://YOUR_PROJECT_ID.supabase.co',
+  // Project URL Supabase:
+  url: 'https://ytjohwuhcbgebfteizwg.supabase.co',
 
-  // Masukkan Anon Public Key Supabase Anda di sini:
-  anonKey: 'YOUR_ANON_PUBLIC_KEY',
+  // Anon Public Key Supabase:
+  anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl0am9od3VoY2JnZWJmdGVpendnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM4NDUzOTksImV4cCI6MjEwOTQyMTM5OX0.nhekrw1H--lAXhzDhbLTSNje7VguUISjWZpznclkG0w',
 
   // Nama tabel yang menampung form (sesuai schema.sql)
   tableName: 'access_logs'

@@ -20,15 +20,18 @@ document.addEventListener('DOMContentLoaded', () => {
   let supabaseClient = null;
   const config = window.SUPABASE_CONFIG || {};
 
-  const isConfigValid = config.url && 
+  // Normalisasi URL (hapus /rest/v1/ atau garis miring di ujung jika ada)
+  const cleanUrl = (config.url || '').replace(/\/rest\/v1\/?$/, '').replace(/\/+$/, '').trim();
+
+  const isConfigValid = cleanUrl && 
                         config.anonKey && 
-                        !config.url.includes('YOUR_PROJECT_ID') &&
+                        !cleanUrl.includes('YOUR_PROJECT_ID') &&
                         !config.anonKey.includes('YOUR_ANON');
 
   if (window.supabase && isConfigValid) {
     try {
-      supabaseClient = window.supabase.createClient(config.url, config.anonKey);
-      console.log('✅ Supabase Client berhasil terhubung.');
+      supabaseClient = window.supabase.createClient(cleanUrl, config.anonKey);
+      console.log('✅ Supabase Client berhasil terhubung ke:', cleanUrl);
     } catch (err) {
       console.warn('⚠️ Gagal menginisialisasi Supabase Client:', err);
     }
