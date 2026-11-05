@@ -11,22 +11,25 @@ Proyek Ucapan/
 │
 ├── index.html            # Layar 1: Gerbang Verifikasi (Your Email & Kunci) & Amplop Interaktif
 ├── main.html             # Layar 2: Halaman "Selamat Datang Cintaku" & Menu Kejutan
-├── timeline.html         # Layar 3: Klise Roll Film 35mm Kenangan
-├── verify.html           # Layar 4: Panel Verifikasi Kunci Manual oleh Pemilik (Admin)
+├── letter.html           # Layar 3: Buku Catatan Kecil (Surat & Doa Mendalam)
+├── timeline.html         # Layar 4: Klise Roll Film 35mm Kenangan
+├── verify.html           # Layar 5: Panel Verifikasi Kunci Manual oleh Pemilik (Admin)
 │
 ├── css/                  # Direktori Stylesheet Terpisah
 │   ├── global.css        # Variabel warna, reset dasar, tombol audio, & palet umum
 │   ├── gate.css          # Styling formulir gerbang verifikasi (login-like card)
 │   ├── envelope.css      # Styling animasi 3D amplop, segel hati, dan surat
 │   ├── main.css          # Styling halaman utama "Selamat Datang Cintaku" & kartu menu
+│   ├── letter.css        # Styling buku catatan kecil realistis, cover kulit & garis kertas
 │   ├── timeline.css      # Styling klise film 35mm amber/oranye, sprocket, & roll kenangan
 │   └── verify.css        # Styling panel verifikasi manual admin
 │
 ├── js/                   # Direktori Script Logika Terpisah
-│   ├── config.js         # Konfigurasi Supabase Database (URL & Anon Key)
+│   ├── config.js         # Konfigurasi Supabase Database & EmailJS
 │   ├── gate.js           # Logika gerbang akses & pendengar status verifikasi real-time
+│   ├── letter.js         # Logika buka buku catatan, efek balik halaman & nomor navigasi
 │   ├── verify.js         # Logika panel verifikasi manual (tombol setujui/tolak kunci)
-│   ├── audio.js          # Web Audio API (efek petikan harpa, pop, & shutter kamera)
+│   ├── audio.js          # Web Audio API (efek harpa, pop, shutter kamera, & page flip)
 │   ├── ambient.js        # Animasi kelopak bunga sakura & hati di kanvas latar
 │   ├── envelope.js       # Logika pembuka amplop & navigasi ke main.html
 │   └── timeline.js       # Logika roll film 35mm & dynamic background

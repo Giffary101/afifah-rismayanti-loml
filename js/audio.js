@@ -256,6 +256,45 @@
     }
   }
 
+  // Suara gesekan lembut lembaran kertas buku dibalik (Page Flip)
+  function playPageFlipSound() {
+    if (!isSoundEnabled) return;
+    try {
+      initAudio();
+      if (!audioCtx) return;
+
+      const bufferSize = Math.floor(audioCtx.sampleRate * 0.14);
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
+      }
+
+      const noise = audioCtx.createBufferSource();
+      noise.buffer = buffer;
+
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(1400, audioCtx.currentTime);
+      filter.frequency.exponentialRampToValueAtTime(350, audioCtx.currentTime + 0.14);
+      filter.Q.value = 2.2;
+
+      const gain = audioCtx.createGain();
+      gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.16, audioCtx.currentTime + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.14);
+
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      noise.start(audioCtx.currentTime);
+      noise.stop(audioCtx.currentTime + 0.15);
+    } catch (e) {
+      console.log('Audio error', e);
+    }
+  }
+
   // Setup tombol kontrol suara jika elemen ada di halaman
   document.addEventListener('DOMContentLoaded', () => {
     const soundBtn = document.getElementById('sound-btn');
@@ -289,6 +328,7 @@
     playCylinderRoll: playCylinderRollSound,
     playFilmRolling: playCylinderRollSound,
     playFilmSlowTurn: playFilmUnfoldSound,
+    playPageFlip: playPageFlipSound,
     isEnabled: () => isSoundEnabled
   };
 })();

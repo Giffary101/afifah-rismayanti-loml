@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buku Catatan: Surat & Doa Mendalam 📖 | Spesial Afifah</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Modular CSS -->
+  <link rel="stylesheet" href="css/global.css?v=4.0">
+  <link rel="stylesheet" href="css/letter.css?v=4.0">
+
+  <!-- Pengaman Akses: Wajib lolos verifikasi manual oleh admin -->
+  <script>
+    if (sessionStorage.getItem('access_verified') !== 'true') {
+      window.location.replace('index.html');
+    }
+  </script>
+</head>
+<body class="letter-body">
+  <!-- Canvas Animasi Kelopak Sakura & Hati -->
+  <canvas id="ambient-canvas"></canvas>
+
+  <!-- Kontrol Suara -->
+  <div class="audio-control-bar">
+    <button id="sound-btn" class="icon-btn" title="Nyalakan / Matikan Efek Suara">
+      <span class="icon">🔔</span>
+      <span class="btn-text">Sound: On</span>
+    </button>
+  </div>
+
+  <main class="letter-page-container">
+    <!-- Bar Navigasi Atas -->
+    <header class="letter-top-nav">
+      <a href="main.html" class="btn-subtle" title="Kembali ke Halaman Selamat Datang Cintaku">
+        ← Kembali ke Menu Utama
+      </a>
+      <div class="letter-header-pill">
+        <span>📖</span> Buku Catatan: Surat & Doa Mendalam
+      </div>
+    </header>
+
+    <!-- Stage Buku Catatan Kecil 3D -->
+    <div class="notebook-stage">
+      <div class="notebook" id="love-notebook">
+        <!-- Pita Pembatas Buku (Bookmark Ribbon) -->
+        <div class="notebook-ribbon"></div>
+
+        <!-- Tulang Buku (Leather Spine) -->
+        <div class="notebook-spine"></div>
+
+        <!-- Wadah Lembaran Buku -->
+        <div class="notebook-sheets">
+          
+          <!-- ==============================================
+               LEMABARAN 0: COVER DEPAN BUKU (FRONT COVER)
+               ============================================== -->
+          <div class="notebook-sheet sheet-cover-front active" data-sheet-index="0" title="Klik untuk membuka buku">
+            <span class="cover-badge-top">🌸 Catatan Cinta & Doa 🌸</span>
+
+            <div class="cover-emblem-box">
+              <div class="cover-icon-seal">📖</div>
+              <h1 class="cover-main-title">Surat & Doa Mendalam</h1>
+              <div class="cover-divider-gold"></div>
+              <div class="cover-recipient">Afifah Rismayanti</div>
+              <p class="cover-quote">
+                “Untuk wanita pejuang peraih mimpi yang selalu tersemat dalam setiap bait doaku.”
+              </p>
+            </div>
+
+            <div class="cover-tap-prompt">
+              <span>Buka Lembaran Buku</span>
+              <span>✨</span>
+            </div>
+          </div>
+
+          <!-- ==============================================
+               LEMBARAN 1: HALAMAN 1 (PROLOG KASIH)
+               ============================================== -->
+          <div class="notebook-sheet sheet-paper" data-sheet-index="1">
+            <div class="page-paper-header">
+              <span class="page-chapter-tag">LEMBARAN I • KAGUM & TULUS</span>
+              <span class="page-date-stamp">#CatatanHati</span>
+            </div>
+
+            <h2 class="page-paper-title">Untukmu, Jiwa yang Paling Ku Kagumi</h2>
+
+            <div class="page-handwritten-text">
+              <p>Afifah tercinta,</p>
+              <p>Melihat caramu menatap masa depan dan menyaksikan keteguhan hatimu melangkah melewati setiap rintangan demi meraih impian, selalu berhasil membuat hatiku bergetar dalam rasa kagum yang amat dalam.</p>
+              <p>Kamu adalah sosok wanita pejuang yang luar biasa tangguh, namun senantiasa menyimpan hati yang selembut embun pagi. Di buku catatan kecil ini, aku titipkan setiap rasa syukur atas hadirmu yang begitu bermakna.</p>
+            </div>
+
+            <div class="page-paper-footer">
+              <span class="paper-doodle">🌸</span>
+              <span class="paper-page-number">1</span>
+            </div>
+          </div>
+
+          <!-- ==============================================
+               LEMBARAN 2: HALAMAN 2 (BAIT DOA DI SETIAP SUJUD)
+               ============================================== -->
+          <div class="notebook-sheet sheet-paper" data-sheet-index="2">
+            <div class="page-paper-header">
+              <span class="page-chapter-tag">LEMBARAN II • RANGKAIAN DOA</span>
+              <span class="page-date-stamp">#DoaAbadi</span>
+            </div>
+
+            <h2 class="page-paper-title">Doa di Setiap Langkah & Sujudmu</h2>
+
+            <div class="page-handwritten-text">
+              <p>Di setiap heningnya malam dan dalam setiap sujudku, ada nama yang tak pernah luput kusebut:</p>
+              <p>Semoga Tuhan senantiasa melimpahkan kesehatan, kelapangan hati, dan kemudahan di setiap ujian yang kamu hadapi. Semoga setiap peluh dan letihmu digantikan dengan keberhasilan yang berlipat ganda.</p>
+              <p>Jangan pernah merasa sendiri, karena doaku akan selalu menjadi sayap tak kasat mata yang menjagamu dari kejauhan.</p>
+            </div>
+
+            <div class="page-paper-footer">
+              <span class="paper-doodle">🤲✨</span>
+              <span class="paper-page-number">2</span>
+            </div>
+          </div>
+
+          <!-- ==============================================
+               LEMBARAN 3: HALAMAN 3 (TEMPAT PULANG SAAT LELAH)
+               ============================================== -->
+          <div class="notebook-sheet sheet-paper" data-sheet-index="3">
+            <div class="page-paper-header">
+              <span class="page-chapter-tag">LEMBARAN III • RUMAH BERPULANG</span>
+              <span class="page-date-stamp">#PelukHangat</span>
+            </div>
+
+            <h2 class="page-paper-title">Saat Bahumu Mulai Terasa Lelah</h2>
+
+            <div class="page-handwritten-text">
+              <p>Dunia di luar sana mungkin sering menuntutmu untuk selalu kuat dan pantang mengeluh. Tapi ingatlah, bersamaku kamu boleh melepas lelahmu sejenak.</p>
+              <p>Jika hari terasa terlalu berat dan air matamu ingin jatuh, jangan ditahan. Aku akan selalu menjadi rumah yang teduh, pendengar yang setia, dan peluk hangat yang tak pernah menghakimi.</p>
+              <p>Kamu sudah melangkah sejauh ini, dan bagiku kamu adalah pemenang yang luar biasa.</p>
+            </div>
+
+            <div class="page-paper-footer">
+              <span class="paper-doodle">☕💖</span>
+              <span class="paper-page-number">3</span>
+            </div>
+          </div>
+
+          <!-- ==============================================
+               LEMBARAN 4: HALAMAN 4 (JANJI MASA DEPAN)
+               ============================================== -->
+          <div class="notebook-sheet sheet-paper" data-sheet-index="4">
+            <div class="page-paper-header">
+              <span class="page-chapter-tag">LEMBARAN IV • MENATAP ESOK</span>
+              <span class="page-date-stamp">#JanjiSetia</span>
+            </div>
+
+            <h2 class="page-paper-title">Janji untuk Selalu Menemani</h2>
+
+            <div class="page-handwritten-text">
+              <p>Masa depan mungkin masih menyimpan sejuta teka-teki, namun satu hal yang pasti: aku berjanji akan terus setia di sampingmu.</p>
+              <p>Menjadi orang terdepan yang bertepuk tangan bangga atas setiap impianmu yang terwujud, dan menjadi genggaman erat saat jalanmu terasa sunyi. Terima kasih telah hadir dan menjadi bagian paling berharga dalam hidup ini.</p>
+              <p>Terbanglah tinggi menggapai mimpimu, cintaku.</p>
+            </div>
+
+            <div class="page-paper-footer">
+              <span class="paper-doodle">🕊️💌</span>
+              <span class="paper-page-number">4</span>
+            </div>
+          </div>
+
+          <!-- ==============================================
+               LEMBARAN 5: COVER BELAKANG BUKU (BACK COVER)
+               ============================================== -->
+          <div class="notebook-sheet sheet-cover-back" data-sheet-index="5" title="Klik untuk kembali ke sampul depan">
+            <div class="back-cover-emblem">💌</div>
+
+            <div class="back-cover-content">
+              <h2 class="back-cover-title">Tertulis Abadi</h2>
+              <p class="back-cover-message">
+                “Doa dan cintaku akan selalu membersamai setiap helaan nafas dan derap langkah juangmu, selamanya.”
+              </p>
+            </div>
+
+            <div class="back-signature-box">
+              <div class="back-signature-name">With all my love</div>
+              <div class="back-signature-sub">~ Selamanya Untuk Afifah ~</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Kontrol Navigasi Buku di Bawah -->
+    <nav class="notebook-controls-bar" aria-label="Navigasi Lembaran Buku">
+      <div class="book-nav-buttons-row">
+        <button id="book-prev-btn" class="btn-book-nav" aria-label="Halaman Sebelumnya">
+          <span>‹</span> Lembar Sebelumnya
+        </button>
+        <button id="book-next-btn" class="btn-book-nav" aria-label="Halaman Berikutnya">
+          Lembar Berikutnya <span>›</span>
+        </button>
+      </div>
+
+      <!-- Bilah Navigasi Nomor Halaman -->
+      <div id="book-pagination" class="book-pagination-nav">
+        <!-- Tombol nomor halaman akan dibuat otomatis oleh js/letter.js -->
+      </div>
+    </nav>
+  </main>
+
+  <!-- Modular Scripts -->
+  <script src="js/audio.js?v=4.0"></script>
+  <script src="js/ambient.js?v=4.0"></script>
+  <script src="js/letter.js?v=4.0"></script>
+</body>
+</html>
