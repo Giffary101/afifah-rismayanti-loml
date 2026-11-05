@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
     '2',
     '3',
     '4',
+    '5',
+    '6',
     'Cover Belakang'
   ];
 
