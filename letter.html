@@ -25,11 +25,14 @@
   <!-- Canvas Animasi Kelopak Sakura & Hati -->
   <canvas id="ambient-canvas"></canvas>
 
-  <!-- Kontrol Suara -->
+  <!-- Audio Latar Belakang: Terbuang Dalam Waktu (Peaceful Piano) -->
+  <audio id="bg-music" loop preload="auto" src="music/Terbuang%20Dalam%20Waktu%20-%20Barasuara%20(Peaceful%20Piano).mp3"></audio>
+
+  <!-- Kontrol Musik Latar Belakang -->
   <div class="audio-control-bar">
-    <button id="sound-btn" class="icon-btn" title="Nyalakan / Matikan Efek Suara">
-      <span class="icon">🔔</span>
-      <span class="btn-text">Sound: On</span>
+    <button id="music-btn" class="icon-btn" title="Nyalakan / Jeda Musik Latar (Terbuang Dalam Waktu)">
+      <span class="icon" id="music-icon">🎵</span>
+      <span class="btn-text" id="music-btn-text">Musik: On</span>
     </button>
   </div>
 

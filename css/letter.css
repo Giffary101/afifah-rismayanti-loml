@@ -41,6 +41,24 @@ body.letter-body {
   gap: 10px;
 }
 
+/* Tombol Musik Latar Belakang (Terbuang Dalam Waktu) */
+.audio-control-bar .icon-btn.playing {
+  border-color: #ffd166;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--love-pink-deep, #d63384);
+  box-shadow: 0 4px 18px rgba(232, 93, 158, 0.35);
+}
+
+.audio-control-bar .icon-btn.playing .icon {
+  display: inline-block;
+  animation: noteBounce 1.8s infinite ease-in-out;
+}
+
+@keyframes noteBounce {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.18) rotate(12deg); }
+}
+
 /* =========================================================
    STAGE & WADAH BUKU CATATAN (NOTEBOOK)
    Hanya Menampilkan Bentuk Buku yang Bersih & Elegan

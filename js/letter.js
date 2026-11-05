@@ -17,8 +17,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnOpenBook = document.getElementById('btn-open-book');
   const btnRestartBook = document.getElementById('btn-restart-book');
 
+  // Kontrol Audio Latar Belakang: "Terbuang Dalam Waktu - Barasuara"
+  const bgMusic = document.getElementById('bg-music');
+  const musicBtn = document.getElementById('music-btn');
+  const musicIcon = document.getElementById('music-icon');
+  const musicBtnText = document.getElementById('music-btn-text');
+
   let currentSheet = 0;
   let isAnimating = false;
+  let isMusicPlaying = false;
+  const TARGET_VOLUME = 0.45; // Volume lembut dan syahdu untuk membaca
   const totalSheets = sheets.length;
 
   // Nama label untuk setiap lembaran di bilah navigasi bawah
@@ -208,6 +216,70 @@ document.addEventListener('DOMContentLoaded', () => {
       // Geser ke kanan -> Halaman sebelumnya (mundur)
       if (currentSheet > 0) goToSheet(currentSheet - 1);
     }
+  }
+
+  // ==============================================
+  // KONTROL MUSIK LATAR BELAKANG: "Terbuang Dalam Waktu"
+  // ==============================================
+  function tryPlayMusic() {
+    if (!bgMusic || isMusicPlaying) return;
+    bgMusic.volume = TARGET_VOLUME;
+    bgMusic.play().then(() => {
+      isMusicPlaying = true;
+      updateMusicButton(true);
+    }).catch(() => {
+      // Jika diblokir oleh kebijakan autoplay browser, tunggu interaksi pertama
+      isMusicPlaying = false;
+      updateMusicButton(false);
+    });
+  }
+
+  function updateMusicButton(playing) {
+    if (!musicBtn) return;
+    if (playing) {
+      if (musicIcon) musicIcon.textContent = '🎵';
+      if (musicBtnText) musicBtnText.textContent = 'Musik: On';
+      musicBtn.classList.add('playing');
+      musicBtn.setAttribute('title', 'Jeda Musik Latar (Terbuang Dalam Waktu)');
+    } else {
+      if (musicIcon) musicIcon.textContent = '🔇';
+      if (musicBtnText) musicBtnText.textContent = 'Musik: Off';
+      musicBtn.classList.remove('playing');
+      musicBtn.setAttribute('title', 'Putar Musik Latar (Terbuang Dalam Waktu)');
+    }
+  }
+
+  if (bgMusic && musicBtn) {
+    musicBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (bgMusic.paused) {
+        bgMusic.play().then(() => {
+          isMusicPlaying = true;
+          updateMusicButton(true);
+        });
+      } else {
+        bgMusic.pause();
+        isMusicPlaying = false;
+        updateMusicButton(false);
+      }
+    });
+
+    // Otomatis putar musik saat interaksi pertama di halaman
+    function startMusicOnFirstInteraction() {
+      if (bgMusic && bgMusic.paused && !isMusicPlaying) {
+        tryPlayMusic();
+      }
+      document.removeEventListener('click', startMusicOnFirstInteraction);
+      document.removeEventListener('touchstart', startMusicOnFirstInteraction);
+      document.removeEventListener('keydown', startMusicOnFirstInteraction);
+    }
+
+    document.addEventListener('click', startMusicOnFirstInteraction);
+    document.addEventListener('touchstart', startMusicOnFirstInteraction);
+    document.addEventListener('keydown', startMusicOnFirstInteraction);
+
+    // Coba putar otomatis saat halaman dimuat
+    tryPlayMusic();
   }
 
   // Bangun navigasi awal
