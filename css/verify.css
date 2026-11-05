@@ -412,6 +412,90 @@ body.verify-body {
   margin: 0 auto;
 }
 
+.btn-mailto {
+  background: #f0fdf4;
+  border: 1.5px solid #86efac;
+  color: #15803d;
+  font-size: 0.78rem;
+  padding: 6px 12px;
+  text-decoration: none;
+}
+
+.btn-mailto:hover {
+  background: #dcfce7;
+  color: #166534;
+  transform: translateY(-2px);
+}
+
+.email-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.email-status-pill.sent {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #86efac;
+}
+
+/* Toast Notifikasi Feedback */
+#verify-toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+  max-width: 380px;
+}
+
+.verify-toast {
+  pointer-events: auto;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(255, 140, 198, 0.5);
+  border-radius: 16px;
+  padding: 14px 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  font-size: 0.86rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: toastSlideIn 0.35s cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.verify-toast.toast-success {
+  border-left: 5px solid #10b981;
+}
+
+.verify-toast.toast-info {
+  border-left: 5px solid #3b82f6;
+}
+
+.verify-toast.toast-error {
+  border-left: 5px solid #ef4444;
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 /* Responsif Layar HP */
 @media (max-width: 640px) {
   .verify-header-card {

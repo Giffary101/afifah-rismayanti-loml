@@ -1,6 +1,6 @@
 /**
  * Logika Panel Verifikasi Kunci Manual (verify.html)
- * Menampilkan daftar permintaan akses dan tombol verifikasi manual oleh manusia
+ * Menampilkan daftar permintaan akses, verifikasi manual, dan kirim email notifikasi (EmailJS)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let submissionsData = [];
   let supabaseClient = null;
 
+  // 1. Inisialisasi Supabase
   const config = window.SUPABASE_CONFIG || {};
   const cleanUrl = (config.url || '').replace(/\/rest\/v1\/?$/, '').replace(/\/+$/, '').trim();
 
@@ -29,6 +30,47 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       console.error('❌ Gagal inisialisasi Supabase:', err);
     }
+  }
+
+  // 2. Inisialisasi EmailJS
+  const emailConfig = window.EMAILJS_CONFIG || {};
+  const hasEmailJSKey = window.emailjs && 
+                        emailConfig.publicKey && 
+                        !emailConfig.publicKey.includes('YOUR_PUBLIC_KEY');
+
+  if (hasEmailJSKey) {
+    try {
+      emailjs.init({ publicKey: emailConfig.publicKey });
+      console.log('✅ EmailJS berhasil diinisialisasi.');
+    } catch (e) {
+      console.warn('⚠️ Gagal inisialisasi EmailJS:', e);
+    }
+  }
+
+  // Toast Container
+  let toastContainer = document.getElementById('verify-toast-container');
+  if (!toastContainer) {
+    toastContainer = document.createElement('div');
+    toastContainer.id = 'verify-toast-container';
+    document.body.appendChild(toastContainer);
+  }
+
+  function showToast(message, type = 'info', duration = 6000) {
+    const toast = document.createElement('div');
+    toast.className = `verify-toast toast-${type}`;
+    
+    let icon = 'ℹ️';
+    if (type === 'success') icon = '✅';
+    if (type === 'error') icon = '❌';
+
+    toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
+    toastContainer.appendChild(toast);
+
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(15px)';
+      setTimeout(() => toast.remove(), 300);
+    }, duration);
   }
 
   // Format tanggal ramah pengguna
@@ -56,6 +98,42 @@ document.addEventListener('DOMContentLoaded', () => {
     if (ua.includes('Windows')) return '💻 Windows PC';
     if (ua.includes('Macintosh')) return '💻 Mac OS';
     return ua.substring(0, 40) + '...';
+  }
+
+  // Fungsi Kirim Email Notifikasi Verifikasi Berhasil ke Pengguna
+  async function sendVerificationEmail(recipientEmail, recipientKunci) {
+    const isConfigured = emailConfig.serviceId && 
+                         emailConfig.templateId && 
+                         emailConfig.publicKey && 
+                         !emailConfig.publicKey.includes('YOUR_PUBLIC_KEY');
+
+    if (!isConfigured) {
+      console.info('ℹ️ EmailJS belum diisi Service ID / Template ID di js/config.js.');
+      return { success: false, reason: 'not_configured' };
+    }
+
+    const websiteUrl = window.location.origin + window.location.pathname.replace('verify.html', 'index.html');
+
+    const templateParams = {
+      to_email: recipientEmail,
+      recipient_email: recipientEmail,
+      user_email: recipientEmail,
+      to_name: recipientEmail.split('@')[0],
+      kunci: recipientKunci,
+      message: emailConfig.defaultMessage || 'Selamat! Kunci Anda telah berhasil diverifikasi oleh admin. Silakan kembali ke website untuk membuka amplop spesial Anda... ✨',
+      from_name: emailConfig.fromName || 'Admin Proyek Ucapan 💖',
+      subject: emailConfig.subject || 'Selamat! Kunci Anda Telah Berhasil Diverifikasi 🌸',
+      website_link: websiteUrl
+    };
+
+    try {
+      const res = await emailjs.send(emailConfig.serviceId, emailConfig.templateId, templateParams);
+      console.log('📧 Email notifikasi berhasil dikirim:', res);
+      return { success: true, res };
+    } catch (err) {
+      console.error('❌ Gagal mengirim email via EmailJS:', err);
+      return { success: false, error: err };
+    }
   }
 
   // Render Daftar Permintaan
@@ -91,11 +169,19 @@ document.addEventListener('DOMContentLoaded', () => {
         statusBadgeHtml = `<span class="status-badge rejected">❌ Kunci Ditolak</span>`;
       }
 
+      // Link Mailto untuk kirim langsung lewat aplikasi Gmail
+      const websiteUrl = window.location.origin + window.location.pathname.replace('verify.html', 'index.html');
+      const mailtoSubject = encodeURIComponent(emailConfig.subject || 'Selamat! Kunci Anda Telah Berhasil Diverifikasi 🌸');
+      const mailtoBody = encodeURIComponent(
+        `Halo,\n\nSelamat! Permintaan akses dan kuncimu (${item.kunci}) telah disetujui oleh admin.\nSilakan buka website untuk membuka amplop spesialmu sekarang:\n${websiteUrl}\n\nSalam hangat,\nAdmin Proyek Ucapan 💖`
+      );
+      const mailtoHref = `mailto:${encodeURIComponent(item.email)}?subject=${mailtoSubject}&body=${mailtoBody}`;
+
       let actionsHtml = '';
       if (currentStatus === 'pending') {
         actionsHtml = `
-          <button class="btn-action btn-approve" data-id="${item.id}" data-action="approve" title="Setujui dan buka halaman untuk pengunjung">
-            ✔ Verifikasi (Kunci Benar)
+          <button class="btn-action btn-approve" data-id="${item.id}" data-action="approve" title="Setujui dan kirim email ke pengguna">
+            ✔ Verifikasi & Kirim Email
           </button>
           <button class="btn-action btn-reject" data-id="${item.id}" data-action="reject" title="Tolak akses">
             ✖ Tolak (Kunci Salah)
@@ -103,6 +189,9 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
       } else {
         actionsHtml = `
+          <a href="${mailtoHref}" target="_blank" class="btn-action btn-mailto" title="Kirim manual langsung via Gmail">
+            ✉ Buka Gmail Manual
+          </a>
           <button class="btn-action btn-reset-pending" data-id="${item.id}" data-action="reset" title="Kembalikan status ke menunggu">
             ↺ Ubah ke Menunggu
           </button>
@@ -166,13 +255,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Update Status ke Database Supabase
+  // Update Status ke Database Supabase & Kirim Email jika Approved
   async function updateSubmissionStatus(id, newStatus) {
     const cardEl = document.getElementById(`submission-card-${id}`);
     if (cardEl) {
       cardEl.style.opacity = '0.6';
       cardEl.style.pointerEvents = 'none';
     }
+
+    // Cari item yang sedang diverifikasi
+    const targetItem = submissionsData.find(i => String(i.id) === String(id));
 
     // Suara feedback
     if (window.AudioApp) {
@@ -193,13 +285,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (error) {
           console.error('❌ Gagal update status di Supabase:', error);
-          alert('Gagal memperbarui status: ' + error.message);
+          showToast('Gagal update status di database: ' + error.message, 'error');
         } else {
           console.log(`✅ Status ID ${id} diubah menjadi: ${newStatus}`);
         }
       } catch (err) {
         console.error('Terjadi kesalahan:', err);
       }
+    }
+
+    // Jika disetujui (Approved), lakukan pengiriman email ke pengguna!
+    if (newStatus === 'approved' && targetItem) {
+      showToast(`Mengirim email ke ${targetItem.email}... ⏳`, 'info', 3000);
+      const emailResult = await sendVerificationEmail(targetItem.email, targetItem.kunci);
+
+      if (emailResult.success) {
+        showToast(`✔ Kunci diverifikasi & Email berhasil terkirim ke ${targetItem.email}! 💌`, 'success', 7000);
+      } else if (emailResult.reason === 'not_configured') {
+        showToast(`✔ Kunci diverifikasi! (Masukkan Service ID EmailJS di config.js untuk mengaktifkan kirim email otomatis)`, 'info', 8000);
+      } else {
+        showToast(`✔ Kunci diverifikasi, namun email gagal terkirim (${emailResult.error?.text || 'EmailJS error'}). Anda bisa klik 'Buka Gmail Manual'.`, 'error', 8000);
+      }
+    } else if (newStatus === 'rejected') {
+      showToast(`❌ Kunci dinyatakan salah / ditolak.`, 'error', 4000);
     }
 
     // Update lokal pada data array
@@ -227,11 +335,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Ambil Data dari Supabase
   async function fetchSubmissions() {
     if (refreshBtn) {
-      refreshBtn.querySelector('.refresh-icon').style.animation = 'spin 0.6s linear';
+      const icon = refreshBtn.querySelector('.refresh-icon');
+      if (icon) icon.style.animation = 'spin 0.6s linear';
     }
 
     if (!supabaseClient) {
-      // Fallback ke localStorage jika Supabase belum aktif
       const localLogs = JSON.parse(localStorage.getItem('access_logs') || '[]');
       submissionsData = localLogs.reverse();
       renderSubmissions(submissionsData);
@@ -257,7 +365,8 @@ document.addEventListener('DOMContentLoaded', () => {
     } finally {
       if (refreshBtn) {
         setTimeout(() => {
-          refreshBtn.querySelector('.refresh-icon').style.animation = '';
+          const icon = refreshBtn.querySelector('.refresh-icon');
+          if (icon) icon.style.animation = '';
         }, 600);
       }
     }
@@ -276,12 +385,12 @@ document.addEventListener('DOMContentLoaded', () => {
           (payload) => {
             console.log('⚡ Perubahan Realtime terdeteksi:', payload);
 
-            // Jika ada permintaan baru yang masuk (INSERT), bunyikan nada notifikasi
             if (payload.eventType === 'INSERT') {
               if (window.AudioApp) {
                 window.AudioApp.init();
                 window.AudioApp.playPop();
               }
+              showToast(`Permintaan akses baru masuk dari: ${payload.new.email}`, 'info', 5000);
             }
 
             fetchSubmissions();
@@ -295,7 +404,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Utility Sanitize HTML
   function escapeHtml(str) {
     if (!str) return '';
     return String(str)
@@ -306,18 +414,14 @@ document.addEventListener('DOMContentLoaded', () => {
       .replace(/'/g, '&#039;');
   }
 
-  // Event Listener Tombol Refresh
   if (refreshBtn) {
     refreshBtn.addEventListener('click', () => {
       fetchSubmissions();
     });
   }
 
-  // Inisialisasi awal
   fetchSubmissions();
   setupRealtime();
 
-  // Polling cadangan setiap 6 detik
-  setInterval(fetchSubmissions, 6000);
+  setInterval(fetchSubmissions, 5000);
 });
-

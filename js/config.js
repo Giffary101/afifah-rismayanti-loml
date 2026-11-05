@@ -21,3 +21,28 @@ window.SUPABASE_CONFIG = {
   tableName: 'access_logs'
 };
 
+/**
+ * Konfigurasi Layanan Pengiriman Email (EmailJS)
+ * 
+ * CARA MENDAPATKAN KUNCI EMAILJS (GRATIS):
+ * 1. Daftar / Login di https://www.emailjs.com
+ * 2. Menu "Email Services" -> Tambahkan Service Gmail Anda -> Salin "Service ID"
+ * 3. Menu "Email Templates" -> Buat template baru -> Salin "Template ID"
+ * 4. Menu "Account" (kanan atas) -> Tab "General" -> Salin "Public Key"
+ */
+window.EMAILJS_CONFIG = {
+  // Masukkan Service ID EmailJS Anda:
+  serviceId: 'YOUR_SERVICE_ID',
+
+  // Masukkan Template ID EmailJS Anda:
+  templateId: 'YOUR_TEMPLATE_ID',
+
+  // Masukkan Public Key EmailJS Anda:
+  publicKey: 'YOUR_PUBLIC_KEY',
+
+  // Informasi default pengirim & pesan
+  fromName: 'Admin Proyek Ucapan 💖',
+  subject: 'Selamat! Kunci Anda Telah Berhasil Diverifikasi 🌸',
+  defaultMessage: 'Selamat telah berhasil masuk! Kunci rahasiamu telah disetujui oleh admin. Silakan kembali ke website untuk membuka amplop kejutan ini ✨'
+};
+
