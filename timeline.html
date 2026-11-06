@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Roll Film Kenangan 35mm 🎞️</title>
+  <title>Linimasa Perjalanan Cinta & Cita-Cita 🌸 | Spesial Afifah</title>
   
-  <!-- Google Fonts -->
+  <!-- Google Fonts Sesuai main.html -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
   
   <!-- Modular CSS -->
-  <link rel="stylesheet" href="css/global.css?v=2.0">
-  <link rel="stylesheet" href="css/timeline.css?v=3.3">
+  <link rel="stylesheet" href="css/global.css?v=2.3">
+  <link rel="stylesheet" href="css/timeline.css?v=4.0">
+
   <!-- Pengaman Akses: Wajib lolos verifikasi manual oleh admin -->
   <script>
     if (sessionStorage.getItem('access_verified') !== 'true') {
@@ -20,154 +21,141 @@
     }
   </script>
 </head>
-<body class="timeline-body">
-  <!-- ========================================================
-       INTRO SCREEN: COUNTDOWN VINTAGE & ANIMASI LAMPU MENYALA
-       ======================================================== -->
-  <div id="intro-overlay" class="intro-overlay" aria-label="Intro Animasi Lampu dan Countdown">
-    <!-- Tombol Lewati Intro -->
-    <button id="skip-intro-btn" class="skip-intro-btn" title="Lewati Animasi">
-      Lewati ➔
-    </button>
-
-    <div class="intro-content">
-      <!-- Lampu Bohlam Edison Vintage Gantung -->
-      <div class="vintage-lamp-assembly" id="vintage-lamp">
-        <div class="lamp-wire"></div>
-        <div class="lamp-socket-cap"></div>
-        <div class="lamp-socket">
-          <div class="socket-screw-stripes"></div>
-          <div class="socket-switch-knob"></div>
-        </div>
-        
-        <div class="lamp-bulb-glass">
-          <div class="bulb-reflection-curve"></div>
-          <!-- Filamen Pijar Tungsten (Kuning Tembaga / Emas Menyala) -->
-          <div class="bulb-filament" id="bulb-filament">
-            <svg viewBox="0 0 44 60" class="filament-svg">
-              <path class="lead-wire left" d="M16 0 L16 22" />
-              <path class="lead-wire right" d="M28 0 L28 22" />
-              <path class="tungsten-filament-coil" d="M16 22 Q12 34 17 44 Q22 52 27 44 Q32 34 28 22" />
-            </svg>
-          </div>
-          <!-- Inti Cahaya Pijar Hangat -->
-          <div class="bulb-inner-glow" id="bulb-inner-glow"></div>
-        </div>
-
-        <!-- Radiasi Aura Cahaya Emas & Pink Hangat saat Menyala -->
-        <div class="bulb-radial-halo" id="bulb-radial-halo"></div>
-      </div>
-
-      <!-- Tampilan Dial Countdown Vintage -->
-      <div class="intro-countdown-panel" id="countdown-panel">
-        <div class="countdown-film-dial">
-          <div class="dial-film-crosshair horizontal"></div>
-          <div class="dial-film-crosshair vertical"></div>
-          <div class="dial-number-wrapper">
-            <span class="countdown-number" id="countdown-number">3</span>
-          </div>
-        </div>
-
-        <div class="countdown-narrative">
-          <h2 class="countdown-title" id="countdown-title">Mempersiapkan Kenangan</h2>
-          <p class="countdown-subtitle" id="countdown-subtitle">Menghitung mundur setiap detik berharga...</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Kilatan Sinar Transisi (Bloom Flash) saat Lampu Menyala Terang Menuju Timeline -->
-    <div class="intro-bloom-flash" id="intro-bloom-flash"></div>
-  </div>
-
-  <!-- Canvas Animasi Kelopak Sakura & Hati -->
+<body>
+  <!-- Canvas Animasi Kelopak Sakura & Hati Melayang (Harmonis dengan main.html) -->
   <canvas id="ambient-canvas"></canvas>
 
-  <!-- Latar Belakang Dinamis: Foto Terpilih dengan Filter Coklat Vintage Nostalgik -->
-  <div class="timeline-vintage-bg">
-    <div class="timeline-bg-photo" id="timeline-bg-photo"></div>
-    <div class="timeline-bg-overlay"></div>
-  </div>
+  <!-- Audio Latar Belakang Romantis -->
+  <audio id="bg-music" loop preload="auto" src="music/Terbuang%20Dalam%20Waktu%20-%20Barasuara%20(Peaceful%20Piano).mp3"></audio>
 
-  <!-- Tombol Panah Kembali ke Menu Utama (Pojok Kiri Atas Absolute) -->
-  <header class="timeline-top-nav">
-    <a href="main.html" class="btn-timeline-back" title="Kembali ke Menu Utama" aria-label="Kembali ke Menu Utama">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="19" y1="12" x2="5" y2="12"></line>
-        <polyline points="12 19 5 12 12 5"></polyline>
-      </svg>
-    </a>
-  </header>
-
-  <!-- Kontrol Suara & Tombol Aksi (Pojok Kanan Atas) -->
+  <!-- Kontrol Suara & Musik (Pojok Kanan Atas) -->
   <div class="audio-control-bar">
-    <button id="roll-film-btn" class="icon-btn" title="Gelindingkan Kepala Roll dari Kanan ke Kiri" style="margin-right: 8px;">
-      <span class="icon">🎞️</span>
-      <span class="btn-text">Roll 3D</span>
-    </button>
-    <button id="replay-lamp-btn" class="icon-btn" title="Nyalakan Kembali Animasi Lampu & Countdown" style="margin-right: 8px;">
-      <span class="icon">💡</span>
-      <span class="btn-text">Lampu</span>
-    </button>
-    <button id="sound-btn" class="icon-btn" title="Nyalakan / Matikan Efek Suara">
-      <span class="icon">🔔</span>
-      <span class="btn-text">Sound: On</span>
+    <button id="music-btn" class="icon-btn" title="Nyalakan / Matikan Musik Latar (Peaceful Piano)">
+      <span class="icon" id="music-icon">🎵</span>
+      <span class="btn-text" id="music-btn-text">Musik: On</span>
     </button>
   </div>
 
-  <main class="timeline-full-container">
-    <!-- PANGGUNG WADAH UTAMA ROLL FILM -->
-    <div class="film-container-stage" id="film-stage">
-      <!-- PITA KLISE FILM (Latar Belakang Roll: Klise, Sprocket, Foto-Foto) -->
-      <div class="film-fullwidth-strip" id="film-strip-wrapper">
-        <!-- Pinggiran Atas Klise (Lubang Sprocket Bersih Tanpa Teks) -->
-        <div class="negative-sprocket-bar sprocket-top">
-          <div class="sprocket-holes-backlight"></div>
-        </div>
+  <main class="timeline-page">
+    <!-- Bar Navigasi Atas -->
+    <header class="timeline-nav-bar">
+      <a href="main.html" class="btn-back-pill" title="Kembali ke Halaman Selamat Datang Cintaku">
+        ← Kembali ke Menu Utama
+      </a>
+    </header>
 
-        <!-- Viewport Klise Film (Foto-Foto Kenangan) -->
-        <div class="negative-scroll-viewport" id="film-track-viewport">
-          <div class="negative-frames-row" id="film-track">
-            <!-- Frame-frame klise film di-render via js/timeline.js -->
-          </div>
-        </div>
-
-        <!-- Pinggiran Bawah Klise (Lubang Sprocket Bersih Tanpa Teks) -->
-        <div class="negative-sprocket-bar sprocket-bottom">
-          <div class="sprocket-holes-backlight"></div>
-        </div>
-      </div>
-
-      <!-- KEPALA ROLL YANG ADA DI GAMBAR (SILINDER KODAK 35MM 3D BERPUTAR MENGGELINDING) -->
-      <div class="film-end-spool" id="film-end-spool" title="Kepala Roll Film Kodak 35mm">
-        <div class="spool-top-cap">
-          <div class="spool-core-pin"></div>
-        </div>
-        <div class="spool-body" id="spool-body">
-          <div class="spool-cylinder-sheen"></div>
-          <div class="spool-brand-badge" id="spool-brand-badge">
-            <span class="brand-name">OUR TIMELINE</span>
-          </div>
-          <div class="spool-film-slit"></div>
-        </div>
-        <div class="spool-bottom-cap">
-          <div class="spool-core-pin"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- WADAH DESKRIPSI & JUDUL DARI BAWAH ROLL -->
-    <div class="film-story-card" id="film-story-card" aria-live="polite">
-      <div class="story-date-badge" id="story-date-badge">12 Mei 2023</div>
-      <h3 class="story-title" id="story-title">Awal Mula Cerita Kita</h3>
-      <p class="story-desc" id="story-desc">
-        Hari di mana senyum manismu pertama kali mencuri perhatian, membuka lembaran kisah penuh rasa hangat dan ketulusan.
+    <!-- Header Hero: Judul & Pengantar Tema Blossom -->
+    <section class="timeline-hero">
+      <div class="blossom-badge">🌸 Jejak Langkah Indah Kita 🌸</div>
+      <h1 class="timeline-main-title">
+        Linimasa Perjalanan Cinta & Cita-Cita
+        <span class="timeline-cursive-tag">Our Journey & Endless Dreams</span>
+      </h1>
+      <p class="timeline-desc">
+        Menyusuri setiap detik kenangan, tawa hangat, dan doa tulus yang terajut indah bersama sang pejuang mimpi, <strong>Afifah</strong>.
       </p>
+
+      <!-- Ringkasan Statistik Perjalanan -->
+      <div class="timeline-stats-bar">
+        <div class="stat-pill">
+          <span class="stat-icon">📅</span>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-moments-count">6 Babak</div>
+            <div class="stat-label">Momen Terukir</div>
+          </div>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-icon">💖</span>
+          <div class="stat-info">
+            <div class="stat-value">100% Selamanya</div>
+            <div class="stat-label">Rasa Ketulusan</div>
+          </div>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-icon">🌟</span>
+          <div class="stat-info">
+            <div class="stat-value">∞ Tak Terhingga</div>
+            <div class="stat-label">Cita-Cita Bersama</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tombol Pengubah Mode Tampilan (Story Road vs Gallery Grid) -->
+    <div class="view-mode-bar" role="tablist" aria-label="Pilih Mode Tampilan">
+      <button id="btn-view-road" class="btn-view-mode active" role="tab" aria-selected="true">
+        <span>🌸</span> Jejak Berkelok
+      </button>
+      <button id="btn-view-grid" class="btn-view-mode" role="tab" aria-selected="false">
+        <span>📸</span> Galeri Kartu
+      </button>
     </div>
+
+    <!-- WADAH UTAMA TIMELINE (STORY ROAD) -->
+    <section class="timeline-container" id="timeline-track">
+      <!-- Garis Tulang Belakang (Spine Line) Tengah -->
+      <div class="timeline-spine"></div>
+
+      <!-- Item-item Linimasa akan di-render secara dinamis oleh js/timeline.js -->
+    </section>
+
+    <!-- KARTU COUNTDOWN & HARAPAN MASA DEPAN (FOOTER BANNER) -->
+    <section class="future-chapter-card">
+      <div class="blossom-badge">✨ Babak Berikutnya ✨</div>
+      <h2 class="future-title">Menuju Hari Bahagia & Babak Baru</h2>
+      <p class="future-desc">
+        Setiap detik yang telah kita lewati adalah hadiah terindah, dan setiap detik ke depan adalah lembaran baru yang siap kita sambut berdua dengan senyuman dan doa terbaik.
+      </p>
+
+      <!-- Tampilan Timer Hitung Mundur -->
+      <div class="countdown-clock" aria-label="Hitung Mundur">
+        <div class="clock-segment">
+          <span class="clock-number" id="cd-days">00</span>
+          <span class="clock-label">Hari</span>
+        </div>
+        <div class="clock-segment">
+          <span class="clock-number" id="cd-hours">00</span>
+          <span class="clock-label">Jam</span>
+        </div>
+        <div class="clock-segment">
+          <span class="clock-number" id="cd-mins">00</span>
+          <span class="clock-label">Menit</span>
+        </div>
+        <div class="clock-segment">
+          <span class="clock-number" id="cd-secs">00</span>
+          <span class="clock-label">Detik</span>
+        </div>
+      </div>
+
+      <!-- Tombol Aksi Menuju Halaman Spesial Lainnya -->
+      <div class="timeline-actions-row">
+        <a href="letter.html" class="btn-primary-action" title="Buka Buku Catatan Surat & Doa Mendalam">
+          <span>📖</span> Buka Surat & Doa Mendalam ➔
+        </a>
+        <a href="music.html" class="btn-secondary-action" title="Buka Pemutar Musik Favorit">
+          <span>🎵</span> Putar Musik Favorit
+        </a>
+        <a href="main.html" class="btn-secondary-action" title="Kembali ke Menu Utama">
+          <span>🏠</span> Menu Utama
+        </a>
+      </div>
+    </section>
   </main>
 
-  <!-- Modular Scripts -->
-  <script src="js/audio.js?v=3.0"></script>
-  <script src="js/ambient.js?v=2.0"></script>
-  <script src="js/timeline.js?v=3.2"></script>
+  <!-- MODAL ZOOM FOTO ELEGAN -->
+  <div class="photo-modal-overlay" id="photo-modal" aria-hidden="true" role="dialog">
+    <div class="photo-modal-box">
+      <button class="photo-modal-close" id="photo-modal-close" aria-label="Tutup Foto">&times;</button>
+      <img src="" alt="Kenangan Spesial" class="photo-modal-img" id="photo-modal-img">
+      <div class="photo-modal-caption">
+        <h4 class="photo-modal-title" id="photo-modal-title">Judul Kenangan</h4>
+        <p class="photo-modal-desc" id="photo-modal-desc">Deskripsi kenangan indah...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modular Scripts Sesuai main.html -->
+  <script src="js/ambient.js?v=3.0"></script>
+  <script src="js/timeline.js?v=4.0"></script>
 </body>
 </html>
