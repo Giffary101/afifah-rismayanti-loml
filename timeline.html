@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Linimasa Perjalanan Cinta & Cita-Cita 🌸 | Spesial Afifah</title>
+  <title>Galeri Foto Kenangan Manis 🌸 | Spesial Afifah</title>
   
   <!-- Google Fonts Sesuai main.html -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,15 +25,21 @@
   <!-- Canvas Animasi Kelopak Sakura & Hati Melayang (Harmonis dengan main.html) -->
   <canvas id="ambient-canvas"></canvas>
 
-  <!-- Audio Latar Belakang Romantis -->
-  <audio id="bg-music" loop preload="auto" src="music/Terbuang%20Dalam%20Waktu%20-%20Barasuara%20(Peaceful%20Piano).mp3"></audio>
+  <!-- Audio Latar Belakang Romantis (Nadhif Basalamah - Kota Ini Tak Sama Tanpamu) -->
+  <audio id="bg-music" autoplay loop preload="auto" src="music/nadhif-basalamah.mp3"></audio>
 
   <!-- Kontrol Suara & Musik (Pojok Kanan Atas) -->
   <div class="audio-control-bar">
-    <button id="music-btn" class="icon-btn" title="Nyalakan / Matikan Musik Latar (Peaceful Piano)">
+    <button id="music-btn" class="icon-btn" title="Nyalakan / Matikan Musik Latar (Nadhif Basalamah - Kota Ini Tak Sama Tanpamu)">
       <span class="icon" id="music-icon">🎵</span>
       <span class="btn-text" id="music-btn-text">Musik: On</span>
     </button>
+  </div>
+
+  <!-- Banner Pemberitahuan Halus jika Autoplay Ditahan Browser -->
+  <div class="audio-autoplay-prompt" id="autoplay-prompt" style="display: none;" title="Klik untuk mendengarkan lagu">
+    <span class="prompt-icon">🎵</span>
+    <span class="prompt-text">Klik di mana saja untuk memutar lagu <em>Nadhif Basalamah</em> 🌸</span>
   </div>
 
   <main class="timeline-page">
@@ -44,87 +50,110 @@
       </a>
     </header>
 
-    <!-- Header Hero: Judul & Pengantar Tema Blossom -->
+    <!-- Header Hero: Judul & Pengantar Tema Dinding Foto Kenangan -->
     <section class="timeline-hero">
-      <div class="blossom-badge">🌸 Jejak Langkah Indah Kita 🌸</div>
+      <div class="blossom-badge">📌 Dinding Foto & Video Kenangan 📌</div>
       <h1 class="timeline-main-title">
-        Linimasa Perjalanan Cinta & Cita-Cita
-        <span class="timeline-cursive-tag">Our Journey & Endless Dreams</span>
+        Dinding Foto & Video Kenangan Manis
+        <span class="timeline-cursive-tag">Sweet Memories Pinned with Love</span>
       </h1>
       <p class="timeline-desc">
-        Menyusuri setiap detik kenangan, tawa hangat, dan doa tulus yang terajut indah bersama sang pejuang mimpi, <strong>Afifah</strong>.
+        Koleksi potret dan rekaman video senyuman manis yang tertempel abadi dengan paku payung kasih sayang untuk sang tercinta, <strong>Afifah</strong>.
       </p>
 
-      <!-- Ringkasan Statistik Perjalanan -->
+      <!-- Ringkasan Statistik Galeri -->
       <div class="timeline-stats-bar">
         <div class="stat-pill">
-          <span class="stat-icon">📅</span>
+          <span class="stat-icon">📸</span>
           <div class="stat-info">
-            <div class="stat-value" id="stat-moments-count">6 Babak</div>
-            <div class="stat-label">Momen Terukir</div>
+            <div class="stat-value" id="stat-moments-count">45 Foto & Video</div>
+            <div class="stat-label">Koleksi Kenangan</div>
           </div>
         </div>
         <div class="stat-pill">
           <span class="stat-icon">💖</span>
           <div class="stat-info">
-            <div class="stat-value">100% Selamanya</div>
-            <div class="stat-label">Rasa Ketulusan</div>
+            <div class="stat-value">100% Manis</div>
+            <div class="stat-label">Ketulusan Rasa</div>
           </div>
         </div>
         <div class="stat-pill">
-          <span class="stat-icon">🌟</span>
+          <span class="stat-icon">✨</span>
           <div class="stat-info">
-            <div class="stat-value">∞ Tak Terhingga</div>
-            <div class="stat-label">Cita-Cita Bersama</div>
+            <div class="stat-value">∞ Selamanya</div>
+            <div class="stat-label">Senyuman Terindah</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Tombol Pengubah Mode Tampilan (Story Road vs Gallery Grid) -->
-    <div class="view-mode-bar" role="tablist" aria-label="Pilih Mode Tampilan">
-      <button id="btn-view-road" class="btn-view-mode active" role="tab" aria-selected="true">
-        <span>🌸</span> Jejak Berkelok
-      </button>
-      <button id="btn-view-grid" class="btn-view-mode" role="tab" aria-selected="false">
-        <span>📸</span> Galeri Kartu
-      </button>
-    </div>
-
-    <!-- WADAH UTAMA TIMELINE (STORY ROAD) -->
-    <section class="timeline-container" id="timeline-track">
-      <!-- Garis Tulang Belakang (Spine Line) Tengah -->
-      <div class="timeline-spine"></div>
-
-      <!-- Item-item Linimasa akan di-render secara dinamis oleh js/timeline.js -->
+    <!-- =========================================================
+         BAGIAN 1: FOTO & VIDEO DENGAN NAMA ANGKA DI URUTAN PERTAMA
+         ========================================================= -->
+    <section class="photo-section" id="section-numbered">
+      <div class="section-badge-header">
+        <span class="section-tag-badge">📌 Koleksi Utama (Foto & Video Berurutan)</span>
+      </div>
+      <div class="gallery-container" id="gallery-container-numbered">
+        <!-- Rendered by js/timeline.js -->
+      </div>
     </section>
 
-    <!-- KARTU COUNTDOWN & HARAPAN MASA DEPAN (FOOTER BANNER) -->
+    <!-- =========================================================
+         PEMISAH: TALI / GARIS MELIUK-LIUK (WAVY ROPE DIVIDER)
+         ========================================================= -->
+    <div class="curvy-divider-wrapper" aria-hidden="true">
+      <div class="curvy-rope-container">
+        <svg class="curvy-rope-svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="ropeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#ffb6c1" stop-opacity="0.3"/>
+              <stop offset="20%" stop-color="#ff8cb8" stop-opacity="0.9"/>
+              <stop offset="50%" stop-color="#e85d9e" stop-opacity="1"/>
+              <stop offset="80%" stop-color="#ff8cb8" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#ffb6c1" stop-opacity="0.3"/>
+            </linearGradient>
+          </defs>
+          <!-- Bayangan lembut tali di dinding -->
+          <path class="rope-shadow-path" d="M0,60 C150,115 300,5 450,60 C600,115 750,5 900,60 C1050,115 1150,25 1200,60" />
+          <!-- Tali meliuk-liuk utama bergradien -->
+          <path class="rope-core-path" d="M0,60 C150,115 300,5 450,60 C600,115 750,5 900,60 C1050,115 1150,25 1200,60" />
+          <!-- Serat pintalan tali (garis putus-putus estetis) -->
+          <path class="rope-twine-path" d="M0,60 C150,115 300,5 450,60 C600,115 750,5 900,60 C1050,115 1150,25 1200,60" />
+        </svg>
+
+        <!-- Lencana dekoratif tengah yang tertempel di tali meliuk -->
+        <div class="curvy-badge-center">
+          <span class="rope-pin-knot">📌</span>
+          <span class="rope-badge-text">🌸 Potret Manis & Momen Spontan Lainnya 🌸</span>
+          <span class="rope-pin-knot">📌</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         BAGIAN 2: SISANYA (FOTO BUKAN ANGKA)
+         ========================================================= -->
+    <section class="photo-section" id="section-others">
+      <div class="gallery-container" id="gallery-container-others">
+        <!-- Rendered by js/timeline.js -->
+      </div>
+    </section>
+
+    <!-- KARTU PENUTUP: KISAH YANG TAK DAPAT DIUCAPKAN (FOOTER BANNER) -->
     <section class="future-chapter-card">
-      <div class="blossom-badge">✨ Babak Berikutnya ✨</div>
-      <h2 class="future-title">Menuju Hari Bahagia & Babak Baru</h2>
+      <div class="blossom-badge">💌 Kisah yang Tak Bertepi 💌</div>
+      <h2 class="future-title">Masih Terlalu Banyak Kisah yang Tak Mampu Terucap...</h2>
       <p class="future-desc">
-        Setiap detik yang telah kita lewati adalah hadiah terindah, dan setiap detik ke depan adalah lembaran baru yang siap kita sambut berdua dengan senyuman dan doa terbaik.
+        Di balik setiap bingkai foto dan rekaman singkat yang terabadikan di dinding ini, sesungguhnya masih tersimpan ribuan tawa kecil,dan kehangatan rasa yang terlalu luas untuk dirangkum oleh kata-kata.
       </p>
 
-      <!-- Tampilan Timer Hitung Mundur -->
-      <div class="countdown-clock" aria-label="Hitung Mundur">
-        <div class="clock-segment">
-          <span class="clock-number" id="cd-days">00</span>
-          <span class="clock-label">Hari</span>
-        </div>
-        <div class="clock-segment">
-          <span class="clock-number" id="cd-hours">00</span>
-          <span class="clock-label">Jam</span>
-        </div>
-        <div class="clock-segment">
-          <span class="clock-number" id="cd-mins">00</span>
-          <span class="clock-label">Menit</span>
-        </div>
-        <div class="clock-segment">
-          <span class="clock-number" id="cd-secs">00</span>
-          <span class="clock-label">Detik</span>
-        </div>
+      <div class="heartfelt-quote-box">
+        <span class="quote-symbol">❝</span>
+        <p class="heartfelt-quote-text">
+          Karena mencintaimu bukan hanya tentang momen yang tertangkap kamera, melainkan tentang rasa syukur di setiap detik napas dan langkah yang selalu ingin kulalui bersamamu, Afifah.
+        </p>
+        <span class="quote-symbol right">❞</span>
       </div>
 
       <!-- Tombol Aksi Menuju Halaman Spesial Lainnya -->
@@ -135,6 +164,9 @@
         <a href="music.html" class="btn-secondary-action" title="Buka Pemutar Musik Favorit">
           <span>🎵</span> Putar Musik Favorit
         </a>
+        <button type="button" class="btn-secondary-action" id="btn-scroll-top-action" title="Ulangi Perjalanan Kenangan dari Awal">
+          <span>↺</span> Ulangi dari Awal
+        </button>
         <a href="main.html" class="btn-secondary-action" title="Kembali ke Menu Utama">
           <span>🏠</span> Menu Utama
         </a>
@@ -142,14 +174,36 @@
     </section>
   </main>
 
-  <!-- MODAL ZOOM FOTO ELEGAN -->
+  <!-- KONTROL FLOATING SCROLL OTOMATIS (POJOK KANAN BAWAH) -->
+  <div class="autoscroll-control-pill" id="autoscroll-control" aria-label="Kontrol Scroll Otomatis">
+    <span class="autoscroll-indicator-dot"></span>
+    <span class="autoscroll-status-text" id="autoscroll-status-text">Scroll Otomatis</span>
+    <button type="button" class="autoscroll-btn" id="btn-toggle-autoscroll" title="Jeda / Lanjutkan Scroll Otomatis">
+      <span id="autoscroll-btn-icon">⏸</span>
+    </button>
+    <button type="button" class="autoscroll-btn" id="btn-restart-autoscroll" title="Ulangi dari Atas">
+      <span>↺</span>
+    </button>
+  </div>
+
+  <!-- MODAL ZOOM FOTO ELEGAN (LIGHTBOX TANPA DESKRIPSI) -->
   <div class="photo-modal-overlay" id="photo-modal" aria-hidden="true" role="dialog">
     <div class="photo-modal-box">
       <button class="photo-modal-close" id="photo-modal-close" aria-label="Tutup Foto">&times;</button>
-      <img src="" alt="Kenangan Spesial" class="photo-modal-img" id="photo-modal-img">
+      <button class="photo-modal-nav prev" id="modal-prev-btn" aria-label="Foto Sebelumnya">&#10094;</button>
+      <button class="photo-modal-nav next" id="modal-next-btn" aria-label="Foto Berikutnya">&#10095;</button>
+      
+      <div class="photo-modal-img-wrapper">
+        <img src="" alt="Kenangan Spesial" class="photo-modal-img" id="photo-modal-img">
+        <video src="" class="photo-modal-video" id="photo-modal-video" controls playsinline style="display: none;"></video>
+      </div>
+      
       <div class="photo-modal-caption">
+        <div class="modal-badge-row">
+          <span class="modal-chapter-tag" id="photo-modal-chapter">🌸 Kenangan Indah</span>
+          <span class="modal-date-tag" id="photo-modal-date">📅 Tanggal</span>
+        </div>
         <h4 class="photo-modal-title" id="photo-modal-title">Judul Kenangan</h4>
-        <p class="photo-modal-desc" id="photo-modal-desc">Deskripsi kenangan indah...</p>
       </div>
     </div>
   </div>

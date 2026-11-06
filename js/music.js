@@ -81,9 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Jeda waktu (1.5 detik) agar lirik bertahan lebih lama sebelum berpindah ke baris berikutnya
-  const LYRIC_LINGER_DELAY = 1.5;
-
   // Update Sinkronisasi Lirik Real-Time
   function updateLyrics(currentTime) {
     if (!lyricLines.length || !lyricsContainer) return;
@@ -92,9 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (let i = 0; i < lyricLines.length; i++) {
       const lineTime = parseFloat(lyricLines[i].dataset.time || 0);
-      // Baris pertama mulai tepat saat vokal masuk, baris berikutnya ditahan 1.5 detik lebih lama
-      const triggerTime = i === 0 ? lineTime : lineTime + LYRIC_LINGER_DELAY;
-      if (currentTime >= triggerTime) {
+      if (currentTime >= lineTime) {
         currentIndex = i;
       } else {
         break;
